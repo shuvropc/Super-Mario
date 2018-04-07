@@ -23,7 +23,7 @@ float _cameraAngle = 0.0;
 
 
 //cameraProperty
-float cameraX=-5.5;
+float cameraX=-5.52;
 
 
 //Mario Property
