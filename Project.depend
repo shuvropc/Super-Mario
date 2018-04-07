@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1219392390 source:c:\users\shuvr\desktop\xx\project\imageloader.cpp
+	<assert.h>
+	<fstream>
+	"imageloader.h"
+
+1219392390 c:\users\shuvr\desktop\xx\project\imageloader.h
+
+1523116359 source:c:\users\shuvr\desktop\xx\project\main.cpp
+	<iostream>
+	<stdlib.h>
+	<math.h>
+	<GL/GLUT.h>
+	<iostream>
+	<stdlib.h>
+	<OpenGL/OpenGL.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	"imageloader.h"
+
+1219392390 source:d:\opengl\super mario\imageloader.cpp
+	<assert.h>
+	<fstream>
+	"imageloader.h"
+
+1219392390 d:\opengl\super mario\imageloader.h
+
+1523116870 source:d:\opengl\super mario\main.cpp
+	<iostream>
+	<stdlib.h>
+	<math.h>
+	<GL/GLUT.h>
+	<iostream>
+	<stdlib.h>
+	<OpenGL/OpenGL.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	"imageloader.h"
+
