@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <time.h>
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -23,15 +24,25 @@ float _cameraAngle = 0.0;
 
 
 //cameraProperty
+//float cameraX=-5.52;
 float cameraX=-5.52;
 
 
 //Mario Property
 float marioPositionX=3;
-float marioPositionY=-2.95;
+float marioPositionY=-2.5;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
 bool marioDirectionRight=true;
+
+
+//texture variables
+GLuint _textureFloor;
+GLuint _textureBrick;
+GLuint _textureScoreBlock;
+GLuint _textureMario;
+GLuint _textureHill;
+GLuint _textureBlock;
 
 
 
@@ -53,10 +64,119 @@ GLuint loadTexture(Image* image) {
 	return textureId; //Returns the id of the texture
 }
 
-GLuint _textureId;
 
-//The id of the texture
+void drawHill(){
 
+
+    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+
+	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
+	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, _textureHill);
+
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glColor3f(1.0f, 1.0f, 1.0f);
+
+
+
+    glPushMatrix();
+
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, 0, 0);
+
+
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(3, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(3.0, 1.0, 0);
+
+
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, 1, 0);
+
+
+        glEnd();
+
+   glDisable(GL_TEXTURE_2D);
+
+
+    glPopMatrix();
+}
+
+void drawBlock(int length){
+
+float translateFloorX=0.0;
+
+
+    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+
+	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
+	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, _textureBlock);
+
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glColor3f(1.0f, 1.0f, 1.0f);
+
+
+    for(int i=0;i<length;i++){
+
+    glPushMatrix();
+
+       //glColor3f(1, 0, 0);
+
+        float brickSize = 0.5;
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(translateFloorX, 0, 0);
+
+            translateFloorX+=0.5;
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(translateFloorX, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(translateFloorX, 0.5, 0);
+
+            translateFloorX-=0.5;
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(translateFloorX, 0.5, 0);
+
+             translateFloorX+=0.5;
+
+        glEnd();
+
+
+
+    glPopMatrix();
+
+     }
+
+     glDisable(GL_TEXTURE_2D);
+
+}
 
 void moveRight(){
           marioPositionX +=0.04f;
@@ -70,7 +190,6 @@ void moveLeft(){
             }
 }
 
-
 void handleKeypress(unsigned char key, int x, int y) {
 
 	switch (key) {
@@ -80,9 +199,11 @@ case ' ':
       jumpMarioKeyPressed=true;
       break;
 case 'd':
+       marioDirectionRight=true;
        moveRight();
       break;
  case 'a':
+        marioDirectionRight=false;
         moveLeft();
       break;
 
@@ -92,7 +213,6 @@ glutPostRedisplay();
 
 	}
 }
-
 
 void drawFloor(int length){
 
@@ -108,7 +228,7 @@ void drawFloor(int length){
 	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
 
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
+	glBindTexture(GL_TEXTURE_2D, _textureFloor);
 
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -148,7 +268,6 @@ void drawFloor(int length){
      glDisable(GL_TEXTURE_2D);
 }
 
-
 void drawBrick(int length){
 
 
@@ -164,12 +283,12 @@ void drawBrick(int length){
 	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
 
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
+	glBindTexture(GL_TEXTURE_2D, _textureBrick);
 
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(1.0f, 1.0f, 1.0f);
 
 
     for(int i=0;i<length;i++){
@@ -183,16 +302,23 @@ void drawBrick(int length){
 
         glBegin(GL_POLYGON);
             glTexCoord2f(0.0f, 0.0f);
-            glVertex3f(translateFloorX++, 0, 0);
+            glVertex3f(translateFloorX, 0, 0);
+
+            translateFloorX+=0.5;
 
             glTexCoord2f(1.0f, 0.0f);
             glVertex3f(translateFloorX, 0, 0);
 
             glTexCoord2f(1.0f, 1.0f);
-            glVertex3f(translateFloorX--, 0.5, 0);
+            glVertex3f(translateFloorX, 0.5, 0);
+
+            translateFloorX-=0.5;
 
             glTexCoord2f(0.0f, 1.0f);
-            glVertex3f(translateFloorX++, 0.5, 0);
+            glVertex3f(translateFloorX, 0.5, 0);
+
+             translateFloorX+=0.5;
+
         glEnd();
 
 
@@ -204,367 +330,138 @@ void drawBrick(int length){
      glDisable(GL_TEXTURE_2D);
 }
 
+void drawScoreBrick(int length){
 
-void drawMario(){
+    float translateFloorX=0.0;
+
+
+    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+
+	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
+	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, _textureScoreBlock);
+
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+      time_t seconds;
+      seconds = time (NULL);
+
+      if(seconds%2==0){
+        glColor3f(1.0f, 1.0f, 1.0f);
+      }
+      else{
+        glColor3f(0.0f, 1.0f, 0.0f);
+      }
+
+
+    for(int i=0;i<length;i++){
+
     glPushMatrix();
 
-    glTranslatef(marioPositionX, marioPositionY, 0);
+       //glColor3f(1, 0, 0);
 
-    //glRotatef(-180,0,1,0);
-    //glFrustum(l,r,b,t,n,f)
+        float brickSize = 0.5;
 
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(translateFloorX, 0, 0);
 
-glVertex3f(0.41, 0.90, 0.0);
-glVertex3f(0.41, 0.93, 0.0);
-glVertex3f(0.26, 0.93, 0.0);
-glVertex3f(0.26, 0.90, 0.0);
-glVertex3f(0.23, 0.90, 0.0);
-glVertex3f(0.23, 0.87, 0.0);
-glVertex3f(0.50, 0.87, 0.0);
-glVertex3f(0.50, 0.90, 0.0);
+            translateFloorX+=0.5;
 
-glEnd();
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(translateFloorX, 0, 0);
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(translateFloorX, 0.5, 0);
 
-glVertex3f(0.23, 0.87, 0.0);
-glVertex3f(0.32, 0.87, 0.0);
-glVertex3f(0.32, 0.84, 0.0);
-glVertex3f(0.23, 0.84, 0.0);
+            translateFloorX-=0.5;
 
-glEnd();
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(translateFloorX, 0.5, 0);
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+             translateFloorX+=0.5;
 
-glVertex3f(0.29, 0.81, 0.0);
-glVertex3f(0.29, 0.84, 0.0);
-glVertex3f(0.26, 0.84, 0.0);
-glVertex3f(0.26, 0.78, 0.0);
-glVertex3f(0.32, 0.78, 0.0);
-glVertex3f(0.32, 0.81, 0.0);
+        glEnd();
 
 
 
-glEnd();
+    glPopMatrix();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+     }
 
-glVertex3f(0.32, 0.84, 0.0);
-glVertex3f(0.29, 0.84, 0.0);
-glVertex3f(0.29, 0.81, 0.0);
-glVertex3f(0.32, 0.81, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
-glVertex3f(0.38, 0.87, 0.0);
-glVertex3f(0.32, 0.87, 0.0);
+     glDisable(GL_TEXTURE_2D);
+}
 
+void drawMario(){
 
 
+    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
-glEnd();
+	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
+	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, _textureMario);
 
-glVertex3f(0.26, 0.84, 0.0);
-glVertex3f(0.23, 0.84, 0.0);
-glVertex3f(0.23, 0.78, 0.0);
-glVertex3f(0.26, 0.78, 0.0);
 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glColor3f(1.0f, 1.0f, 1.0f);
 
 
-glEnd();
 
+    glPushMatrix();
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
 
-glVertex3f(0.23, 0.84, 0.0);
-glVertex3f(0.20, 0.84, 0.0);
-glVertex3f(0.20, 0.78, 0.0);
-glVertex3f(0.23, 0.78, 0.0);
 
 
-glEnd();
+        if(marioDirectionRight==false){
+            glTranslatef(marioPositionX-0.5, marioPositionY, 0);
+            glRotatef(180,0.0,1.0,0.0);
+        }else{
+             glTranslatef(marioPositionX-1.0, marioPositionY, 0);
+            glRotatef(0,0.0,0.0,0.0);
+        }
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
 
-glVertex3f(0.23, 0.78, 0.0);
-glVertex3f(0.26, 0.78, 0.0);
-glVertex3f(0.26, 0.75, 0.0);
-glVertex3f(0.23, 0.75, 0.0);
 
-glEnd();
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, 0, 0);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
 
-glVertex3f(0.26, 0.78, 0.0);
-glVertex3f(0.32, 0.78, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.26, 0.72, 0.0);
 
-glEnd();
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.5, 0, 0);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 0.0, 0.0);//(R,G,B)
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.5, 0.5, 0);
 
-glVertex3f(0.41, 0.81, 0.0);
-glVertex3f(0.41, 0.87, 0.0);
-glVertex3f(0.38, 0.87, 0.0);
-glVertex3f(0.38, 0.81, 0.0);
-glVertex3f(0.44, 0.81, 0.0);
-glVertex3f(0.44, 0.78, 0.0);
-glVertex3f(0.41, 0.78, 0.0);
 
 
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, 0.5, 0);
 
-glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+        glEnd();
 
-glVertex3f(0.41, 0.81, 0.0);
-glVertex3f(0.38, 0.81, 0.0);
-glVertex3f(0.38, 0.78, 0.0);
-glVertex3f(0.41, 0.78, 0.0);
+   glDisable(GL_TEXTURE_2D);
 
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.44, 0.84, 0.0);
-glVertex3f(0.44, 0.87, 0.0);
-glVertex3f(0.41, 0.87, 0.0);
-glVertex3f(0.41, 0.81, 0.0);
-glVertex3f(0.44, 0.81, 0.0);
-glVertex3f(0.44, 0.78, 0.0);
-glVertex3f(0.50, 0.78, 0.0);
-glVertex3f(0.50, 0.84, 0.0);
-
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.50, 0.81, 0.0);
-glVertex3f(0.50, 0.78, 0.0);
-glVertex3f(0.53, 0.78, 0.0);
-glVertex3f(0.53, 0.81, 0.0);
-
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 0.0, 0.0);//(R,G,B)
-
-glVertex3f(0.38, 0.75, 0.0);
-glVertex3f(0.50, 0.75, 0.0);
-glVertex3f(0.50, 0.78, 0.0);
-glVertex3f(0.38, 0.78, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.38, 0.75, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
-glVertex3f(0.44, 0.72, 0.0);
-glVertex3f(0.44, 0.75, 0.0);
-
-
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.26, 0.63, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.29, 0.72, 0.0);
-glVertex3f(0.23, 0.72, 0.0);
-glVertex3f(0.23, 0.69, 0.0);
-glVertex3f(0.20, 0.69, 0.0);
-glVertex3f(0.20, 0.66, 0.0);
-glVertex3f(0.17, 0.66, 0.0);
-glVertex3f(0.17, 0.63, 0.0);
-glVertex3f(0.23, 0.63, 0.0);
-glVertex3f(0.23, 0.60, 0.0);
-glVertex3f(0.26, 0.60, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
-
-glVertex3f(0.32, 0.63, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.29, 0.72, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.32, 0.63, 0.0);
-glVertex3f(0.32, 0.54, 0.0);
-glVertex3f(0.38, 0.54, 0.0);
-glVertex3f(0.38, 0.66, 0.0);
-glVertex3f(0.32, 0.66, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
-
-glVertex3f(0.38, 0.63, 0.0);
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.41, 0.72, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
-
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.32, 0.66, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
-glVertex3f(0.38, 0.66, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.44, 0.63, 0.0);
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.41, 0.72, 0.0);
-glVertex3f(0.47, 0.72, 0.0);
-glVertex3f(0.47, 0.69, 0.0);
-glVertex3f(0.50, 0.69, 0.0);
-glVertex3f(0.50, 0.66, 0.0);
-glVertex3f(0.53, 0.66, 0.0);
-glVertex3f(0.53, 0.63, 0.0);
-glVertex3f(0.47, 0.63, 0.0);
-glVertex3f(0.47, 0.60, 0.0);
-glVertex3f(0.44, 0.60, 0.0);
-
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.38, 0.63, 0.0);
-glVertex3f(0.38, 0.60, 0.0);
-glVertex3f(0.41, 0.60, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.32, 0.63, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.29, 0.60, 0.0);
-glVertex3f(0.32, 0.60, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
-
-glVertex3f(0.44, 0.57, 0.0);
-glVertex3f(0.44, 0.63, 0.0);
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.41, 0.60, 0.0);
-glVertex3f(0.38, 0.60, 0.0);
-glVertex3f(0.38, 0.51, 0.0);
-glVertex3f(0.47, 0.51, 0.0);
-glVertex3f(0.47, 0.57, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
-
-glVertex3f(0.26, 0.57, 0.0);
-glVertex3f(0.26, 0.63, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.29, 0.60, 0.0);
-glVertex3f(0.32, 0.60, 0.0);
-glVertex3f(0.32, 0.51, 0.0);
-glVertex3f(0.23, 0.51, 0.0);
-glVertex3f(0.23, 0.57, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.23, 0.60, 0.0);
-glVertex3f(0.23, 0.63, 0.0);
-glVertex3f(0.17, 0.63, 0.0);
-glVertex3f(0.17, 0.54, 0.0);
-glVertex3f(0.23, 0.54, 0.0);
-glVertex3f(0.23, 0.57, 0.0);
-glVertex3f(0.26, 0.57, 0.0);
-glVertex3f(0.26, 0.60, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
-
-glVertex3f(0.47, 0.60, 0.0);
-glVertex3f(0.47, 0.63, 0.0);
-glVertex3f(0.53, 0.63, 0.0);
-glVertex3f(0.53, 0.54, 0.0);
-glVertex3f(0.47, 0.54, 0.0);
-glVertex3f(0.47, 0.57, 0.0);
-glVertex3f(0.44, 0.57, 0.0);
-glVertex3f(0.44, 0.60, 0.0);
-
-glEnd();
-
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
-
-glVertex3f(0.20, 0.48, 0.0);
-glVertex3f(0.20, 0.51, 0.0);
-glVertex3f(0.29, 0.51, 0.0);
-glVertex3f(0.29, 0.45, 0.0);
-glVertex3f(0.17, 0.45, 0.0);
-glVertex3f(0.17, 0.48, 0.0);
-
-
-glEnd();
-
-
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
-
-glVertex3f(0.50, 0.48, 0.0);
-glVertex3f(0.50, 0.51, 0.0);
-glVertex3f(0.41, 0.51, 0.0);
-glVertex3f(0.41, 0.45, 0.0);
-glVertex3f(0.53, 0.45, 0.0);
-glVertex3f(0.53, 0.48, 0.0);
-
-
-glEnd();
 
     glPopMatrix();
 }
-
 
 void jumpMario(){
 
@@ -579,7 +476,7 @@ void jumpMario(){
         }
         else if(jumpTopReached==true){
 
-            if(marioPositionY>-2.95){
+            if(marioPositionY>-2.5){
                 marioPositionY-= .2f;
             }
             else{
@@ -591,23 +488,52 @@ void jumpMario(){
 
 }
 
-
 //Initializes 3D rendering
 void initRendering() {
-    glClearColor(0.56, 0.56, 0.96, 0.0);
+
+    glClearColor(0.48,0.47,1.0,1.0);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_TEXTURE_2D);
+
+
 
 
 
     //texture
-    glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_NORMALIZE);
-	glEnable(GL_COLOR_MATERIAL);
+//    glEnable(GL_LIGHTING);
+//	glEnable(GL_LIGHT0);
+//	glEnable(GL_NORMALIZE);
+//	glEnable(GL_COLOR_MATERIAL);
 
-	Image* image = loadBMP("images/brick.bmp");
-	_textureId = loadTexture(image);
+	Image* image = loadBMP("images/baseWall.bmp");
+	_textureFloor = loadTexture(image);
 	delete image;
+
+
+	Image* image2 = loadBMP("images/question.bmp");
+	_textureScoreBlock = loadTexture(image2);
+	delete image2;
+
+	Image* image3 = loadBMP("images/brick.bmp");
+	_textureBrick = loadTexture(image3);
+	delete image3;
+
+
+	Image* image4 = loadBMP("images/mario.bmp");
+	_textureMario = loadTexture(image4);
+	delete image4;
+
+	Image* image5 = loadBMP("images/hill.bmp");
+	_textureHill = loadTexture(image5);
+	delete image5;
+
+
+	Image* image6 = loadBMP("images/block.bmp");
+	_textureBlock = loadTexture(image6);
+	delete image6;
+
 }
 
 //Called when the window is resized
@@ -617,8 +543,6 @@ void handleResize(int w, int h) {
     glLoadIdentity();
     gluPerspective(45.0, (double)w / (double)h, 1.0, 200.0);
 }
-
-
 
 //Draws the 3D scene
 void drawScene() {
@@ -649,25 +573,72 @@ void drawScene() {
     glPopMatrix();
 
 
-    //Draw Brick
+//firsst power
     glPushMatrix();
     glTranslatef(5, -0.5, 0);
         drawBrick(1);
     glPopMatrix();
 
-        glPushMatrix();
-    glTranslatef(7, -0.5, 0);
+     glPushMatrix();
+    glTranslatef(5.5, -0.5, 0);
+        drawScoreBrick(1);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(6, -0.5, 0);
+        drawBrick(1);
+    glPopMatrix();
+
+
+
+//second power
+       glPushMatrix();
+    glTranslatef(11, -0.5, 0);
         drawBrick(2);
     glPopMatrix();
+
+        glPushMatrix();
+    glTranslatef(12, -0.5, 0);
+        drawScoreBrick(1);
+    glPopMatrix();
+
+      glPushMatrix();
+    glTranslatef(12.5, -0.5, 0);
+        drawBrick(2);
+    glPopMatrix();
+
+    glPushMatrix();
+     glTranslatef(13, 0.5, 0);
+     drawScoreBrick(1);
+    glPopMatrix();
+
+   glPushMatrix();
+     glTranslatef(19, -2.5, 0);
+     drawHill();
+    glPopMatrix();
+
+
 
 
     glPushMatrix();
-    glTranslatef(10, -0.5, 0);
-        drawBrick(2);
+        glTranslatef(2, -1, 0);
+        drawBlock(5);
+    glPopMatrix();
+
+   glPushMatrix();
+        glTranslatef(2.5, -0.45, 0);
+        drawBlock(4);
+    glPopMatrix();
+
+      glPushMatrix();
+        glTranslatef(3.0, -0.1, 0);
+        drawBlock(3);
     glPopMatrix();
 
 
-
+      glPushMatrix();
+        glTranslatef(3.5, 0.55, 0);
+        drawBlock(2);
+    glPopMatrix();
 
 
     glutSwapBuffers();
@@ -677,6 +648,8 @@ void update(int value) {
 
 
     jumpMario();
+
+
 
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
@@ -708,7 +681,7 @@ int main(int argc, char** argv) {
 
     glutMainLoop();
 
-    return 0;
+
 }
 
 
