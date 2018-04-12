@@ -44,7 +44,7 @@
 
 1219392390 d:\opengl\project\imageloader.h
 
-1523523393 source:d:\opengl\project\main.cpp
+1523558724 source:d:\opengl\project\main.cpp
 	<iostream>
 	<stdlib.h>
 	<math.h>
@@ -52,6 +52,8 @@
 	<iostream>
 	<stdlib.h>
 	<time.h>
+	<windows.h>
+	<MMsystem.h>
 	<OpenGL/OpenGL.h>
 	<GLUT/glut.h>
 	<GL/glut.h>

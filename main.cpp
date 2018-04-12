@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <windows.h>
+#include <MMsystem.h>
+
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -66,6 +69,16 @@ GLuint loadTexture(Image* image) {
 				                   //as unsigned numbers
 				 image->pixels);               //The actual pixel data
 	return textureId; //Returns the id of the texture
+}
+
+void enableSound(string state){
+
+
+    if(state=="jump"){
+     PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
+
+    }
+
 }
 
 void enableTexture(GLuint textureName){
@@ -259,30 +272,6 @@ void moveLeft(){
                 marioPositionX -=0.04f;
                 cameraX +=0.04f;
             }
-}
-
-void handleKeypress(unsigned char key, int x, int y) {
-
-	switch (key) {
-
-case 'w':
-case ' ':
-      jumpMarioKeyPressed=true;
-      break;
-case 'd':
-       marioDirectionRight=true;
-       moveRight();
-      break;
- case 'a':
-        marioDirectionRight=false;
-        moveLeft();
-      break;
-
-
-glutPostRedisplay();
-
-
-	}
 }
 
 void drawFloor(int length){
@@ -492,6 +481,7 @@ void drawMario(){
 
 void jumpMario(){
 
+
     if(jumpMarioKeyPressed){
         if(jumpTopReached==false){
             if(marioPositionY<0.6){
@@ -513,6 +503,31 @@ void jumpMario(){
         }
      }
 
+}
+
+void handleKeypress(unsigned char key, int x, int y) {
+
+	switch (key) {
+
+case 'w':
+case ' ':
+       enableSound("jump");
+      jumpMarioKeyPressed=true;
+      break;
+case 'd':
+       marioDirectionRight=true;
+       moveRight();
+      break;
+ case 'a':
+        marioDirectionRight=false;
+        moveLeft();
+      break;
+
+
+glutPostRedisplay();
+
+
+	}
 }
 
 //Initializes 3D rendering
@@ -678,9 +693,7 @@ void drawScene() {
 
 void update(int value) {
 
-
     jumpMario();
-
 
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
@@ -688,8 +701,6 @@ void update(int value) {
     //Tell GLUT to call update again in 25 milliseconds
     glutTimerFunc(25, update, 0);
 }
-
-
 int main(int argc, char** argv) {
     //Initialize GLUT
     glutInit(&argc, argv);
@@ -700,6 +711,9 @@ int main(int argc, char** argv) {
     //Create the window
     glutCreateWindow("Super Mario");
     initRendering();
+
+
+    //PlaySound("sounds/background.wav", NULL, SND_LOOP | SND_ASYNC);
 
     //Set handler functions
     glutDisplayFunc(drawScene);
