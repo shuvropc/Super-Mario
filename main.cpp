@@ -43,7 +43,11 @@ GLuint _textureScoreBlock;
 GLuint _textureMario;
 GLuint _textureHill;
 GLuint _textureBlock;
+GLuint _textureCloud;
 
+
+//Cloud Property
+float cloudPositionX=4.0;
 
 
 //Makes the image into a texture, and returns the id of the texture
@@ -64,9 +68,7 @@ GLuint loadTexture(Image* image) {
 	return textureId; //Returns the id of the texture
 }
 
-
-void drawHill(){
-
+void enableTexture(GLuint textureName){
 
     GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
@@ -77,16 +79,20 @@ void drawHill(){
 	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
 
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureHill);
+	glBindTexture(GL_TEXTURE_2D, textureName);
 
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glColor3f(1.0f, 1.0f, 1.0f);
 
+}
 
+void drawCloud(){
 
-    glPushMatrix();
+        enableTexture(_textureCloud);
+
+        glPushMatrix();
 
 
 
@@ -121,21 +127,7 @@ void drawBlock(int length){
 float translateFloorX=0.0;
 
 
-    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
-
-	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
-	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureBlock);
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(1.0f, 1.0f, 1.0f);
+    enableTexture(_textureBlock);
 
 
     for(int i=0;i<length;i++){
@@ -176,6 +168,85 @@ float translateFloorX=0.0;
 
      glDisable(GL_TEXTURE_2D);
 
+}
+
+void drawObstacleBlockByMyDefinedFunc(int length){
+
+    glPushMatrix();
+
+              float x=2.0;
+              float y=-1.0;
+
+              for(int i=length;i>0;i--){
+
+                    glPushMatrix();
+                        glTranslatef(x, y, 0);
+                        drawBlock(i);
+                    glPopMatrix();
+
+                     x+=0.5;
+                     y+=0.55;
+              }
+
+    glPopMatrix();
+
+    glPushMatrix();
+
+      glTranslatef(length*2,0.0,0.0);
+      glRotatef(180,0.0,1.0,0.0);
+
+              x=2.0;
+              y=-1.0;
+
+              for(int i=length;i>0;i--){
+
+                    glPushMatrix();
+                        glTranslatef(x, y, 0);
+                        drawBlock(i);
+                    glPopMatrix();
+
+                     x+=0.5;
+                     y+=0.55;
+              }
+
+    glPopMatrix();
+
+
+}
+
+void drawHill(){
+
+
+    enableTexture(_textureHill);
+
+    glPushMatrix();
+
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, 0, 0);
+
+
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(3, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(3.0, 1.0, 0);
+
+
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, 1, 0);
+
+
+        glEnd();
+
+   glDisable(GL_TEXTURE_2D);
+
+
+    glPopMatrix();
 }
 
 void moveRight(){
@@ -219,21 +290,7 @@ void drawFloor(int length){
     float translateFloorX=0.0;
 
 
-    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
-
-	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
-	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureFloor);
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(1.0f, 1.0f, 1.0f);
+    enableTexture(_textureFloor);
 
 
     for(int i=0;i<length;i++){
@@ -273,22 +330,7 @@ void drawBrick(int length){
 
     float translateFloorX=0.0;
 
-
-    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
-
-	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
-	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureBrick);
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(1.0f, 1.0f, 1.0f);
+    enableTexture(_textureBrick);
 
 
     for(int i=0;i<length;i++){
@@ -404,22 +446,7 @@ void drawScoreBrick(int length){
 void drawMario(){
 
 
-    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
-
-	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
-	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureMario);
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(1.0f, 1.0f, 1.0f);
-
+    enableTexture(_textureMario);
 
 
     glPushMatrix();
@@ -534,6 +561,12 @@ void initRendering() {
 	_textureBlock = loadTexture(image6);
 	delete image6;
 
+
+	Image* image7 = loadBMP("images/cloud.bmp");
+	_textureCloud = loadTexture(image7);
+	delete image7;
+
+
 }
 
 //Called when the window is resized
@@ -560,16 +593,14 @@ void drawScene() {
 
 
 
-
-
     glPushMatrix();
         drawMario();
     glPopMatrix();
 
-
+//draw floor
     glPushMatrix();
     glTranslatef(0, -3, 0);
-        drawFloor(40);
+        drawFloor(30);
     glPopMatrix();
 
 
@@ -618,26 +649,27 @@ void drawScene() {
 
 
 
+    //block draw
 
     glPushMatrix();
-        glTranslatef(2, -1, 0);
-        drawBlock(5);
-    glPopMatrix();
-
-   glPushMatrix();
-        glTranslatef(2.5, -0.45, 0);
-        drawBlock(4);
-    glPopMatrix();
-
-      glPushMatrix();
-        glTranslatef(3.0, -0.1, 0);
-        drawBlock(3);
+        glTranslatef(25.5, -1.5, 0);
+        drawObstacleBlockByMyDefinedFunc(5);
     glPopMatrix();
 
 
-      glPushMatrix();
-        glTranslatef(3.5, 0.55, 0);
-        drawBlock(2);
+
+
+    //draw floor
+    glPushMatrix();
+    glTranslatef(31, -3, 0);
+        drawFloor(10);
+    glPopMatrix();
+
+
+    //draw cloud
+    glPushMatrix();
+        glTranslatef(cloudPositionX, 2, 0);
+        drawCloud();
     glPopMatrix();
 
 
@@ -648,7 +680,6 @@ void update(int value) {
 
 
     jumpMario();
-
 
 
 
@@ -667,7 +698,7 @@ int main(int argc, char** argv) {
     glutInitWindowPosition(200,100);
 
     //Create the window
-    glutCreateWindow("Transformations");
+    glutCreateWindow("Super Mario");
     initRendering();
 
     //Set handler functions
