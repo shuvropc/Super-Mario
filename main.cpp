@@ -1251,7 +1251,6 @@ void update(int value) {
 
     cloudPositionX -= 0.02f;
 
-    std::cout<<cloudPositionX<<std::endl;
 
     if(cloudPositionX < -100.0f)
     {

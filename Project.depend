@@ -59,3 +59,24 @@
 	<GL/glut.h>
 	"imageloader.h"
 
+1523794607 source:d:\github\super-mario\imageloader.cpp
+	<assert.h>
+	<fstream>
+	"imageloader.h"
+
+1523794607 d:\github\super-mario\imageloader.h
+
+1523827359 source:d:\github\super-mario\main.cpp
+	<iostream>
+	<stdlib.h>
+	<math.h>
+	<GL/GLUT.h>
+	<stdlib.h>
+	<time.h>
+	<windows.h>
+	<MMsystem.h>
+	<OpenGL/OpenGL.h>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	"imageloader.h"
+
