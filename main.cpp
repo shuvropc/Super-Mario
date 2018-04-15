@@ -967,7 +967,7 @@ if(key=='d'){
 glutPostRedisplay();
 }
 
- void handleKeypressUp(unsigned char key, int x, int y) {
+void handleKeypressUp(unsigned char key, int x, int y) {
 
 if(key=='w' || key==' '){
        enableSound("jump");
@@ -1194,7 +1194,6 @@ void drawScene() {
 
     //drawenemy
 
-
         glPushMatrix();
                     glTranslatef(17, -2.5, 0);
                     drawEnemy();
@@ -1215,6 +1214,7 @@ void update(int value) {
     //Tell GLUT to call update again in 25 milliseconds
     glutTimerFunc(25, update, 0);
 }
+
 int main(int argc, char** argv) {
     //Initialize GLUT
     glutInit(&argc, argv);
