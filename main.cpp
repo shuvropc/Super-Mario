@@ -52,6 +52,7 @@ GLuint _textureHill;
 GLuint _textureBlock;
 GLuint _textureCloud;
 GLuint _textureCylinder;
+GLuint _textureEnemy;
 
 
 //Cloud Property
@@ -95,6 +96,39 @@ void enableTexture(GLuint textureName){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glColor3f(1.0f, 1.0f, 1.0f);
 
+}
+
+void drawEnemy(){
+            enableTexture(_textureEnemy);
+
+        glPushMatrix();
+
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, 0, 0);
+
+
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.5, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.5, 0.5, 0);
+
+
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, 0.5, 0);
+
+
+        glEnd();
+
+   glDisable(GL_TEXTURE_2D);
+
+
+    glPopMatrix();
 }
 
 void drawCylinder(){
@@ -1009,6 +1043,12 @@ void initRendering() {
 	_textureCylinder = loadTexture(image8);
 	delete image8;
 
+	Image* image9 = loadBMP("images/enemy.bmp");
+	_textureEnemy = loadTexture(image9);
+	delete image9;
+
+
+
 }
 
 //Called when the window is resized
@@ -1148,6 +1188,17 @@ void drawScene() {
                 glPopMatrix();
 
     glPopMatrix();
+
+
+
+
+    //drawenemy
+
+
+        glPushMatrix();
+                    glTranslatef(17, -2.5, 0);
+                    drawEnemy();
+        glPopMatrix();
 
     glutSwapBuffers();
 }
