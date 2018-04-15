@@ -31,12 +31,16 @@ float _cameraAngle = 0.0;
 float cameraX=-5.52;
 
 
+
+
 //Mario Property
 float marioPositionX=3;
-float marioPositionY=-2.5;
+float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
 bool marioDirectionRight=true;
+bool moveRight, moveLeft = false;
+bool keyarr[4];
 
 
 //texture variables
@@ -47,10 +51,12 @@ GLuint _textureMario;
 GLuint _textureHill;
 GLuint _textureBlock;
 GLuint _textureCloud;
+GLuint _textureCylinder;
 
 
 //Cloud Property
 float cloudPositionX=4.0;
+
 
 
 //Makes the image into a texture, and returns the id of the texture
@@ -71,16 +77,6 @@ GLuint loadTexture(Image* image) {
 	return textureId; //Returns the id of the texture
 }
 
-void enableSound(string state){
-
-
-    if(state=="jump"){
-     PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
-
-    }
-
-}
-
 void enableTexture(GLuint textureName){
 
     GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
@@ -98,6 +94,50 @@ void enableTexture(GLuint textureName){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glColor3f(1.0f, 1.0f, 1.0f);
+
+}
+
+void drawCylinder(){
+
+        enableTexture(_textureCylinder);
+
+        glPushMatrix();
+
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, 0, 0);
+
+
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(1, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(1, 2.0, 0);
+
+
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, 2, 0);
+
+
+        glEnd();
+
+   glDisable(GL_TEXTURE_2D);
+
+
+    glPopMatrix();
+}
+
+void enableSound(string state){
+
+
+    if(state=="jump"){
+     PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
+
+    }
 
 }
 
@@ -262,16 +302,17 @@ void drawHill(){
     glPopMatrix();
 }
 
-void moveRight(){
-          marioPositionX +=0.04f;
-         cameraX -=0.04f;
-}
-
-void moveLeft(){
+void moveMario(){
+    if(moveRight == true){
+          marioPositionX +=0.1f;
+         cameraX -=0.1f;
+    }
+    else if(moveLeft == true){
             if(marioPositionX>2.8){
-                marioPositionX -=0.04f;
-                cameraX +=0.04f;
+                marioPositionX -=0.1f;
+                cameraX +=0.1f;
             }
+    }
 }
 
 void drawFloor(int length){
@@ -479,6 +520,375 @@ void drawMario(){
     glPopMatrix();
 }
 
+void drawMarioNew(){
+
+
+    glPushMatrix();
+
+
+        if(marioDirectionRight==false){
+            glTranslatef(marioPositionX-0.5, marioPositionY, 0);
+            glRotatef(180,0.0,1.0,0.0);
+        }else{
+             glTranslatef(marioPositionX-1.0, marioPositionY, 0);
+            glRotatef(0,0.0,0.0,0.0);
+        }
+
+
+
+        glBegin(GL_POLYGON);
+
+        glBegin(GL_POLYGON);
+glColor3f(0.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.41, 0.90, 0.0);
+glVertex3f(0.41, 0.93, 0.0);
+glVertex3f(0.26, 0.93, 0.0);
+glVertex3f(0.26, 0.90, 0.0);
+glVertex3f(0.23, 0.90, 0.0);
+glVertex3f(0.23, 0.87, 0.0);
+glVertex3f(0.50, 0.87, 0.0);
+glVertex3f(0.50, 0.90, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.23, 0.87, 0.0);
+glVertex3f(0.32, 0.87, 0.0);
+glVertex3f(0.32, 0.84, 0.0);
+glVertex3f(0.23, 0.84, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.29, 0.81, 0.0);
+glVertex3f(0.29, 0.84, 0.0);
+glVertex3f(0.26, 0.84, 0.0);
+glVertex3f(0.26, 0.78, 0.0);
+glVertex3f(0.32, 0.78, 0.0);
+glVertex3f(0.32, 0.81, 0.0);
+
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.32, 0.84, 0.0);
+glVertex3f(0.29, 0.84, 0.0);
+glVertex3f(0.29, 0.81, 0.0);
+glVertex3f(0.32, 0.81, 0.0);
+glVertex3f(0.32, 0.72, 0.0);
+glVertex3f(0.38, 0.72, 0.0);
+glVertex3f(0.38, 0.87, 0.0);
+glVertex3f(0.32, 0.87, 0.0);
+
+
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.26, 0.84, 0.0);
+glVertex3f(0.23, 0.84, 0.0);
+glVertex3f(0.23, 0.78, 0.0);
+glVertex3f(0.26, 0.78, 0.0);
+
+
+
+glEnd();
+
+
+glBegin(GL_POLYGON);
+glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.23, 0.84, 0.0);
+glVertex3f(0.20, 0.84, 0.0);
+glVertex3f(0.20, 0.78, 0.0);
+glVertex3f(0.23, 0.78, 0.0);
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.23, 0.78, 0.0);
+glVertex3f(0.26, 0.78, 0.0);
+glVertex3f(0.26, 0.75, 0.0);
+glVertex3f(0.23, 0.75, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.26, 0.78, 0.0);
+glVertex3f(0.32, 0.78, 0.0);
+glVertex3f(0.32, 0.72, 0.0);
+glVertex3f(0.26, 0.72, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.41, 0.81, 0.0);
+glVertex3f(0.41, 0.87, 0.0);
+glVertex3f(0.38, 0.87, 0.0);
+glVertex3f(0.38, 0.81, 0.0);
+glVertex3f(0.44, 0.81, 0.0);
+glVertex3f(0.44, 0.78, 0.0);
+glVertex3f(0.41, 0.78, 0.0);
+
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.41, 0.81, 0.0);
+glVertex3f(0.38, 0.81, 0.0);
+glVertex3f(0.38, 0.78, 0.0);
+glVertex3f(0.41, 0.78, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.44, 0.84, 0.0);
+glVertex3f(0.44, 0.87, 0.0);
+glVertex3f(0.41, 0.87, 0.0);
+glVertex3f(0.41, 0.81, 0.0);
+glVertex3f(0.44, 0.81, 0.0);
+glVertex3f(0.44, 0.78, 0.0);
+glVertex3f(0.50, 0.78, 0.0);
+glVertex3f(0.50, 0.84, 0.0);
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.50, 0.81, 0.0);
+glVertex3f(0.50, 0.78, 0.0);
+glVertex3f(0.53, 0.78, 0.0);
+glVertex3f(0.53, 0.81, 0.0);
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.38, 0.75, 0.0);
+glVertex3f(0.50, 0.75, 0.0);
+glVertex3f(0.50, 0.78, 0.0);
+glVertex3f(0.38, 0.78, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.38, 0.75, 0.0);
+glVertex3f(0.38, 0.72, 0.0);
+glVertex3f(0.44, 0.72, 0.0);
+glVertex3f(0.44, 0.75, 0.0);
+
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.26, 0.63, 0.0);
+glVertex3f(0.29, 0.63, 0.0);
+glVertex3f(0.29, 0.72, 0.0);
+glVertex3f(0.23, 0.72, 0.0);
+glVertex3f(0.23, 0.69, 0.0);
+glVertex3f(0.20, 0.69, 0.0);
+glVertex3f(0.20, 0.66, 0.0);
+glVertex3f(0.17, 0.66, 0.0);
+glVertex3f(0.17, 0.63, 0.0);
+glVertex3f(0.23, 0.63, 0.0);
+glVertex3f(0.23, 0.60, 0.0);
+glVertex3f(0.26, 0.60, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.0, 0.0, 1.0);//(R,G,B)
+
+glVertex3f(0.32, 0.63, 0.0);
+glVertex3f(0.32, 0.72, 0.0);
+glVertex3f(0.29, 0.72, 0.0);
+glVertex3f(0.29, 0.63, 0.0);
+glVertex3f(0.32, 0.63, 0.0);
+glVertex3f(0.32, 0.54, 0.0);
+glVertex3f(0.38, 0.54, 0.0);
+glVertex3f(0.38, 0.66, 0.0);
+glVertex3f(0.32, 0.66, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.0, 0.0, 1.0);//(R,G,B)
+
+glVertex3f(0.38, 0.63, 0.0);
+glVertex3f(0.41, 0.63, 0.0);
+glVertex3f(0.41, 0.72, 0.0);
+glVertex3f(0.38, 0.72, 0.0);
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.32, 0.66, 0.0);
+glVertex3f(0.32, 0.72, 0.0);
+glVertex3f(0.38, 0.72, 0.0);
+glVertex3f(0.38, 0.66, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.44, 0.63, 0.0);
+glVertex3f(0.41, 0.63, 0.0);
+glVertex3f(0.41, 0.72, 0.0);
+glVertex3f(0.47, 0.72, 0.0);
+glVertex3f(0.47, 0.69, 0.0);
+glVertex3f(0.50, 0.69, 0.0);
+glVertex3f(0.50, 0.66, 0.0);
+glVertex3f(0.53, 0.66, 0.0);
+glVertex3f(0.53, 0.63, 0.0);
+glVertex3f(0.47, 0.63, 0.0);
+glVertex3f(0.47, 0.60, 0.0);
+glVertex3f(0.44, 0.60, 0.0);
+
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.41, 0.63, 0.0);
+glVertex3f(0.38, 0.63, 0.0);
+glVertex3f(0.38, 0.60, 0.0);
+glVertex3f(0.41, 0.60, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.32, 0.63, 0.0);
+glVertex3f(0.29, 0.63, 0.0);
+glVertex3f(0.29, 0.60, 0.0);
+glVertex3f(0.32, 0.60, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.0, 0.0, 1.0);//(R,G,B)
+
+glVertex3f(0.44, 0.57, 0.0);
+glVertex3f(0.44, 0.63, 0.0);
+glVertex3f(0.41, 0.63, 0.0);
+glVertex3f(0.41, 0.60, 0.0);
+glVertex3f(0.38, 0.60, 0.0);
+glVertex3f(0.38, 0.51, 0.0);
+glVertex3f(0.47, 0.51, 0.0);
+glVertex3f(0.47, 0.57, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.0, 0.0, 1.0);//(R,G,B)
+
+glVertex3f(0.26, 0.57, 0.0);
+glVertex3f(0.26, 0.63, 0.0);
+glVertex3f(0.29, 0.63, 0.0);
+glVertex3f(0.29, 0.60, 0.0);
+glVertex3f(0.32, 0.60, 0.0);
+glVertex3f(0.32, 0.51, 0.0);
+glVertex3f(0.23, 0.51, 0.0);
+glVertex3f(0.23, 0.57, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.23, 0.60, 0.0);
+glVertex3f(0.23, 0.63, 0.0);
+glVertex3f(0.17, 0.63, 0.0);
+glVertex3f(0.17, 0.54, 0.0);
+glVertex3f(0.23, 0.54, 0.0);
+glVertex3f(0.23, 0.57, 0.0);
+glVertex3f(0.26, 0.57, 0.0);
+glVertex3f(0.26, 0.60, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+
+glVertex3f(0.47, 0.60, 0.0);
+glVertex3f(0.47, 0.63, 0.0);
+glVertex3f(0.53, 0.63, 0.0);
+glVertex3f(0.53, 0.54, 0.0);
+glVertex3f(0.47, 0.54, 0.0);
+glVertex3f(0.47, 0.57, 0.0);
+glVertex3f(0.44, 0.57, 0.0);
+glVertex3f(0.44, 0.60, 0.0);
+
+glEnd();
+
+glBegin(GL_POLYGON);
+glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.20, 0.48, 0.0);
+glVertex3f(0.20, 0.51, 0.0);
+glVertex3f(0.29, 0.51, 0.0);
+glVertex3f(0.29, 0.45, 0.0);
+glVertex3f(0.17, 0.45, 0.0);
+glVertex3f(0.17, 0.48, 0.0);
+
+
+glEnd();
+
+
+glBegin(GL_POLYGON);
+glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+
+glVertex3f(0.50, 0.48, 0.0);
+glVertex3f(0.50, 0.51, 0.0);
+glVertex3f(0.41, 0.51, 0.0);
+glVertex3f(0.41, 0.45, 0.0);
+glVertex3f(0.53, 0.45, 0.0);
+glVertex3f(0.53, 0.48, 0.0);
+
+        glEnd();
+
+
+    glPopMatrix();
+}
+
 void jumpMario(){
 
 
@@ -493,7 +903,7 @@ void jumpMario(){
         }
         else if(jumpTopReached==true){
 
-            if(marioPositionY>-2.5){
+            if(marioPositionY>-2.95){
                 marioPositionY-= .2f;
             }
             else{
@@ -507,27 +917,40 @@ void jumpMario(){
 
 void handleKeypress(unsigned char key, int x, int y) {
 
-	switch (key) {
-
-case 'w':
-case ' ':
+if(key=='w' || key==' '){
        enableSound("jump");
       jumpMarioKeyPressed=true;
-      break;
-case 'd':
+}
+if(key=='d'){
        marioDirectionRight=true;
-       moveRight();
-      break;
- case 'a':
+       moveRight = true;
+}
+ if(key=='a'){
         marioDirectionRight=false;
-        moveLeft();
-      break;
+        moveLeft = true;
+ }
+
+glutPostRedisplay();
+}
+
+ void handleKeypressUp(unsigned char key, int x, int y) {
+
+if(key=='w' || key==' '){
+       enableSound("jump");
+}
+if(key=='d'){
+       marioDirectionRight=true;
+       moveRight = false;
+}
+ if(key=='a'){
+        marioDirectionRight=false;
+        moveLeft = false;
+ }
+
 
 
 glutPostRedisplay();
 
-
-	}
 }
 
 //Initializes 3D rendering
@@ -582,6 +1005,10 @@ void initRendering() {
 	delete image7;
 
 
+	Image* image8 = loadBMP("images/cylinder.bmp");
+	_textureCylinder = loadTexture(image8);
+	delete image8;
+
 }
 
 //Called when the window is resized
@@ -609,7 +1036,7 @@ void drawScene() {
 
 
     glPushMatrix();
-        drawMario();
+        drawMarioNew();
     glPopMatrix();
 
 //draw floor
@@ -677,7 +1104,7 @@ void drawScene() {
     //draw floor
     glPushMatrix();
     glTranslatef(31, -3, 0);
-        drawFloor(10);
+        drawFloor(25);
     glPopMatrix();
 
 
@@ -687,6 +1114,40 @@ void drawScene() {
         drawCloud();
     glPopMatrix();
 
+        //draw Cylinder
+    glPushMatrix();
+        glTranslatef(40, -3, 0);
+        drawCylinder();
+    glPopMatrix();
+
+
+
+    //draw score brick group
+    glPushMatrix();
+    glTranslatef(46, 0, 0);
+
+                glPushMatrix();
+                    glTranslatef(0, -0.9, 0);
+                    drawScoreBrick(1);
+                glPopMatrix();
+
+                glPushMatrix();
+                    glTranslatef(1.5, -0.9, 0);
+                    drawScoreBrick(1);
+                glPopMatrix();
+
+                   glPushMatrix();
+                    glTranslatef(3, -0.9, 0);
+                    drawScoreBrick(1);
+                glPopMatrix();
+
+
+                 glPushMatrix();
+                    glTranslatef(1.5, 0.8, 0);
+                    drawScoreBrick(1);
+                glPopMatrix();
+
+    glPopMatrix();
 
     glutSwapBuffers();
 }
@@ -694,6 +1155,8 @@ void drawScene() {
 void update(int value) {
 
     jumpMario();
+
+    moveMario();
 
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
@@ -721,6 +1184,7 @@ int main(int argc, char** argv) {
     glutReshapeFunc(handleResize);
 
     glutKeyboardFunc(handleKeypress);
+    glutKeyboardUpFunc(handleKeypressUp);
 
     glutTimerFunc(25, update, 0); //Add a timer
 
