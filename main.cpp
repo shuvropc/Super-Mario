@@ -52,6 +52,7 @@ GLuint _textureHill;
 GLuint _textureBlock;
 GLuint _textureCloud;
 GLuint _textureCylinder;
+GLuint _textureEnemy;
 
 
 //Cloud Property
@@ -95,6 +96,39 @@ void enableTexture(GLuint textureName){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glColor3f(1.0f, 1.0f, 1.0f);
 
+}
+
+void drawEnemy(){
+            enableTexture(_textureEnemy);
+
+        glPushMatrix();
+
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, 0, 0);
+
+
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.5, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.5, 0.5, 0);
+
+
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, 0.5, 0);
+
+
+        glEnd();
+
+   glDisable(GL_TEXTURE_2D);
+
+
+    glPopMatrix();
 }
 
 void drawCylinder(){
@@ -173,6 +207,47 @@ void drawCloud(){
 
 
     glPopMatrix();
+}
+
+
+void drawCloud(int length){
+
+    float translateCloudX=0.0f;
+
+        enableTexture(_textureCloud);
+
+        for(int i=0;i<length;i++){
+
+            glPushMatrix();
+
+            glTranslatef(translateCloudX, 0, 0);
+
+            glBegin(GL_POLYGON);
+                glTexCoord2f(0.0f, 0.0f);
+                glVertex3f(0, 0, 0);
+
+
+
+                glTexCoord2f(1.0f, 0.0f);
+                glVertex3f(3, 0, 0);
+
+                glTexCoord2f(1.0f, 1.0f);
+                glVertex3f(3.0, 1.0, 0);
+
+
+
+                glTexCoord2f(0.0f, 1.0f);
+                glVertex3f(0, 1, 0);
+
+
+            glEnd();
+        glPopMatrix();
+
+        translateCloudX += 10.0f;
+        }
+
+
+        glDisable(GL_TEXTURE_2D);
 }
 
 void drawBlock(int length){
@@ -933,7 +1008,7 @@ if(key=='d'){
 glutPostRedisplay();
 }
 
- void handleKeypressUp(unsigned char key, int x, int y) {
+void handleKeypressUp(unsigned char key, int x, int y) {
 
 if(key=='w' || key==' '){
        enableSound("jump");
@@ -1008,6 +1083,12 @@ void initRendering() {
 	Image* image8 = loadBMP("images/cylinder.bmp");
 	_textureCylinder = loadTexture(image8);
 	delete image8;
+
+	Image* image9 = loadBMP("images/enemy.bmp");
+	_textureEnemy = loadTexture(image9);
+	delete image9;
+
+
 
 }
 
@@ -1111,7 +1192,7 @@ void drawScene() {
     //draw cloud
     glPushMatrix();
         glTranslatef(cloudPositionX, 2, 0);
-        drawCloud();
+        drawCloud(100);
     glPopMatrix();
 
         //draw Cylinder
@@ -1149,6 +1230,16 @@ void drawScene() {
 
     glPopMatrix();
 
+
+
+
+    //drawenemy
+
+        glPushMatrix();
+                    glTranslatef(17, -2.5, 0);
+                    drawEnemy();
+        glPopMatrix();
+
     glutSwapBuffers();
 }
 
@@ -1158,12 +1249,22 @@ void update(int value) {
 
     moveMario();
 
+    cloudPositionX -= 0.02f;
+
+    std::cout<<cloudPositionX<<std::endl;
+
+    if(cloudPositionX < -100.0f)
+    {
+        cloudPositionX = 4.0f;
+    }
+
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
 
     //Tell GLUT to call update again in 25 milliseconds
     glutTimerFunc(25, update, 0);
 }
+
 int main(int argc, char** argv) {
     //Initialize GLUT
     glutInit(&argc, argv);
