@@ -209,6 +209,47 @@ void drawCloud(){
     glPopMatrix();
 }
 
+
+void drawCloud(int length){
+
+    float translateCloudX=0.0f;
+
+        enableTexture(_textureCloud);
+
+        for(int i=0;i<length;i++){
+
+            glPushMatrix();
+
+            glTranslatef(translateCloudX, 0, 0);
+
+            glBegin(GL_POLYGON);
+                glTexCoord2f(0.0f, 0.0f);
+                glVertex3f(0, 0, 0);
+
+
+
+                glTexCoord2f(1.0f, 0.0f);
+                glVertex3f(3, 0, 0);
+
+                glTexCoord2f(1.0f, 1.0f);
+                glVertex3f(3.0, 1.0, 0);
+
+
+
+                glTexCoord2f(0.0f, 1.0f);
+                glVertex3f(0, 1, 0);
+
+
+            glEnd();
+        glPopMatrix();
+
+        translateCloudX += 10.0f;
+        }
+
+
+        glDisable(GL_TEXTURE_2D);
+}
+
 void drawBlock(int length){
 
 float translateFloorX=0.0;
@@ -1151,7 +1192,7 @@ void drawScene() {
     //draw cloud
     glPushMatrix();
         glTranslatef(cloudPositionX, 2, 0);
-        drawCloud();
+        drawCloud(100);
     glPopMatrix();
 
         //draw Cylinder
@@ -1207,6 +1248,14 @@ void update(int value) {
     jumpMario();
 
     moveMario();
+
+    cloudPositionX -= 0.02f;
+
+
+    if(cloudPositionX < -100.0f)
+    {
+        cloudPositionX = 4.0f;
+    }
 
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
