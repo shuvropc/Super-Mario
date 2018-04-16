@@ -33,8 +33,10 @@ float cameraX=-5.52;
 
 
 
+
+
 //Mario Property
-float marioPositionX=3;
+float marioPositionX=4;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
@@ -53,6 +55,8 @@ GLuint _textureBlock;
 GLuint _textureCloud;
 GLuint _textureCylinder;
 GLuint _textureEnemy;
+GLuint _textureCastle;
+
 
 
 //Cloud Property
@@ -95,6 +99,41 @@ void enableTexture(GLuint textureName){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glColor3f(1.0f, 1.0f, 1.0f);
+
+}
+
+void deawCastle(){
+
+                enableTexture(_textureCastle);
+
+        glPushMatrix();
+
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, 0, 0);
+
+
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(3, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(3, 3, 0);
+
+
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, 3, 0);
+
+
+        glEnd();
+
+   glDisable(GL_TEXTURE_2D);
+
+
+    glPopMatrix();
 
 }
 
@@ -208,7 +247,6 @@ void drawCloud(){
 
     glPopMatrix();
 }
-
 
 void drawCloud(int length){
 
@@ -378,12 +416,13 @@ void drawHill(){
 }
 
 void moveMario(){
-    if(moveRight == true){
-          marioPositionX +=0.1f;
+    if(moveRight == true && marioPositionX<60.1 && marioPositionX>2){
+         marioPositionX +=0.1f;
          cameraX -=0.1f;
+         cout<<marioPositionX<<endl;
     }
     else if(moveLeft == true){
-            if(marioPositionX>2.8){
+            if(marioPositionX>4){
                 marioPositionX -=0.1f;
                 cameraX +=0.1f;
             }
@@ -1090,6 +1129,12 @@ void initRendering() {
 
 
 
+	Image* image10 = loadBMP("images/castle.bmp");
+	_textureCastle = loadTexture(image10);
+	delete image10;
+
+
+
 }
 
 //Called when the window is resized
@@ -1123,7 +1168,7 @@ void drawScene() {
 //draw floor
     glPushMatrix();
     glTranslatef(0, -3, 0);
-        drawFloor(30);
+        drawFloor(38);
     glPopMatrix();
 
 
@@ -1185,7 +1230,7 @@ void drawScene() {
     //draw floor
     glPushMatrix();
     glTranslatef(31, -3, 0);
-        drawFloor(25);
+        drawFloor(35);
     glPopMatrix();
 
 
@@ -1239,6 +1284,17 @@ void drawScene() {
                     glTranslatef(17, -2.5, 0);
                     drawEnemy();
         glPopMatrix();
+
+
+
+
+    //drawCastle
+       glPushMatrix();
+                    glTranslatef(58, -2.5, 0);
+                    deawCastle();
+       glPopMatrix();
+
+
 
     glutSwapBuffers();
 }
