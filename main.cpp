@@ -32,9 +32,6 @@ float cameraX=-5.52;
 
 
 
-
-
-
 //Mario Property
 float marioPositionX=4;
 float marioPositionY=-2.95;
@@ -61,6 +58,14 @@ GLuint _textureCastle;
 
 //Cloud Property
 float cloudPositionX=4.0;
+
+
+
+//collision information
+
+int bottomCollision[32];
+int topCollision[32];
+
 
 
 
@@ -208,6 +213,7 @@ void enableSound(string state){
 
 
     if(state=="jump"){
+
      PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
 
     }
@@ -419,7 +425,8 @@ void moveMario(){
     if(moveRight == true && marioPositionX<60.1 && marioPositionX>2){
          marioPositionX +=0.1f;
          cameraX -=0.1f;
-         cout<<marioPositionX<<endl;
+         cout<<"Mario X: "<<marioPositionX;
+         cout<<" Mario Y: "<<marioPositionY<<endl;
     }
     else if(moveLeft == true){
             if(marioPositionX>4){
@@ -1026,6 +1033,9 @@ void jumpMario(){
             }
         }
      }
+
+         cout<<"Mario X: "<<marioPositionX;
+         cout<<" Mario Y: "<<marioPositionY<<endl;
 
 }
 
