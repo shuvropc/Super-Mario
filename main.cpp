@@ -20,6 +20,8 @@
 
 #include "imageloader.h"
 
+
+
 using namespace std;
 
 
@@ -55,18 +57,34 @@ GLuint _textureEnemy;
 GLuint _textureCastle;
 
 
+//location store
+
+bool storeLocation = true;
 
 //Cloud Property
 float cloudPositionX=4.0;
 
 
-
 //collision information
 
-int bottomCollision[32];
-int topCollision[32];
+int bottomAreaAssignCount=0;
 
 
+float  bottomCollisionArea[100][5];
+
+//float  bottomCollisionArea[2][4]={{5.0,-0.5,5.5,-0.5},{6.0,-0.5,6.5,-0.5}};
+
+
+//collision property
+
+bool marioCollisionOccured = false;
+bool jumpBottomCollisionOccured = false;
+bool jumpBottomCollisionOccuredCoin = false;
+
+
+//coin collision
+float collisionedCoinX;
+float collisionedCoinY;
 
 
 //Makes the image into a texture, and returns the id of the texture
@@ -85,6 +103,17 @@ GLuint loadTexture(Image* image) {
 				                   //as unsigned numbers
 				 image->pixels);               //The actual pixel data
 	return textureId; //Returns the id of the texture
+}
+
+
+
+void storeObjectPosition(float x, float y, int noOfObjects, int type){
+    bottomCollisionArea[bottomAreaAssignCount][0]=x;
+    bottomCollisionArea[bottomAreaAssignCount][1]=y;
+    bottomCollisionArea[bottomAreaAssignCount][2]=x+0.5*noOfObjects;
+    bottomCollisionArea[bottomAreaAssignCount][3]=y;
+    bottomCollisionArea[bottomAreaAssignCount][4]=type;
+    bottomAreaAssignCount++;
 }
 
 void enableTexture(GLuint textureName){
@@ -107,10 +136,144 @@ void enableTexture(GLuint textureName){
 
 }
 
-void deawCastle(){
+void drawScoreBrick(float x, float y, int length){
 
-                enableTexture(_textureCastle);
+     float translateFloorX=0.0;
 
+       enableTexture(_textureScoreBlock);
+
+      time_t seconds;
+      seconds = time (NULL);
+
+      if(seconds%2==0){
+        glColor3f(1.0f, 1.0f, 1.0f);
+      }
+      else{
+        glColor3f(0.0f, 1.0f, 0.0f);
+      }
+
+
+
+      if(storeLocation){
+         storeObjectPosition(x,y,length,1);
+      }
+
+
+  glPushMatrix();
+  glTranslatef(x,y,0);
+
+    for(int i=0;i<length;i++){
+
+    glPushMatrix();
+
+       //glColor3f(1, 0, 0);
+
+        float brickSize = 0.5;
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(translateFloorX, 0, 0);
+
+            translateFloorX+=0.5;
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(translateFloorX, 0, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(translateFloorX, 0.5, 0);
+
+            translateFloorX-=0.5;
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(translateFloorX, 0.5, 0);
+
+             translateFloorX+=0.5;
+
+        glEnd();
+
+
+
+    glPopMatrix();
+
+     }
+    glPopMatrix();
+
+     glDisable(GL_TEXTURE_2D);
+}
+
+void enableSound(string state){
+
+
+    if(state=="jump"){
+        PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
+       }
+
+     if(state=="collite"){
+        PlaySound("sounds/collite.wav", NULL, NULL | SND_ASYNC);
+    }
+
+     if(state=="coin"){
+        PlaySound("sounds/coin.wav", NULL, NULL | SND_ASYNC);
+    }
+
+}
+
+void colliteMario(float x, float y){
+
+    if(jumpBottomCollisionOccured){
+       enableSound("collite");
+       jumpBottomCollisionOccured=false;
+    }
+    else if(jumpBottomCollisionOccuredCoin){
+        enableSound("coin");
+        jumpBottomCollisionOccuredCoin=false;
+
+    }
+
+
+      if(marioPositionY>-2.95){
+           marioPositionY-= .2f;
+       }else{
+         marioCollisionOccured=false;
+         jumpMarioKeyPressed=false;
+       }
+
+}
+
+void detectCollision(){
+
+ for(int i = 0; i < 50; i++)
+    {
+        //for(int j = 0; j < 4; j++){
+
+            if(marioPositionX>=bottomCollisionArea[i][0]+0.5 && marioPositionX<=bottomCollisionArea[i][2]+0.75){
+                if(marioPositionY>=bottomCollisionArea[i][1]-1 && marioPositionY<bottomCollisionArea[i][1]){
+                    if(bottomCollisionArea[i][4]==0){
+                         marioCollisionOccured=true;
+                         jumpBottomCollisionOccured=true;
+                    }else{
+                         marioCollisionOccured=true;
+                         jumpBottomCollisionOccuredCoin=true;
+                         collisionedCoinX=bottomCollisionArea[i][0];
+                         collisionedCoinY=bottomCollisionArea[i][1];
+                    }
+                 }
+                 else if(marioPositionY>bottomCollisionArea[i][1]){
+                    marioPositionY=bottomCollisionArea[i][1];
+                 }
+
+            }
+
+
+        //}
+    }
+
+}
+
+void drawCastle(){
+
+        enableTexture(_textureCastle);
         glPushMatrix();
 
 
@@ -135,9 +298,7 @@ void deawCastle(){
 
         glEnd();
 
-   glDisable(GL_TEXTURE_2D);
-
-
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 
 }
@@ -207,17 +368,6 @@ void drawCylinder(){
 
 
     glPopMatrix();
-}
-
-void enableSound(string state){
-
-
-    if(state=="jump"){
-
-     PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
-
-    }
-
 }
 
 void drawCloud(){
@@ -425,8 +575,6 @@ void moveMario(){
     if(moveRight == true && marioPositionX<60.1 && marioPositionX>2){
          marioPositionX +=0.1f;
          cameraX -=0.1f;
-         cout<<"Mario X: "<<marioPositionX;
-         cout<<" Mario Y: "<<marioPositionY<<endl;
     }
     else if(moveLeft == true){
             if(marioPositionX>4){
@@ -476,7 +624,7 @@ void drawFloor(int length){
      glDisable(GL_TEXTURE_2D);
 }
 
-void drawBrick(int length){
+void drawOldBrick(int length){
 
 
     float translateFloorX=0.0;
@@ -518,42 +666,25 @@ void drawBrick(int length){
 
     glPopMatrix();
 
+
      }
 
      glDisable(GL_TEXTURE_2D);
 }
 
-void drawScoreBrick(int length){
+void drawBrick(float x, float y, int length){
+
+      if(storeLocation){
+         storeObjectPosition(x,y,length,0);
+      }
+
 
     float translateFloorX=0.0;
 
+    enableTexture(_textureBrick);
 
-    GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
-
-	GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
-	GLfloat directedLightPos[] = {-10.0f, 15.0f, 20.0f, 0.0f};
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureScoreBlock);
-
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-      time_t seconds;
-      seconds = time (NULL);
-
-      if(seconds%2==0){
-        glColor3f(1.0f, 1.0f, 1.0f);
-      }
-      else{
-        glColor3f(0.0f, 1.0f, 0.0f);
-      }
-
+  glPushMatrix();
+  glTranslatef(x,y,0);
 
     for(int i=0;i<length;i++){
 
@@ -585,11 +716,10 @@ void drawScoreBrick(int length){
 
         glEnd();
 
-
-
     glPopMatrix();
+}
+     glPopMatrix();
 
-     }
 
      glDisable(GL_TEXTURE_2D);
 }
@@ -601,8 +731,6 @@ void drawMario(){
 
 
     glPushMatrix();
-
-
 
 
         if(marioDirectionRight==false){
@@ -1034,8 +1162,6 @@ void jumpMario(){
         }
      }
 
-         cout<<"Mario X: "<<marioPositionX;
-         cout<<" Mario Y: "<<marioPositionY<<endl;
 
 }
 
@@ -1043,7 +1169,7 @@ void handleKeypress(unsigned char key, int x, int y) {
 
 if(key=='w' || key==' '){
        enableSound("jump");
-      jumpMarioKeyPressed=true;
+       jumpMarioKeyPressed=true;
 }
 if(key=='d'){
        marioDirectionRight=true;
@@ -1060,7 +1186,7 @@ glutPostRedisplay();
 void handleKeypressUp(unsigned char key, int x, int y) {
 
 if(key=='w' || key==' '){
-       enableSound("jump");
+      // enableSound("jump");
 }
 if(key=='d'){
        marioDirectionRight=true;
@@ -1182,42 +1308,55 @@ void drawScene() {
     glPopMatrix();
 
 
+
+
+
 //firsst power
     glPushMatrix();
-    glTranslatef(5, -0.5, 0);
-        drawBrick(1);
+//    glTranslatef(5, -0.5, 0);
+//        drawBrick(1);
+    drawBrick(5,-0.5,1);
     glPopMatrix();
 
-     glPushMatrix();
-    glTranslatef(5.5, -0.5, 0);
-        drawScoreBrick(1);
-    glPopMatrix();
+
+
     glPushMatrix();
-    glTranslatef(6, -0.5, 0);
-        drawBrick(1);
+    //glTranslatef(5.5, -0.5, 0);
+        drawScoreBrick(5.5,-0.5,1);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+//    glTranslatef(6, -0.5, 0);
+//        drawBrick(1);
+  drawBrick(6,-0.5,1);
     glPopMatrix();
 
 
 
 //second power
-       glPushMatrix();
-    glTranslatef(11, -0.5, 0);
-        drawBrick(2);
+    glPushMatrix();
+    //    glTranslatef(11, -0.5, 0);
+    //        drawBrick(2);
+    drawBrick(11,-0.5,2);
     glPopMatrix();
 
         glPushMatrix();
-    glTranslatef(12, -0.5, 0);
-        drawScoreBrick(1);
+    //glTranslatef(12, -0.5, 0);
+        drawScoreBrick(12,-0.5,1);
     glPopMatrix();
 
       glPushMatrix();
-    glTranslatef(12.5, -0.5, 0);
-        drawBrick(2);
+//    glTranslatef(12.5, -0.5, 0);
+//        drawBrick(2);
+
+    drawBrick(12.5,-0.5,2);
     glPopMatrix();
 
     glPushMatrix();
-     glTranslatef(13, 0.5, 0);
-     drawScoreBrick(1);
+    // glTranslatef(13, 0.5, 0);
+     drawScoreBrick(13,1,1);
     glPopMatrix();
 
    glPushMatrix();
@@ -1259,31 +1398,29 @@ void drawScene() {
 
 
     //draw score brick group
-    glPushMatrix();
-    glTranslatef(46, 0, 0);
 
                 glPushMatrix();
-                    glTranslatef(0, -0.9, 0);
-                    drawScoreBrick(1);
+                    //glTranslatef(0, -0.9, 0);
+                    drawScoreBrick(46,-0.9,1);
                 glPopMatrix();
 
                 glPushMatrix();
-                    glTranslatef(1.5, -0.9, 0);
-                    drawScoreBrick(1);
+                  //glTranslatef(1.5, -0.9, 0);
+                    drawScoreBrick(47.5,-0.9,1);
                 glPopMatrix();
 
                    glPushMatrix();
-                    glTranslatef(3, -0.9, 0);
-                    drawScoreBrick(1);
+                    //glTranslatef(3, -0.9, 0);
+                    drawScoreBrick(49,-0.9,1);
                 glPopMatrix();
 
 
                  glPushMatrix();
-                    glTranslatef(1.5, 0.8, 0);
-                    drawScoreBrick(1);
+                    //glTranslatef(1.5, 0.8, 0);
+                    drawScoreBrick(47.5,0.8,1);
                 glPopMatrix();
 
-    glPopMatrix();
+    //glPopMatrix();
 
 
 
@@ -1301,19 +1438,30 @@ void drawScene() {
     //drawCastle
        glPushMatrix();
                     glTranslatef(58, -2.5, 0);
-                    deawCastle();
+                    drawCastle();
        glPopMatrix();
 
 
 
-    glutSwapBuffers();
+   storeLocation = false;
+   glutSwapBuffers();
 }
 
 void update(int value) {
 
-    jumpMario();
 
     moveMario();
+
+
+    if(marioCollisionOccured==true){
+         colliteMario(0,0);
+    }else{
+         jumpMario();
+    }
+
+
+    detectCollision();
+
 
     cloudPositionX -= 0.02f;
 
@@ -1355,7 +1503,6 @@ int main(int argc, char** argv) {
     glutTimerFunc(25, update, 0); //Add a timer
 
     glutMainLoop();
-
 
 }
 
