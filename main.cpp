@@ -87,6 +87,12 @@ float collisionedCoinX;
 float collisionedCoinY;
 
 
+//goomba animation variables
+float animateLegScaleX = 0.0;
+float animateLegScaleY = 0.0;
+bool legAnimationCycle = true;
+
+
 //Makes the image into a texture, and returns the id of the texture
 GLuint loadTexture(Image* image) {
 	GLuint textureId;
@@ -303,35 +309,870 @@ void drawCastle(){
 
 }
 
-void drawEnemy(){
-            enableTexture(_textureEnemy);
+//void drawEnemy(){
+//            enableTexture(_textureEnemy);
+//
+//        glPushMatrix();
+//
+//
+//
+//        glBegin(GL_POLYGON);
+//            glTexCoord2f(0.0f, 0.0f);
+//            glVertex3f(0, 0, 0);
+//
+//
+//
+//            glTexCoord2f(1.0f, 0.0f);
+//            glVertex3f(0.5, 0, 0);
+//
+//            glTexCoord2f(1.0f, 1.0f);
+//            glVertex3f(0.5, 0.5, 0);
+//
+//
+//
+//            glTexCoord2f(0.0f, 1.0f);
+//            glVertex3f(0, 0.5, 0);
+//
+//
+//        glEnd();
+//
+//   glDisable(GL_TEXTURE_2D);
+//
+//
+//    glPopMatrix();
+//}
 
-        glPushMatrix();
+
+void drawEnemy()
+{
+glPushMatrix();
 
 
+	glPushMatrix(); //Save the transformations performed thus far
 
-        glBegin(GL_POLYGON);
-            glTexCoord2f(0.0f, 0.0f);
-            glVertex3f(0, 0, 0);
+    glTranslatef(0.0, 0.7, 0.0);
+    glScalef(2.0, 1.0, 1.0);
 
+    glBegin(GL_POLYGON); //HEAD1
 
+    glColor3ub(105, 45, 40);
 
-            glTexCoord2f(1.0f, 0.0f);
-            glVertex3f(0.5, 0, 0);
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
 
-            glTexCoord2f(1.0f, 1.0f);
-            glVertex3f(0.5, 0.5, 0);
+    glEnd();
 
+    glPopMatrix(); //Undo the move to the center of the triangle
 
+    glPushMatrix(); //Save the transformations performed thus far
 
-            glTexCoord2f(0.0f, 1.0f);
-            glVertex3f(0, 0.5, 0);
+    glTranslatef(0.0, 0.6, 0.0);
+    glScalef(3.0, 1.0, 1.0);
 
+    glBegin(GL_POLYGON); //Head 2
 
-        glEnd();
+    glColor3ub(105, 45, 40);
 
-   glDisable(GL_TEXTURE_2D);
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
 
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, 0.5, 0.0);
+    glScalef(4.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 3
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, 0.4, 0.0);
+    glScalef(5.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 4
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, 0.3, 0.0);
+    glScalef(3.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 5
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.55, 0.3, 0.0);
+    glScalef(0.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 5 Right
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.55, 0.3, 0.0);
+    glScalef(0.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 5 Left
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.4, 0.3, 0.0);
+    glScalef(1.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 5 Brow Left
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.4, 0.3, 0.0);
+    glScalef(1.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 5 Brow Right
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, 0.2, 0.0);
+    glScalef(2.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(105, 45, 40); //Head 6
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.55, 0.2, 0.0);
+    glScalef(1.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 6 Right
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.55, 0.2, 0.0);
+    glScalef(1.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 6 Left
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, 0.1, 0.0);
+    glScalef(2.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); // Head 7
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.55, 0.1, 0.0);
+    glScalef(1.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 7 Right
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.55, 0.1, 0.0);
+    glScalef(1.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 7 Left
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, 0.0, 0.0);
+    glScalef(1.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(105, 45, 40); //Head 8
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.6, 0.0, 0.0);
+    glScalef(2.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 8 right
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.6, 0.0, 0.0);
+    glScalef(2.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 8 Left
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.25, 0.0, 0.0);
+    glScalef(0.5, 3, 1.0);
+
+    glBegin(GL_POLYGON); //Eye Pupil Left
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.25, 0.0, 0.0);
+    glScalef(0.5, 3, 1.0);
+
+    glBegin(GL_POLYGON); // Eye Pupil Right
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.15, 0.0, 0.0);
+    glScalef(0.5, 2, 1.0);
+
+    glBegin(GL_POLYGON); // Head 8 Eye White Left
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.15, 0.0, 0.0);
+    glScalef(0.5, 2, 1.0);
+
+    glBegin(GL_POLYGON); // Head 8 Eye white right
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, -0.1, 0.0);
+    glScalef(1.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 9
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.6, -0.1, 0.0);
+    glScalef(2.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 9 Right
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.6, -0.1, 0.0);
+    glScalef(2.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //Head 9 Left
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.35, -0.1, 0.0);
+    glScalef(0.5, 4, 1.0);
+
+    glBegin(GL_POLYGON); //Head 9 Eye White vertical left
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.35, -0.1, 0.0);
+    glScalef(0.5, 4, 1.0);
+
+    glBegin(GL_POLYGON); //Head 9 Eye white vertical right
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.2, -0.1, 0.0);
+    glScalef(1.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //head 9 eye white horizontal left
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.2, -0.1, 0.0);
+    glScalef(1.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //head 9 eye white horizontal right
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, -0.2, 0.0);
+    glScalef(8.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //head 10
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, -0.3, 0.0);
+    glScalef(3.0, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //body 1
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix();
+
+    glTranslatef(-0.5, -0.3, 0.0);
+    glScalef(2, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //head 11 left
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix();
+
+    glPushMatrix();
+
+    glTranslatef(0.5, -0.3, 0.0);
+    glScalef(2, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //head 11 right
+
+    glColor3ub(105, 45, 40);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix();
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, -0.4, 0.0);
+    glScalef(4.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //body 2
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, -0.5, 0.0);
+    glScalef(4.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //body 3
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, -0.6, 0.0);
+    glScalef(3.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //body 4
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.0, -0.7, 0.0);
+    glScalef(1.5, 1.0, 1.0);
+
+    glBegin(GL_POLYGON); //body 5
+
+    glColor3ub(215, 185, 120);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //right leg animation matrix begin
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.5, -0.5, 0.0);
+    glScalef(1.0, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 1 right
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.45, -0.6, 0.0);
+    glScalef(2.5, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 2 right
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.4, -0.7, 0.0);
+    glScalef(3, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 3 right
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(0.35, -0.8, 0.0);
+    glScalef(2.5, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 4 right
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPopMatrix(); //Right Leg matrix end
+
+    glPushMatrix(); //Left leg animation matrix begin
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.5, -0.5, 0.0);
+    glScalef(1, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, -animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 1 left
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.45, -0.6, 0.0);
+    glScalef(2.5, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, -animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 2 left
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix();
+
+    glTranslatef(-0.4, -0.7, 0.0);
+    glScalef(3, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, -animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 3 left
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPushMatrix(); //Save the transformations performed thus far
+
+    glTranslatef(-0.35, -0.8, 0.0);
+    glScalef(2.5, 1.0, 1.0);
+    glTranslatef(animateLegScaleX, -animateLegScaleY, 0.0);
+
+    glBegin(GL_POLYGON); //leg 4 left
+
+    glColor3ub(0, 0, 0);
+
+    glVertex2f(-0.1, 0.0);
+    glVertex2f(0.1, 0.0);
+    glVertex2f(0.1, 0.1);
+    glVertex2f(-0.1, 0.1);
+
+    glEnd();
+
+    glPopMatrix(); //Undo the move to the center of the triangle
+
+    glPopMatrix(); // Left leg animation matrix end
 
     glPopMatrix();
 }
@@ -1428,7 +2269,8 @@ void drawScene() {
     //drawenemy
 
         glPushMatrix();
-                    glTranslatef(17, -2.5, 0);
+                    glTranslatef(17, -2.3, 0);
+                    glScalef(0.25, 0.25, 1.0);
                     drawEnemy();
         glPopMatrix();
 
@@ -1462,7 +2304,7 @@ void update(int value) {
 
     detectCollision();
 
-
+    //cloud animation begin
     cloudPositionX -= 0.02f;
 
 
@@ -1470,6 +2312,28 @@ void update(int value) {
     {
         cloudPositionX = 4.0f;
     }
+    //cloud animation end
+
+    //goomba animation begin
+	if (legAnimationCycle == true)
+    {
+        animateLegScaleX -= 0.01f;
+        animateLegScaleY -= 0.01f;
+        if (animateLegScaleX <= -0.05f)
+        {
+            legAnimationCycle = false;
+        }
+    }
+    else if (legAnimationCycle == false)
+    {
+        animateLegScaleX += 0.01f;
+        animateLegScaleY += 0.01f;
+        if (animateLegScaleX >= 0.05f)
+        {
+            legAnimationCycle = true;
+        }
+    }
+    //goomba animation end
 
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
