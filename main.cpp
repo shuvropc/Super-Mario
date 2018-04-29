@@ -85,6 +85,12 @@ bool jumpBottomCollisionOccuredCoin = false;
 //coin collision
 float collisionedCoinX;
 float collisionedCoinY;
+bool brickCollisionStatus[100]; // true for no collision, false for collision
+int brickLocation[100]; //brickLocation value comes from bottomAreaAssignCount
+int locationCounter = 0; //used as brickLocation array's counter
+int tempBrickCounter = 0; //a temp counter used while calling drawbrick. Will be reset each time drawScene finishs looping
+
+
 
 
 //goomba animation variables
@@ -112,14 +118,16 @@ GLuint loadTexture(Image* image) {
 }
 
 
-
-void storeObjectPosition(float x, float y, int noOfObjects, int type){
+int storeObjectPosition(float x, float y, int noOfObjects, int type){
     bottomCollisionArea[bottomAreaAssignCount][0]=x;
     bottomCollisionArea[bottomAreaAssignCount][1]=y;
     bottomCollisionArea[bottomAreaAssignCount][2]=x+0.5*noOfObjects;
     bottomCollisionArea[bottomAreaAssignCount][3]=y;
     bottomCollisionArea[bottomAreaAssignCount][4]=type;
+
+    int returnValue = bottomAreaAssignCount;
     bottomAreaAssignCount++;
+    return returnValue;
 }
 
 void enableTexture(GLuint textureName){
@@ -142,7 +150,7 @@ void enableTexture(GLuint textureName){
 
 }
 
-void drawScoreBrick(float x, float y, int length){
+void drawScoreBrick(float x, float y, int length, bool enabled){
 
      float translateFloorX=0.0;
 
@@ -151,17 +159,24 @@ void drawScoreBrick(float x, float y, int length){
       time_t seconds;
       seconds = time (NULL);
 
-      if(seconds%2==0){
-        glColor3f(1.0f, 1.0f, 1.0f);
-      }
-      else{
-        glColor3f(0.0f, 1.0f, 0.0f);
+      if(enabled)
+      {
+          if(seconds%2==0){
+            glColor3f(1.0f, 1.0f, 1.0f);
+          }
+          else{
+            glColor3f(0.0f, 1.0f, 0.0f);
+          }
       }
 
-
+      else
+      {
+          glColor3f(1.0f, 0.0f, 0.0f);
+      }
 
       if(storeLocation){
-         storeObjectPosition(x,y,length,1);
+         brickLocation[locationCounter] = storeObjectPosition(x,y,length,1);
+         locationCounter++;
       }
 
 
@@ -264,6 +279,14 @@ void detectCollision(){
                          collisionedCoinX=bottomCollisionArea[i][0];
                          collisionedCoinY=bottomCollisionArea[i][1];
                     }
+                     brickCollisionStatus[i] = false;
+                     cout << "Collision at brick number " << i << endl;
+                     cout << endl;
+                     for(int j=0; j<locationCounter;j++){
+                        cout << "brick location: " << brickLocation[j] << endl;
+                        cout << "brick collision status " << brickCollisionStatus[brickLocation[j]] << endl;
+                        cout << endl;
+                     }
                  }
                  else if(marioPositionY>bottomCollisionArea[i][1]){
                     marioPositionY=bottomCollisionArea[i][1];
@@ -1516,7 +1539,8 @@ void drawOldBrick(int length){
 void drawBrick(float x, float y, int length){
 
       if(storeLocation){
-         storeObjectPosition(x,y,length,0);
+         brickLocation[locationCounter] = storeObjectPosition(x,y,length,0);
+         locationCounter++;
       }
 
 
@@ -2044,6 +2068,12 @@ glutPostRedisplay();
 
 }
 
+void initValues()
+{
+    for(int i=0; i<100; i++)
+        {brickCollisionStatus[i] = true;};
+}
+
 //Initializes 3D rendering
 void initRendering() {
 
@@ -2158,13 +2188,24 @@ void drawScene() {
 //        drawBrick(1);
     drawBrick(5,-0.5,1);
     glPopMatrix();
+    tempBrickCounter++;
 
 
-
-    glPushMatrix();
-    //glTranslatef(5.5, -0.5, 0);
-        drawScoreBrick(5.5,-0.5,1);
-    glPopMatrix();
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(5.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(5.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
 
 
 
@@ -2173,6 +2214,7 @@ void drawScene() {
 //        drawBrick(1);
   drawBrick(6,-0.5,1);
     glPopMatrix();
+    tempBrickCounter++;
 
 
 
@@ -2182,11 +2224,25 @@ void drawScene() {
     //        drawBrick(2);
     drawBrick(11,-0.5,2);
     glPopMatrix();
+    tempBrickCounter++;
 
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
         glPushMatrix();
     //glTranslatef(12, -0.5, 0);
-        drawScoreBrick(12,-0.5,1);
-    glPopMatrix();
+        drawScoreBrick(12,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+    //glTranslatef(12, -0.5, 0);
+        drawScoreBrick(12,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+
 
       glPushMatrix();
 //    glTranslatef(12.5, -0.5, 0);
@@ -2194,11 +2250,25 @@ void drawScene() {
 
     drawBrick(12.5,-0.5,2);
     glPopMatrix();
+    tempBrickCounter++;
 
-    glPushMatrix();
-    // glTranslatef(13, 0.5, 0);
-     drawScoreBrick(13,1,1);
-    glPopMatrix();
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(13,1,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(13,1,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+
 
    glPushMatrix();
      glTranslatef(19, -2.5, 0);
@@ -2240,26 +2310,69 @@ void drawScene() {
 
     //draw score brick group
 
-                glPushMatrix();
-                    //glTranslatef(0, -0.9, 0);
-                    drawScoreBrick(46,-0.9,1);
-                glPopMatrix();
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+            //glTranslatef(0, -0.9, 0);
+            drawScoreBrick(46,-0.9,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+            //glTranslatef(0, -0.9, 0);
+            drawScoreBrick(46,-0.9,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
 
-                glPushMatrix();
-                  //glTranslatef(1.5, -0.9, 0);
-                    drawScoreBrick(47.5,-0.9,1);
-                glPopMatrix();
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+          //glTranslatef(1.5, -0.9, 0);
+            drawScoreBrick(47.5,-0.9,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+          //glTranslatef(1.5, -0.9, 0);
+            drawScoreBrick(47.5,-0.9,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
 
-                   glPushMatrix();
-                    //glTranslatef(3, -0.9, 0);
-                    drawScoreBrick(49,-0.9,1);
-                glPopMatrix();
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+            //glTranslatef(3, -0.9, 0);
+            drawScoreBrick(49,-0.9,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+            //glTranslatef(3, -0.9, 0);
+            drawScoreBrick(49,-0.9,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
 
-
-                 glPushMatrix();
-                    //glTranslatef(1.5, 0.8, 0);
-                    drawScoreBrick(47.5,0.8,1);
-                glPopMatrix();
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+            //glTranslatef(1.5, 0.8, 0);
+            drawScoreBrick(47.5,0.8,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+            //glTranslatef(1.5, 0.8, 0);
+            drawScoreBrick(47.5,0.8,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
 
     //glPopMatrix();
 
@@ -2286,6 +2399,7 @@ void drawScene() {
 
 
    storeLocation = false;
+   tempBrickCounter = 0;
    glutSwapBuffers();
 }
 
@@ -2351,6 +2465,7 @@ int main(int argc, char** argv) {
 
     //Create the window
     glutCreateWindow("Super Mario");
+    initValues();
     initRendering();
 
 
