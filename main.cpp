@@ -104,7 +104,7 @@ bool legAnimationCycle = true;
 
 //jump variables
 int jumpCounter = 0;
-
+bool onTheBrick = false;
 
 //enemy property
 
@@ -324,7 +324,7 @@ void fallFromTopIfNoObstacle(){
 
            if(countCol==0){
                jumpTopReached=true;
-               jumpCounter = 20;
+               //jumpCounter = 20;
                jumpMarioKeyPressed=true;
                //marioPositionY=-2.95;
                // countCol=0;
@@ -358,11 +358,17 @@ void detectCollision(){
                 }
 
 
-                 else if(marioPositionY>bottomCollisionArea[i][1]+1.0){
+                 else if(marioPositionY>bottomCollisionArea[i][1]){
+                        if(!onTheBrick)
+                        {
                             jumpCounter = 0;
                             jumpMarioKeyPressed=false;
-                             marioPositionY=bottomCollisionArea[i][1];
-//                            cout<<"On the brick: "<<marioPositionY<<endl;
+                            //jumpTopReached = false;
+                        }
+
+                             //marioPositionY=bottomCollisionArea[i][1];
+                             onTheBrick = true;
+                            cout<<"On the brick: "<<marioPositionY<<endl;
                     }
 
             }
@@ -2131,6 +2137,8 @@ void jumpMario(){
         {
             marioPositionY -= 0.2f;
             jumpCounter--;
+
+
             if(jumpCounter<=0)
             {
                 jumpTopReached = false;
@@ -2554,6 +2562,11 @@ void update(int value) {
          colliteMario(0,0);
     }else{
          jumpMario();
+    }
+
+    if(marioPositionY < -2)
+    {
+        onTheBrick = false;
     }
 
 
