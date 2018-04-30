@@ -102,6 +102,8 @@ float animateLegScaleX = 0.0;
 float animateLegScaleY = 0.0;
 bool legAnimationCycle = true;
 
+//jump variables
+int jumpCounter = 0;
 
 
 //enemy property
@@ -322,6 +324,7 @@ void fallFromTopIfNoObstacle(){
 
            if(countCol==0){
                jumpTopReached=true;
+               jumpCounter = 20;
                jumpMarioKeyPressed=true;
                //marioPositionY=-2.95;
                // countCol=0;
@@ -356,6 +359,7 @@ void detectCollision(){
 
 
                  else if(marioPositionY>bottomCollisionArea[i][1]+1.0){
+                            jumpCounter = 0;
                             jumpMarioKeyPressed=false;
                              marioPositionY=bottomCollisionArea[i][1];
 //                            cout<<"On the brick: "<<marioPositionY<<endl;
@@ -389,6 +393,7 @@ void colliteMario(float x, float y){
            //detectCollision();
        }else{
          marioCollisionOccured=false;
+         jumpCounter = 0;
          jumpMarioKeyPressed=false;
        }
 
@@ -2082,29 +2087,59 @@ glVertex3f(0.53, 0.48, 0.0);
     glPopMatrix();
 }
 
+//void jumpMario(){
+//
+//
+//    if(jumpMarioKeyPressed){
+//        if(jumpTopReached==false){
+//            if(marioPositionY<0.6){
+//                marioPositionY += .2f;
+//            }
+//            else{
+//                jumpTopReached = true;
+//            }
+//        }
+//        else if(jumpTopReached==true){
+//
+//            if(marioPositionY>-2.95){
+//                marioPositionY-= .2f;
+//            }
+//            else{
+//                jumpMarioKeyPressed = false;
+//                jumpTopReached=false;
+//            }
+//        }
+//     }
+//
+//
+//}
+
 void jumpMario(){
 
-
-    if(jumpMarioKeyPressed){
-        if(jumpTopReached==false){
-            if(marioPositionY<0.6){
-                marioPositionY += .2f;
-            }
-            else{
+    if(jumpMarioKeyPressed)
+    {
+        if(!jumpTopReached)
+        {
+            marioPositionY += 0.2f;
+            jumpCounter++;
+            if(jumpCounter>=15)
+            {
                 jumpTopReached = true;
             }
         }
-        else if(jumpTopReached==true){
-
-            if(marioPositionY>-2.95){
-                marioPositionY-= .2f;
-            }
-            else{
+        else if (jumpTopReached)
+        {
+            marioPositionY -= 0.2f;
+            jumpCounter--;
+            if(jumpCounter<=0)
+            {
+                jumpTopReached = false;
                 jumpMarioKeyPressed = false;
-                jumpTopReached=false;
             }
+
         }
-     }
+
+    }
 
 
 }
