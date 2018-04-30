@@ -117,6 +117,10 @@ float textX=-2.5;
 int score=0;
 
 
+//function declaration
+void jumpMario();
+
+
 //Makes the image into a texture, and returns the id of the texture
 GLuint loadTexture(Image* image) {
 	GLuint textureId;
@@ -324,10 +328,13 @@ void fallFromTopIfNoObstacle(){
 
            if(countCol==0){
                jumpTopReached=true;
-               //jumpCounter = 20;
+               jumpCounter = 15;
                jumpMarioKeyPressed=true;
                //marioPositionY=-2.95;
                // countCol=0;
+            }
+            if(countCol==500){
+                onTheBrick = false;
             }
 
 
@@ -358,17 +365,20 @@ void detectCollision(){
                 }
 
 
-                 else if(marioPositionY>bottomCollisionArea[i][1]){
-                        if(!onTheBrick)
+                 else if(marioPositionY>=bottomCollisionArea[i][1]){
+                        //cout << "marioPositionY: " << marioPositionY << " bottomCollisionArea: " << bottomCollisionArea[i][1] << endl;
+                        if((marioPositionY<=-0.15 && marioPositionY >=-0.35))
                         {
                             jumpCounter = 0;
+                            cout << "Line 365 in detect collision else if jumpcounter 0" << endl;
                             jumpMarioKeyPressed=false;
-                            //jumpTopReached = false;
+                            jumpTopReached = false;
                         }
 
                              //marioPositionY=bottomCollisionArea[i][1];
+
                              onTheBrick = true;
-                            cout<<"On the brick: "<<marioPositionY<<endl;
+                            //cout<<"On the brick: "<<marioPositionY<<endl;
                     }
 
             }
@@ -395,11 +405,15 @@ void colliteMario(float x, float y){
 
 
       if(marioPositionY>-2.95){
-           marioPositionY-= .2f;
+           //marioPositionY-= .2f;
            //detectCollision();
+           //cout << "line 400 in collite mario " << endl;
+           jumpTopReached = true;
+           jumpMario();
        }else{
          marioCollisionOccured=false;
          jumpCounter = 0;
+         cout << "Line 405 in collite mario jumpcounter 0" << endl;
          jumpMarioKeyPressed=false;
        }
 
@@ -2128,6 +2142,7 @@ void jumpMario(){
         {
             marioPositionY += 0.2f;
             jumpCounter++;
+            cout << "JUMP COUNTER UP: " << jumpCounter << endl;
             if(jumpCounter>=15)
             {
                 jumpTopReached = true;
@@ -2137,10 +2152,17 @@ void jumpMario(){
         {
             marioPositionY -= 0.2f;
             jumpCounter--;
-
+            cout << "JUMP COUNTER DOWN: " << jumpCounter << endl;
 
             if(jumpCounter<=0)
             {
+                cout << "Line 2146 in jumpmario jumpcounter 0 " << endl;
+                jumpTopReached = false;
+                jumpMarioKeyPressed = false;
+            }
+            else if (marioPositionY <= -2.95)
+            {
+                jumpCounter = 0;
                 jumpTopReached = false;
                 jumpMarioKeyPressed = false;
             }
