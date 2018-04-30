@@ -385,6 +385,7 @@ void detectCollision(){
                          collisionedCoinY=bottomCollisionArea[i][1];
                     }
                      brickCollisionStatus[i] = false;
+                     cout << "Collision of brick " << i << endl;
 
                 }
 
@@ -404,14 +405,15 @@ void detectCollision(){
 //                             onTheBrick = true;
 //                            //cout<<"On the brick: "<<marioPositionY<<endl;
 //                    }
-                    else if(marioPositionY<=-0.15 && marioPositionY >=-0.35){
+                    else if((marioPositionY<=-0.15 && marioPositionY >=-0.35)||(marioPositionY<=1.25 && marioPositionY >=1.05)){
                         //cout << "marioPositionY: " << marioPositionY << " bottomCollisionArea: " << bottomCollisionArea[i][1] << endl;
 
                             jumpCounter = 0;
-                            cout << "Line 365 in detect collision else if jumpcounter 0" << endl;
+
                             jumpMarioKeyPressed=false;
 
                             jumpTopReached = false;
+
 
 
                              //marioPositionY=bottomCollisionArea[i][1];
@@ -420,6 +422,11 @@ void detectCollision(){
                             //cout<<"On the brick: "<<marioPositionY<<endl;
 
                     }
+
+
+
+                    //cout << "Mario Position Y: " << marioPositionY << endl;
+
 
             }
 
@@ -447,14 +454,12 @@ void colliteMario(float x, float y){
       if(marioPositionY>-2.95 && !onTheBrick){
            //marioPositionY-= .2f;
            //detectCollision();
-           cout << "line 400 in collite mario " << endl;
            jumpTopReached = true;
            jumpMarioKeyPressed = true;
            jumpMario();
        }else{
          marioCollisionOccured=false;
          jumpCounter = 0;
-         cout << "Line 405 in collite mario jumpcounter 0" << endl;
          jumpMarioKeyPressed=false;
        }
 
@@ -2180,7 +2185,7 @@ void jumpMario(){
         {
             marioPositionY += 0.2f;
             jumpCounter++;
-            cout << "JUMP COUNTER UP: " << jumpCounter << endl;
+
             if(jumpCounter>=15)
             {
                 jumpTopReached = true;
@@ -2190,11 +2195,9 @@ void jumpMario(){
         {
             marioPositionY -= 0.2f;
             jumpCounter--;
-            cout << "JUMP COUNTER DOWN: " << jumpCounter << endl;
 
             if(jumpCounter<=0)
             {
-                cout << "Line 2146 in jumpmario jumpcounter 0 " << endl;
                 jumpTopReached = false;
                 jumpMarioKeyPressed = false;
             }
@@ -2646,6 +2649,20 @@ void drawScene() {
 
 void update(int value) {
 
+    if(onTheBrick)
+    {
+        cout << "Mario on the brick" << endl;
+    }
+    if(!onTheBrick)
+    {
+        cout << "Mario not on the brick" << endl;
+    }
+
+    if(marioPositionY >= -2.95 && jumpCounter==0 && !onTheBrick)
+    {
+        marioPositionY -= 0.2f;
+    }
+
 
     moveMario();
 
@@ -2656,7 +2673,7 @@ void update(int value) {
          jumpMario();
     }
 
-    if(marioPositionY < -2)
+    if(marioPositionY < -1.5)
     {
         onTheBrick = false;
     }
