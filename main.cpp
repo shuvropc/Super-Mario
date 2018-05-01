@@ -124,6 +124,7 @@ float bulletY=-0.8;
 bool bulletTouchedGround = false;
 
 //Fireflower Property
+bool enableFlowerCollision = false;
 bool flowerUsed = false;
 bool showFlower = false;
 float flowerPositionY = -0.5; //initial Y position of the brick which the flower is in
@@ -196,6 +197,16 @@ void enableSound(string state){
          if(state=="fire"){
         PlaySound("sounds/fire.wav", NULL, NULL | SND_ASYNC);
     }
+    if(state=="powerupappears")
+    {
+        PlaySound("sounds/powerupappears.wav", NULL, NULL | SND_ASYNC);
+    }
+
+    if(state=="powerup")
+    {
+        PlaySound("sounds/powerup.wav", NULL, NULL | SND_ASYNC);
+    }
+
 
 
 
@@ -272,12 +283,15 @@ for(int i=0; i<arrayLength;i++){
 
 void detectCollisionWithFireflower()
 {
-    float positionDifference = 25.3-marioPositionX;
-
-    if((positionDifference<-0.25 && positionDifference >- 1.0) && (marioPositionY >= -0.95 && marioPositionY <= 0.25))
+    if(enableFlowerCollision)
     {
-        cout << "Collision with flower" << endl;
-        flowerUsed = true;
+        float positionDifference = 25.3-marioPositionX;
+
+        if((positionDifference<-0.25 && positionDifference >- 1.0) && (marioPositionY >= -0.95 && marioPositionY <= 0.25))
+        {
+            enableSound("powerup");
+            flowerUsed = true;
+        }
     }
 }
 
@@ -2278,6 +2292,7 @@ void collisionEvents(int brickNumber)
     if(brickNumber == 7 && !flowerUsed)
     {
         showFlower = true;
+        enableSound("powerupappears");
     }
 }
 
@@ -2741,6 +2756,8 @@ void update(int value) {
     if(flowerUsed)
     {
         fireBulletAbility = true;
+        showFlower = false;
+        enableFlowerCollision = false;
     }
 
      bulletCollisionWithEnemy();
@@ -2835,10 +2852,10 @@ void update(int value) {
             flowerPositionY += 0.05f;
         }
     }
-    else if (flowerUsed)
+
+    if(flowerPositionY >= 0)
     {
-        flowerPositionY = -0.5f;
-        showFlower = false;
+        enableFlowerCollision = true;
     }
 
 
