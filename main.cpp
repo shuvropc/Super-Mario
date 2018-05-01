@@ -189,6 +189,24 @@ void drawFire(){
 
 }
 
+void bulletCollisionWithEnemy(){
+
+     float positionDifference = enemyX-bulletX;
+     float enemyMarioDifference = enemyX-marioPositionX;
+     cout<<enemyMarioDifference<<endl;
+
+
+        if(positionDifference<-0.25 && positionDifference>-1.0){
+                   if(enemyMarioDifference<10 && enemyMarioDifference>-10){
+                          enemyX=-50;
+                          enableSound("enemycollite");
+                          cout<<"Enemy died by Bullet"<<endl;
+                          fireBullet=false;
+                    }
+            }
+
+}
+
 void delectCollisionWithEnemy(){
 
 
@@ -2567,6 +2585,7 @@ void update(int value) {
 
     moveMario();
 
+    bulletCollisionWithEnemy();
 
     if(marioCollisionOccured==true){
          colliteMario(0,0);
@@ -2615,25 +2634,21 @@ void update(int value) {
 
 
 
-
         //bullet property change
           if(fireBullet){
-                if(bulletY>-0.8){
-                    bulletX+=0.15;
+                if(bulletY>=-1.0){
+                    bulletX+=0.2;
                     bulletY-=0.1;
-
-cout<<bulletY<<endl;
-
                 }
-                else if(bulletY<-0.8f){
-                    bulletX+=0.15;
+                else if(bulletY<=-0.8f){
+                    bulletX+=0.2;
                     bulletY+=0.1;
-
-cout<<bulletY<<endl;
-
-                }
+               }
 
           }
+
+
+
 
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
