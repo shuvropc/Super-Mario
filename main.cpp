@@ -109,8 +109,8 @@ bool legAnimationCycle = true;
 
 
 //enemy property
-float enemyX=20.0;
-
+//float enemyX=20.0;
+float emeneyPositionx[10]={10,15,20};
 
 
 //Fire Property
@@ -140,6 +140,20 @@ GLuint loadTexture(Image* image) {
 				                   //as unsigned numbers
 				 image->pixels);               //The actual pixel data
 	return textureId; //Returns the id of the texture
+}
+
+void generateRandomEnemy(){
+
+ srand (time(NULL));
+ int i=0;
+
+ while(i<3){
+     int  random = rand() % 30 + 10;
+     emeneyPositionx[i]=random;
+     i++;
+ }
+
+
 }
 
 void enableSound(string state){
@@ -191,14 +205,17 @@ void drawFire(){
 
 void bulletCollisionWithEnemy(){
 
-     float positionDifference = enemyX-bulletX;
-     float enemyMarioDifference = enemyX-marioPositionX;
-     cout<<enemyMarioDifference<<endl;
 
+int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
+
+for(int i=0; i<arrayLength;i++){
+
+     float positionDifference = emeneyPositionx[i]-bulletX;
+     float enemyMarioDifference = emeneyPositionx[i]-marioPositionX;
 
         if(positionDifference<-0.25 && positionDifference>-1.0){
                    if(enemyMarioDifference<10 && enemyMarioDifference>-10){
-                          enemyX=-50;
+                          emeneyPositionx[i]=-50;
                           enableSound("enemycollite");
                           cout<<"Enemy died by Bullet"<<endl;
                           fireBullet=false;
@@ -207,10 +224,16 @@ void bulletCollisionWithEnemy(){
 
 }
 
+}
+
 void delectCollisionWithEnemy(){
 
 
-    float positionDifference = enemyX-marioPositionX;
+int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
+
+for(int i=0; i<arrayLength;i++){
+
+    float positionDifference = emeneyPositionx[i]-marioPositionX;
 
     if(positionDifference<-0.25 && positionDifference>-1.0){
             if(marioPositionY<-2.95){
@@ -224,11 +247,13 @@ void delectCollisionWithEnemy(){
 
             }
             else if(marioPositionY<-2.5){
-                  enemyX=-50;
+                  emeneyPositionx[i]=-50;
                   enableSound("enemycollite");
                   cout<<"Enemy died"<<endl;
             }
     }
+}
+
 }
 
 int storeObjectPosition(float x, float y, int noOfObjects, int type){
@@ -2435,6 +2460,14 @@ void drawScene() {
     glPopMatrix();
 
 
+    glPushMatrix();
+         drawBrick(27,-0.5,2);
+    glPopMatrix();
+
+
+
+
+
 
     //block draw
 
@@ -2540,12 +2573,15 @@ void drawScene() {
 
     //drawenemy
 
+    int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
+
+    for(int i=0;i<arrayLength;i++){
         glPushMatrix();
-                    glTranslatef(enemyX, -2.3, 0);
+                    glTranslatef(emeneyPositionx[i], -2.3, 0);
                     glScalef(0.25, 0.25, 1.0);
                     drawEnemy();
         glPopMatrix();
-
+    }
 
 
 
@@ -2629,7 +2665,17 @@ void update(int value) {
     }
     //goomba animation end
 
-     enemyX-=0.02;
+    int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
+
+    for(int i=0;i<arrayLength;i++){
+             emeneyPositionx[i]-=0.02;
+    }
+
+
+
+
+
+
 //     textX+=marioPositionX;
 
 
@@ -2658,6 +2704,8 @@ void update(int value) {
 }
 
 int main(int argc, char** argv) {
+
+
     //Initialize GLUT
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
