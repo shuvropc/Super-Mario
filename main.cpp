@@ -2338,14 +2338,14 @@ void drawScene() {
     {
         glPushMatrix();
             //glTranslatef(0, -0.9, 0);
-            drawScoreBrick(46,-0.9,1,true);
+            drawScoreBrick(46,-0.5,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
             //glTranslatef(0, -0.9, 0);
-            drawScoreBrick(46,-0.9,1,false);
+            drawScoreBrick(46,-0.5,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
@@ -2354,14 +2354,14 @@ void drawScene() {
     {
         glPushMatrix();
           //glTranslatef(1.5, -0.9, 0);
-            drawScoreBrick(47.5,-0.9,1,true);
+            drawScoreBrick(47.5,-0.5,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
           //glTranslatef(1.5, -0.9, 0);
-            drawScoreBrick(47.5,-0.9,1,false);
+            drawScoreBrick(47.5,-0.5,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
@@ -2370,14 +2370,14 @@ void drawScene() {
     {
         glPushMatrix();
             //glTranslatef(3, -0.9, 0);
-            drawScoreBrick(49,-0.9,1,true);
+            drawScoreBrick(49,-0.5,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
             //glTranslatef(3, -0.9, 0);
-            drawScoreBrick(49,-0.9,1,false);
+            drawScoreBrick(49,-0.5,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
