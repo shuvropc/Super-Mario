@@ -105,9 +105,7 @@ float animateLegScaleX = 0.0;
 float animateLegScaleY = 0.0;
 bool legAnimationCycle = true;
 
-//jump variables
-int jumpCounter = 0;
-bool onTheBrick = false;
+
 
 
 //enemy property
@@ -124,10 +122,6 @@ bool bulletTouchedGround = false;
 
 //text property
 int score=0;
-
-
-//function declaration
-void jumpMario();
 
 
 //Makes the image into a texture, and returns the id of the texture
@@ -283,7 +277,7 @@ void drawScoreBrick(float x, float y, int length, bool enabled){
 
 
   glPushMatrix();
-  glTranslatef(x,y+0.1,0);
+  glTranslatef(x,y,0);
 
     for(int i=0;i<length;i++){
 
@@ -352,13 +346,9 @@ void fallFromTopIfNoObstacle(){
 
            if(countCol==0){
                jumpTopReached=true;
-               jumpCounter = 15;
                jumpMarioKeyPressed=true;
                //marioPositionY=-2.95;
                // countCol=0;
-            }
-            if(countCol==500){
-                onTheBrick = false;
             }
 
 
@@ -385,48 +375,15 @@ void detectCollision(){
                          collisionedCoinY=bottomCollisionArea[i][1];
                     }
                      brickCollisionStatus[i] = false;
-                     cout << "Collision of brick " << i << endl;
 
                 }
 
 
-//                 else if(marioPositionY>=bottomCollisionArea[i][1]){
-//                        //cout << "marioPositionY: " << marioPositionY << " bottomCollisionArea: " << bottomCollisionArea[i][1] << endl;
-//                        if((marioPositionY<=-0.15 && marioPositionY >=-0.35))
-//                        {
-//                            jumpCounter = 0;
-//                            cout << "Line 365 in detect collision else if jumpcounter 0" << endl;
-//                            jumpMarioKeyPressed=false;
-//                            jumpTopReached = false;
-//                        }
-//
-//                             //marioPositionY=bottomCollisionArea[i][1];
-//
-//                             onTheBrick = true;
-//                            //cout<<"On the brick: "<<marioPositionY<<endl;
-//                    }
-                    else if((marioPositionY<=-0.15 && marioPositionY >=-0.35)||(marioPositionY<=1.25 && marioPositionY >=1.05)){
-                        //cout << "marioPositionY: " << marioPositionY << " bottomCollisionArea: " << bottomCollisionArea[i][1] << endl;
-
-                            jumpCounter = 0;
-
+                 else if(marioPositionY>bottomCollisionArea[i][1]+1.0){
                             jumpMarioKeyPressed=false;
-
-                            jumpTopReached = false;
-
-
-
-                             //marioPositionY=bottomCollisionArea[i][1];
-
-                             onTheBrick = true;
-                            //cout<<"On the brick: "<<marioPositionY<<endl;
-
+                            marioPositionY=bottomCollisionArea[i][1];
+//                            cout<<"On the brick: "<<marioPositionY<<endl;
                     }
-
-
-
-                    //cout << "Mario Position Y: " << marioPositionY << endl;
-
 
             }
 
@@ -451,15 +408,11 @@ void colliteMario(float x, float y){
     }
 
 
-      if(marioPositionY>-2.95 && !onTheBrick){
-           //marioPositionY-= .2f;
+      if(marioPositionY>-2.95){
+           marioPositionY-= .2f;
            //detectCollision();
-           jumpTopReached = true;
-           jumpMarioKeyPressed = true;
-           jumpMario();
        }else{
          marioCollisionOccured=false;
-         jumpCounter = 0;
          jumpMarioKeyPressed=false;
        }
 
@@ -1696,7 +1649,7 @@ void drawBrick(float x, float y, int length){
     enableTexture(_textureBrick);
 
   glPushMatrix();
-  glTranslatef(x,y+0.1,0);
+  glTranslatef(x,y,0);
 
     for(int i=0;i<length;i++){
 
@@ -1746,7 +1699,7 @@ void drawMario(){
 
 
         if(marioDirectionRight==false){
-            glTranslatef(marioPositionX-1.0, marioPositionY, 0);
+            glTranslatef(marioPositionX-0.5, marioPositionY, 0);
             glRotatef(180,0.0,1.0,0.0);
         }else{
              glTranslatef(marioPositionX-1.0, marioPositionY, 0);
@@ -2150,67 +2103,29 @@ glVertex3f(0.53, 0.48, 0.0);
     glPopMatrix();
 }
 
-//void jumpMario(){
-//
-//
-//    if(jumpMarioKeyPressed){
-//        if(jumpTopReached==false){
-//            if(marioPositionY<0.6){
-//                marioPositionY += .2f;
-//            }
-//            else{
-//                jumpTopReached = true;
-//            }
-//        }
-//        else if(jumpTopReached==true){
-//
-//            if(marioPositionY>-2.95){
-//                marioPositionY-= .2f;
-//            }
-//            else{
-//                jumpMarioKeyPressed = false;
-//                jumpTopReached=false;
-//            }
-//        }
-//     }
-//
-//
-//}
-
 void jumpMario(){
 
-    if(jumpMarioKeyPressed)
-    {
-        if(!jumpTopReached)
-        {
-            marioPositionY += 0.2f;
-            jumpCounter++;
 
-            if(jumpCounter>=15)
-            {
+    if(jumpMarioKeyPressed){
+        if(jumpTopReached==false){
+            if(marioPositionY<0.6){
+                marioPositionY += .2f;
+            }
+            else{
                 jumpTopReached = true;
             }
         }
-        else if (jumpTopReached)
-        {
-            marioPositionY -= 0.2f;
-            jumpCounter--;
+        else if(jumpTopReached==true){
 
-            if(jumpCounter<=0)
-            {
-                jumpTopReached = false;
-                jumpMarioKeyPressed = false;
+            if(marioPositionY>-2.95){
+                marioPositionY-= .2f;
             }
-            else if (marioPositionY <= -2.95)
-            {
-                jumpCounter = 0;
-                jumpTopReached = false;
+            else{
                 jumpMarioKeyPressed = false;
+                jumpTopReached=false;
             }
-
         }
-
-    }
+     }
 
 
 }
@@ -2649,20 +2564,6 @@ void drawScene() {
 
 void update(int value) {
 
-    if(onTheBrick)
-    {
-        cout << "Mario on the brick" << endl;
-    }
-    if(!onTheBrick)
-    {
-        cout << "Mario not on the brick" << endl;
-    }
-
-    if(marioPositionY >= -2.95 && jumpCounter==0 && !onTheBrick)
-    {
-        marioPositionY -= 0.2f;
-    }
-
 
     moveMario();
 
@@ -2671,11 +2572,6 @@ void update(int value) {
          colliteMario(0,0);
     }else{
          jumpMario();
-    }
-
-    if(marioPositionY < -1.5)
-    {
-        onTheBrick = false;
     }
 
 
@@ -2758,7 +2654,7 @@ int main(int argc, char** argv) {
     initValues();
     initRendering();
 
-
+    //For continuous playing sound
     //PlaySound("sounds/background.wav", NULL, SND_LOOP | SND_ASYNC);
 
     //Set handler functions
