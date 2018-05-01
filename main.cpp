@@ -28,6 +28,7 @@ using namespace std;
 float _cameraAngle = 0.0;
 
 
+
 //cameraProperty
 //float cameraX=-5.52;
 float cameraX=-5.52;
@@ -70,7 +71,7 @@ float cloudPositionX=4.0;
 int bottomAreaAssignCount=0;
 
 
-float  bottomCollisionArea[100][5];
+float  bottomCollisionArea[500][5];
 
 //float  bottomCollisionArea[2][4]={{5.0,-0.5,5.5,-0.5},{6.0,-0.5,6.5,-0.5}};
 
@@ -92,11 +93,12 @@ int tempBrickCounter = 0; //a temp counter used while calling drawbrick. Will be
 
 
 
-
 //goomba animation variables
 float animateLegScaleX = 0.0;
 float animateLegScaleY = 0.0;
 bool legAnimationCycle = true;
+
+
 
 
 //Makes the image into a texture, and returns the id of the texture
@@ -116,7 +118,6 @@ GLuint loadTexture(Image* image) {
 				 image->pixels);               //The actual pixel data
 	return textureId; //Returns the id of the texture
 }
-
 
 int storeObjectPosition(float x, float y, int noOfObjects, int type){
     bottomCollisionArea[bottomAreaAssignCount][0]=x;
@@ -240,6 +241,82 @@ void enableSound(string state){
 
 }
 
+void fallFromTopIfNoObstacle(){
+
+
+    int countCol=0;
+
+     for(int i = 0; i < 50; i++){
+        //for(int j = 0; j < 4; j++){
+
+            if(marioPositionX>=bottomCollisionArea[i][0]+0.5 && marioPositionX<=bottomCollisionArea[i][2]+0.75){
+
+               if(marioPositionY==-0.5 || marioPositionY>-0.5){
+                    countCol++;
+               }
+            }
+
+
+             if(marioPositionY<-0.5 || jumpMarioKeyPressed==true){
+                countCol=500;
+             }
+
+
+            //cout<<countCol<<endl;
+
+    }
+
+           if(countCol==0){
+               jumpTopReached=true;
+               jumpMarioKeyPressed=true;
+               //marioPositionY=-2.95;
+               // countCol=0;
+            }
+
+
+}
+
+void detectCollision(){
+
+
+ for(int i = 0; i < 50; i++){
+        //for(int j = 0; j < 4; j++){
+
+            if(marioPositionX>=bottomCollisionArea[i][0]+0.5 && marioPositionX<=bottomCollisionArea[i][2]+0.75){
+
+                if(marioPositionY>=bottomCollisionArea[i][1]-1 && marioPositionY<bottomCollisionArea[i][1]){
+
+
+                    if(bottomCollisionArea[i][4]==0){
+                         marioCollisionOccured=true;
+                         jumpBottomCollisionOccured=true;
+                    }else{
+                         marioCollisionOccured=true;
+                         jumpBottomCollisionOccuredCoin=true;
+                         collisionedCoinX=bottomCollisionArea[i][0];
+                         collisionedCoinY=bottomCollisionArea[i][1];
+                    }
+                     brickCollisionStatus[i] = false;
+
+                }
+
+
+                 else if(marioPositionY>bottomCollisionArea[i][1]+1.0){
+                            jumpMarioKeyPressed=false;
+                             marioPositionY=bottomCollisionArea[i][1];
+//                            cout<<"On the brick: "<<marioPositionY<<endl;
+                    }
+
+            }
+
+
+    }
+
+    fallFromTopIfNoObstacle();
+
+
+}
+
 void colliteMario(float x, float y){
 
     if(jumpBottomCollisionOccured){
@@ -255,48 +332,11 @@ void colliteMario(float x, float y){
 
       if(marioPositionY>-2.95){
            marioPositionY-= .2f;
+           //detectCollision();
        }else{
          marioCollisionOccured=false;
          jumpMarioKeyPressed=false;
        }
-
-}
-
-void detectCollision(){
-
- for(int i = 0; i < 50; i++)
-    {
-        //for(int j = 0; j < 4; j++){
-
-            if(marioPositionX>=bottomCollisionArea[i][0]+0.5 && marioPositionX<=bottomCollisionArea[i][2]+0.75){
-                if(marioPositionY>=bottomCollisionArea[i][1]-1 && marioPositionY<bottomCollisionArea[i][1]){
-                    if(bottomCollisionArea[i][4]==0){
-                         marioCollisionOccured=true;
-                         jumpBottomCollisionOccured=true;
-                    }else{
-                         marioCollisionOccured=true;
-                         jumpBottomCollisionOccuredCoin=true;
-                         collisionedCoinX=bottomCollisionArea[i][0];
-                         collisionedCoinY=bottomCollisionArea[i][1];
-                    }
-                     brickCollisionStatus[i] = false;
-                     cout << "Collision at brick number " << i << endl;
-                     cout << endl;
-                     for(int j=0; j<locationCounter;j++){
-                        cout << "brick location: " << brickLocation[j] << endl;
-                        cout << "brick collision status " << brickCollisionStatus[brickLocation[j]] << endl;
-                        cout << endl;
-                     }
-                 }
-                 else if(marioPositionY>bottomCollisionArea[i][1]){
-                    marioPositionY=bottomCollisionArea[i][1];
-                 }
-
-            }
-
-
-        //}
-    }
 
 }
 
@@ -332,42 +372,8 @@ void drawCastle(){
 
 }
 
-//void drawEnemy(){
-//            enableTexture(_textureEnemy);
-//
-//        glPushMatrix();
-//
-//
-//
-//        glBegin(GL_POLYGON);
-//            glTexCoord2f(0.0f, 0.0f);
-//            glVertex3f(0, 0, 0);
-//
-//
-//
-//            glTexCoord2f(1.0f, 0.0f);
-//            glVertex3f(0.5, 0, 0);
-//
-//            glTexCoord2f(1.0f, 1.0f);
-//            glVertex3f(0.5, 0.5, 0);
-//
-//
-//
-//            glTexCoord2f(0.0f, 1.0f);
-//            glVertex3f(0, 0.5, 0);
-//
-//
-//        glEnd();
-//
-//   glDisable(GL_TEXTURE_2D);
-//
-//
-//    glPopMatrix();
-//}
+void drawEnemy(){
 
-
-void drawEnemy()
-{
 glPushMatrix();
 
 
@@ -1313,10 +1319,12 @@ void drawBlock(int length){
 float translateFloorX=0.0;
 
 
-    enableTexture(_textureBlock);
+    enableTexture(_textureBrick);
+
 
 
     for(int i=0;i<length;i++){
+
 
     glPushMatrix();
 
@@ -1356,7 +1364,10 @@ float translateFloorX=0.0;
 
 }
 
-void drawObstacleBlockByMyDefinedFunc(int length){
+void drawObstacleBlockByMyDefinedFunc(float xx, float yy, int length){
+
+    glPushMatrix();
+
 
     glPushMatrix();
 
@@ -1365,13 +1376,18 @@ void drawObstacleBlockByMyDefinedFunc(int length){
 
               for(int i=length;i>0;i--){
 
+
+
+
+
                     glPushMatrix();
                         glTranslatef(x, y, 0);
                         drawBlock(i);
                     glPopMatrix();
 
                      x+=0.5;
-                     y+=0.55;
+//                     y+=0.55;
+                     y+=0.5;
               }
 
     glPopMatrix();
@@ -1386,14 +1402,22 @@ void drawObstacleBlockByMyDefinedFunc(int length){
 
               for(int i=length;i>0;i--){
 
+
+
+
                     glPushMatrix();
                         glTranslatef(x, y, 0);
                         drawBlock(i);
                     glPopMatrix();
 
                      x+=0.5;
-                     y+=0.55;
+//                     y+=0.55;
+                     y+=0.5;
               }
+
+    glPopMatrix();
+
+
 
     glPopMatrix();
 
@@ -1446,6 +1470,7 @@ void moveMario(){
                 cameraX +=0.1f;
             }
     }
+
 }
 
 void drawFloor(int length){
@@ -2068,8 +2093,7 @@ glutPostRedisplay();
 
 }
 
-void initValues()
-{
+void initValues(){
     for(int i=0; i<100; i++)
         {brickCollisionStatus[i] = true;};
 }
@@ -2279,10 +2303,10 @@ void drawScene() {
 
     //block draw
 
-    glPushMatrix();
-        glTranslatef(25.5, -1.5, 0);
-        drawObstacleBlockByMyDefinedFunc(5);
-    glPopMatrix();
+//    glPushMatrix();
+//        glTranslatef(25.5, -1.5, 0);
+//        drawObstacleBlockByMyDefinedFunc(25.5,-1.5,5);
+//    glPopMatrix();
 
 
 
