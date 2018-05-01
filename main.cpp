@@ -91,6 +91,7 @@ bool jumpBottomCollisionOccuredCoin = false;
 
 
 //coin collision
+int currentCollisionBrick;
 float collisionedCoinX;
 float collisionedCoinY;
 bool brickCollisionStatus[100]; // true for no collision, false for collision
@@ -460,9 +461,11 @@ void detectCollision(){
                          collisionedCoinX=bottomCollisionArea[i][0];
                          collisionedCoinY=bottomCollisionArea[i][1];
                     }
-                     brickCollisionStatus[i] = false;
+                     //currentCollisionBrick = i;
                      cout << "Collision of brick " << i << endl;
+
                      collisionEvents(i);
+                     //brickCollisionStatus[i] = false;
 
                 }
 
@@ -517,15 +520,20 @@ void detectCollision(){
 
 void colliteMario(float x, float y){
 
-    if(jumpBottomCollisionOccured){
-       enableSound("collite");
-       jumpBottomCollisionOccured=false;
-    }
-    else if(jumpBottomCollisionOccuredCoin){
-        enableSound("coin");
-        jumpBottomCollisionOccuredCoin=false;
-
-    }
+//    if(jumpBottomCollisionOccured){
+//       enableSound("collite");
+//       jumpBottomCollisionOccured=false;
+//    }
+//    else if(jumpBottomCollisionOccuredCoin){
+//        cout << "Brick collision status of brck " << currentCollisionBrick << " is " << brickCollisionStatus[currentCollisionBrick] << endl;
+//        if(brickCollisionStatus[currentCollisionBrick]==true)
+//        {
+//            enableSound("coin");
+//            score += 100;
+//        }
+//
+//        jumpBottomCollisionOccuredCoin=false;
+//    }
 
 
       if(marioPositionY>-2.95 && !onTheBrick){
@@ -2293,6 +2301,23 @@ void collisionEvents(int brickNumber)
     {
         showFlower = true;
         enableSound("powerupappears");
+    }
+    if(brickNumber != 7)
+    {
+        if(jumpBottomCollisionOccuredCoin && brickCollisionStatus[brickNumber]==true)
+        {
+            enableSound("coin");
+            score += 100;
+            jumpBottomCollisionOccuredCoin=false;
+            brickCollisionStatus[brickNumber]=false;
+        }
+
+        else
+        {
+            enableSound("collite");
+            jumpBottomCollisionOccured=false;
+            jumpBottomCollisionOccuredCoin = false;
+        }
     }
 }
 
