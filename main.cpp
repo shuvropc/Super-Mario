@@ -217,7 +217,6 @@ for(int i=0; i<arrayLength;i++){
                    if(enemyMarioDifference<10 && enemyMarioDifference>-10){
                           emeneyPositionx[i]=-50;
                           enableSound("enemycollite");
-                          cout<<"Enemy died by Bullet"<<endl;
                           fireBullet=false;
                     }
             }
@@ -238,7 +237,6 @@ for(int i=0; i<arrayLength;i++){
     if(positionDifference<-0.25 && positionDifference>-1.0){
             if(marioPositionY<-2.95){
                   enableSound("mariodie");
-                  cout<<"Mario died"<<endl;
                   marioPositionY=-500;
                   Sleep(3000);
                   marioPositionX+=2;
@@ -249,7 +247,6 @@ for(int i=0; i<arrayLength;i++){
             else if(marioPositionY<-2.5){
                   emeneyPositionx[i]=-50;
                   enableSound("enemycollite");
-                  cout<<"Enemy died"<<endl;
             }
     }
 }
@@ -2460,9 +2457,9 @@ void drawScene() {
     glPopMatrix();
 
 
-    glPushMatrix();
-         drawBrick(27,-0.5,2);
-    glPopMatrix();
+//    glPushMatrix();
+//         drawBrick(27,-0.5,2);
+//    glPopMatrix();
 
 
 
