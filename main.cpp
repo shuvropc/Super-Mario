@@ -243,6 +243,8 @@ for(int i=0; i<arrayLength;i++){
                    if(enemyMarioDifference<10 && enemyMarioDifference>-10){
                           emeneyPositionx[i]=-50;
                           enableSound("enemycollite");
+                          score += 100;
+                          cout << "Score: " << score << endl;
                           cout<<"Enemy died by Bullet"<<endl;
                           fireBullet=false;
                     }
@@ -275,6 +277,8 @@ for(int i=0; i<arrayLength;i++){
             else if(marioPositionY<-2.5){
                   emeneyPositionx[i]=-50;
                   enableSound("enemycollite");
+                  score += 100;
+                  cout << "Score: " << score << endl;
                   cout<<"Enemy died"<<endl;
             }
     }
@@ -291,6 +295,8 @@ void detectCollisionWithFireflower()
         if((positionDifference<-0.25 && positionDifference >- 1.0) && (marioPositionY >= -0.95 && marioPositionY <= 0.25))
         {
             enableSound("powerup");
+            score += 1000;
+            cout << "Score: " << score << endl;
             flowerUsed = true;
         }
     }
@@ -2286,10 +2292,11 @@ void collisionEvents(int brickNumber)
     }
     if(brickNumber != 7)
     {
-        if(jumpBottomCollisionOccuredCoin && brickCollisionStatus[brickNumber]==true)
+        if(jumpBottomCollisionOccuredCoin && brickCollisionStatus[brickNumber]==true && (brickNumber == 1 || brickNumber == 4 || brickNumber == 6 || brickNumber == 8 || brickNumber == 9 || brickNumber == 10 || brickNumber == 11))
         {
             enableSound("coin");
             score += 100;
+            cout << "Score: " << score << endl;
             jumpBottomCollisionOccuredCoin=false;
             brickCollisionStatus[brickNumber]=false;
         }
