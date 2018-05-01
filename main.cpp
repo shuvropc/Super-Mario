@@ -520,28 +520,10 @@ void detectCollision(){
 
 void colliteMario(float x, float y){
 
-//    if(jumpBottomCollisionOccured){
-//       enableSound("collite");
-//       jumpBottomCollisionOccured=false;
-//    }
-//    else if(jumpBottomCollisionOccuredCoin){
-//        cout << "Brick collision status of brck " << currentCollisionBrick << " is " << brickCollisionStatus[currentCollisionBrick] << endl;
-//        if(brickCollisionStatus[currentCollisionBrick]==true)
-//        {
-//            enableSound("coin");
-//            score += 100;
-//        }
-//
-//        jumpBottomCollisionOccuredCoin=false;
-//    }
-
-
       if(marioPositionY>-2.95 && !onTheBrick){
-           //marioPositionY-= .2f;
-           //detectCollision();
            jumpTopReached = true;
            jumpMarioKeyPressed = true;
-           jumpMario();
+
        }else{
          marioCollisionOccured=false;
          jumpCounter = 0;
@@ -2790,9 +2772,10 @@ void update(int value) {
 
     if(marioCollisionOccured==true){
          colliteMario(0,0);
-    }else{
-         jumpMario();
     }
+
+    jumpMario();
+
 
     if(marioPositionY < -1.5)
     {
