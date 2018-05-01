@@ -3,12 +3,15 @@
 #include <math.h>
 #include <time.h>
 #include <ctime>
+#include <unistd.h>
+
 
 #include <GL/GLUT.h>
 
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <dos.h>
 
 #include <windows.h>
 #include <MMsystem.h>
@@ -104,14 +107,20 @@ bool legAnimationCycle = true;
 
 
 
+
 //enemy property
-
-
 float enemyX=20.0;
 
 
+
+//Fire Property
+
+bool fireBullet = false;
+float bulletX=0;
+float bulletY=-0.8;
+bool bulletTouchedGround = false;
+
 //text property
-float textX=-2.5;
 int score=0;
 
 
@@ -156,21 +165,29 @@ void enableSound(string state){
         PlaySound("sounds/mariodie.wav", NULL, NULL | SND_ASYNC);
     }
 
+         if(state=="fire"){
+        PlaySound("sounds/fire.wav", NULL, NULL | SND_ASYNC);
+    }
+
+
 
 }
 
-void printText(int x, int y,int z, char *string){
-//set the position of the text in the window using the x, y and z coordinates
-glRasterPos3f(x,y,z);
-//get the length of the string to display
-    int len = (int) strlen(string);
+void drawFire(){
 
-    //loop to display character by character
-    for (int i = 0; i < len; i++)
-    {
-    glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,string[i]);
-    }
-};
+        glPushMatrix();
+
+ glBegin(GL_POLYGON);
+        glColor3f(1,0,0);
+                glVertex3f(2,-1,0);
+                glVertex3f(2.15,-1,0);
+                glVertex3f(2.15,-1.15,0);
+                glVertex3f(2,-1.15,0);
+  glEnd();
+
+    glPopMatrix();
+
+}
 
 void delectCollisionWithEnemy(){
 
@@ -181,6 +198,12 @@ void delectCollisionWithEnemy(){
             if(marioPositionY<-2.95){
                   enableSound("mariodie");
                   cout<<"Mario died"<<endl;
+                  marioPositionY=-500;
+                  Sleep(3000);
+                  marioPositionX+=2;
+                  marioPositionY=-2.95;
+
+
             }
             else if(marioPositionY<-2.5){
                   enemyX=-50;
@@ -191,6 +214,7 @@ void delectCollisionWithEnemy(){
 }
 
 int storeObjectPosition(float x, float y, int noOfObjects, int type){
+
     bottomCollisionArea[bottomAreaAssignCount][0]=x;
     bottomCollisionArea[bottomAreaAssignCount][1]=y;
     bottomCollisionArea[bottomAreaAssignCount][2]=x+0.5*noOfObjects;
@@ -357,7 +381,7 @@ void detectCollision(){
 
                  else if(marioPositionY>bottomCollisionArea[i][1]+1.0){
                             jumpMarioKeyPressed=false;
-                             marioPositionY=bottomCollisionArea[i][1];
+                            marioPositionY=bottomCollisionArea[i][1];
 //                            cout<<"On the brick: "<<marioPositionY<<endl;
                     }
 
@@ -1431,9 +1455,6 @@ void drawObstacleBlockByMyDefinedFunc(float xx, float yy, int length){
               for(int i=length;i>0;i--){
 
 
-
-
-
                     glPushMatrix();
                         glTranslatef(x, y, 0);
                         drawBlock(i);
@@ -2111,42 +2132,60 @@ void jumpMario(){
 
 void handleKeypress(unsigned char key, int x, int y) {
 
-if(key=='w' || key==' '){
-       enableSound("jump");
-       jumpMarioKeyPressed=true;
-}
-if(key=='d'){
-       marioDirectionRight=true;
-       moveRight = true;
-}
- if(key=='a'){
-        marioDirectionRight=false;
-        moveLeft = true;
 
- }
+
+        if(key=='w' || key==' '){
+               enableSound("jump");
+               jumpMarioKeyPressed=true;
+        }
+        if(key=='d'){
+               marioDirectionRight=true;
+               moveRight = true;
+        }
+
+        if(key=='a'){
+                marioDirectionRight=false;
+                moveLeft = true;
+
+         }
+
+        if(key=='f'){
+               enableSound("fire");
+               fireBullet=true;
+               bulletX=marioPositionX-2.5;
+               bulletY=marioPositionY+1.65;
+         }
+
+
+
 
 glutPostRedisplay();
 }
 
 void handleKeypressUp(unsigned char key, int x, int y) {
 
-if(key=='w' || key==' '){
-      // enableSound("jump");
-}
-if(key=='d'){
-       marioDirectionRight=true;
-       moveRight = false;
-}
- if(key=='a'){
-        marioDirectionRight=false;
-        moveLeft = false;
- }
 
 
 
-glutPostRedisplay();
 
-}
+
+        if(key=='w' || key==' '){
+              // enableSound("jump");
+        }
+        if(key=='d'){
+               marioDirectionRight=true;
+               moveRight = false;
+        }
+         if(key=='a'){
+                marioDirectionRight=false;
+                moveLeft = false;
+         }
+
+
+
+        glutPostRedisplay();
+
+        }
 
 void initValues(){
     for(int i=0; i<100; i++)
@@ -2248,10 +2287,21 @@ void drawScene() {
 
 
 
+       //draw Fire
+
+         if(fireBullet==true){
+                glPushMatrix();
+                glTranslatef(bulletX,bulletY,0);
+                drawFire();
+                glPopMatrix();
+            }
+
+
+
     //draw score
   glPushMatrix();
 
-    printText(textX+marioPositionX,1.5,0,"Score: ");
+//    printText();
 
   glPopMatrix();
 
@@ -2504,6 +2554,9 @@ void drawScene() {
 
 
 
+
+
+
    storeLocation = false;
    tempBrickCounter = 0;
    glutSwapBuffers();
@@ -2560,6 +2613,29 @@ void update(int value) {
      enemyX-=0.02;
 //     textX+=marioPositionX;
 
+
+
+
+        //bullet property change
+          if(fireBullet){
+                if(bulletY>-0.8){
+                    bulletX+=0.15;
+                    bulletY-=0.1;
+
+cout<<bulletY<<endl;
+
+                }
+                else if(bulletY<-0.8f){
+                    bulletX+=0.15;
+                    bulletY+=0.1;
+
+cout<<bulletY<<endl;
+
+                }
+
+          }
+
+
     glutPostRedisplay(); //Tell GLUT that the display has changed
 
     //Tell GLUT to call update again in 25 milliseconds
@@ -2594,11 +2670,4 @@ int main(int argc, char** argv) {
     glutMainLoop();
 
 }
-
-
-
-
-
-
-
 
