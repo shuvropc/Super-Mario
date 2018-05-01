@@ -2522,6 +2522,13 @@ void drawScene() {
 
 
 
+     glPushMatrix();
+     drawBrick(25,-0.5,1);
+    glPopMatrix();
+    tempBrickCounter++;
+
+
+
     //block draw
 
 //    glPushMatrix();
@@ -2670,15 +2677,6 @@ void drawScene() {
 }
 
 void update(int value) {
-
-    if(onTheBrick)
-    {
-        cout << "Mario on the brick" << endl;
-    }
-    if(!onTheBrick)
-    {
-        cout << "Mario not on the brick" << endl;
-    }
 
     if(marioPositionY >= -2.95 && jumpCounter==0 && !onTheBrick)
     {
