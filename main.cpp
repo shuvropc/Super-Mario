@@ -117,10 +117,16 @@ float emeneyPositionx[10]={10,15,20};
 
 //Fire Property
 
+bool fireBulletAbility = false;
 bool fireBullet = false;
 float bulletX=0;
 float bulletY=-0.8;
 bool bulletTouchedGround = false;
+
+//Fireflower Property
+bool flowerUsed = false;
+bool showFlower = false;
+float flowerPositionY = -0.5; //initial Y position of the brick which the flower is in
 
 //text property
 int score=0;
@@ -128,6 +134,7 @@ int score=0;
 
 //function declaration
 void jumpMario();
+void collisionEvents(int brickNumber);
 
 
 //Makes the image into a texture, and returns the id of the texture
@@ -261,6 +268,17 @@ for(int i=0; i<arrayLength;i++){
     }
 }
 
+}
+
+void detectCollisionWithFireflower()
+{
+    float positionDifference = 25.3-marioPositionX;
+
+    if((positionDifference<-0.25 && positionDifference >- 1.0) && (marioPositionY >= -0.95 && marioPositionY <= 0.25))
+    {
+        cout << "Collision with flower" << endl;
+        flowerUsed = true;
+    }
 }
 
 int storeObjectPosition(float x, float y, int noOfObjects, int type){
@@ -430,6 +448,7 @@ void detectCollision(){
                     }
                      brickCollisionStatus[i] = false;
                      cout << "Collision of brick " << i << endl;
+                     collisionEvents(i);
 
                 }
 
@@ -1625,6 +1644,27 @@ void drawHill(){
     glPopMatrix();
 }
 
+void drawFireFlower(float translateX, float translateY)
+{
+    glPushMatrix();
+
+    glTranslatef(translateX, translateY, 0);
+    glScalef(0.5, 0.5, 1);
+
+    glBegin(GL_QUADS);
+
+    glColor3ub(0, 240, 110);
+
+    glVertex3f(0, 0, 0);
+    glVertex3f(1, 0, 0);
+    glVertex3f(1, 1, 0);
+    glVertex3f(0, 1, 0);
+
+    glEnd();
+
+    glPopMatrix();
+}
+
 void moveMario(){
     if(moveRight == true && marioPositionX<80 && marioPositionX>2){
          marioPositionX +=0.1f;
@@ -2233,6 +2273,14 @@ void jumpMario(){
 
 }
 
+void collisionEvents(int brickNumber)
+{
+    if(brickNumber == 7 && !flowerUsed)
+    {
+        showFlower = true;
+    }
+}
+
 void handleKeypress(unsigned char key, int x, int y) {
 
 
@@ -2241,6 +2289,7 @@ void handleKeypress(unsigned char key, int x, int y) {
                enableSound("jump");
                jumpMarioKeyPressed=true;
         }
+
         if(key=='d'){
                marioDirectionRight=true;
                moveRight = true;
@@ -2252,11 +2301,13 @@ void handleKeypress(unsigned char key, int x, int y) {
 
          }
 
-            if(key=='f'){
+         if(key=='f' && fireBulletAbility){
+
                enableSound("fire");
                fireBullet=true;
                bulletX=marioPositionX-2.5;
                bulletY=marioPositionY+1.65;
+
          }
 
 
@@ -2524,6 +2575,7 @@ void drawScene() {
 
      glPushMatrix();
      drawBrick(25,-0.5,1);
+     if(!flowerUsed)drawFireFlower(25, flowerPositionY);
     glPopMatrix();
     tempBrickCounter++;
 
@@ -2686,6 +2738,11 @@ void update(int value) {
 
     moveMario();
 
+    if(flowerUsed)
+    {
+        fireBulletAbility = true;
+    }
+
      bulletCollisionWithEnemy();
 
 
@@ -2704,6 +2761,8 @@ void update(int value) {
     detectCollision();
 
     delectCollisionWithEnemy();
+
+    detectCollisionWithFireflower();
 
     //cloud animation begin
     cloudPositionX -= 0.02f;
@@ -2756,6 +2815,7 @@ void update(int value) {
 
         //bullet property change
           if(fireBullet){
+
                 if(bulletY>=-1.0){
                     bulletX+=0.2;
                     bulletY-=0.1;
@@ -2766,6 +2826,21 @@ void update(int value) {
                }
 
           }
+
+
+    if(!flowerUsed && showFlower)
+    {
+        if(flowerPositionY<=0)
+        {
+            flowerPositionY += 0.05f;
+        }
+    }
+    else if (flowerUsed)
+    {
+        flowerPositionY = -0.5f;
+        showFlower = false;
+    }
+
 
 
 
