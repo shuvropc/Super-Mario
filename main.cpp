@@ -66,6 +66,9 @@ GLuint _textureEnemy;
 GLuint _textureCastle;
 
 
+//game logic variables
+bool isPaused = false;
+
 //location store
 bool storeLocation = true;
 
@@ -206,6 +209,11 @@ void enableSound(string state){
     if(state=="powerup")
     {
         PlaySound("sounds/powerup.wav", NULL, NULL | SND_ASYNC);
+    }
+
+    if(state=="pause")
+    {
+        PlaySound("sounds/pause.wav", NULL, NULL | SND_ASYNC);
     }
 
 
@@ -2338,6 +2346,18 @@ void handleKeypress(unsigned char key, int x, int y) {
                bulletY=marioPositionY+1.65;
 
          }
+         if(key=='p')
+         {
+            if(isPaused)
+            {
+                isPaused = false;
+            }
+            else if(!isPaused)
+            {
+                isPaused = true;
+            }
+            enableSound("pause");
+         }
 
 
 
@@ -2759,118 +2779,121 @@ void drawScene() {
 
 void update(int value) {
 
-    if(marioPositionY >= -2.95 && jumpCounter==0 && !onTheBrick)
+    if(!isPaused)
     {
-        marioPositionY -= 0.2f;
-    }
-
-
-    moveMario();
-
-    if(flowerUsed)
-    {
-        fireBulletAbility = true;
-        showFlower = false;
-        enableFlowerCollision = false;
-    }
-
-     bulletCollisionWithEnemy();
-
-
-    if(marioCollisionOccured==true){
-         colliteMario(0,0);
-    }
-
-    jumpMario();
-
-
-    if(marioPositionY < -1.5)
-    {
-        onTheBrick = false;
-    }
-
-
-    detectCollision();
-
-    delectCollisionWithEnemy();
-
-    detectCollisionWithFireflower();
-
-    //cloud animation begin
-    cloudPositionX -= 0.02f;
-
-
-    if(cloudPositionX < -100.0f)
-    {
-        cloudPositionX = 4.0f;
-    }
-    //cloud animation end
-
-    //goomba animation begin
-	if (legAnimationCycle == true)
-    {
-        animateLegScaleX -= 0.01f;
-        animateLegScaleY -= 0.01f;
-        if (animateLegScaleX <= -0.05f)
+        if(marioPositionY >= -2.95 && jumpCounter==0 && !onTheBrick)
         {
-            legAnimationCycle = false;
+            marioPositionY -= 0.2f;
         }
-    }
-    else if (legAnimationCycle == false)
-    {
-        animateLegScaleX += 0.01f;
-        animateLegScaleY += 0.01f;
-        if (animateLegScaleX >= 0.05f)
+
+
+        moveMario();
+
+        if(flowerUsed)
         {
-            legAnimationCycle = true;
+            fireBulletAbility = true;
+            showFlower = false;
+            enableFlowerCollision = false;
         }
-    }
-    //goomba animation end
+
+         bulletCollisionWithEnemy();
 
 
+        if(marioCollisionOccured==true){
+             colliteMario(0,0);
+        }
+
+        jumpMario();
 
 
-    int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
-
-    for(int i=0;i<arrayLength;i++){
-             emeneyPositionx[i]-=0.02;
-    }
-
-
-
-
-
-
-//     textX+=marioPositionX;
-
-
-
-        //bullet property change
-          if(fireBullet){
-
-                if(bulletY>=-1.0){
-                    bulletX+=0.2;
-                    bulletY-=0.1;
-                }
-                else if(bulletY<=-0.8f){
-                    bulletX+=0.2;
-                    bulletY+=0.1;
-               }
-
-          }
-
-
-    if(!flowerUsed && showFlower)
-    {
-        if(flowerPositionY<=0)
+        if(marioPositionY < -1.5)
         {
-            flowerPositionY += 0.05f;
+            onTheBrick = false;
         }
-    }
 
-    if(flowerPositionY >= 0)
-    {
-        enableFlowerCollision = true;
+
+        detectCollision();
+
+        delectCollisionWithEnemy();
+
+        detectCollisionWithFireflower();
+
+        //cloud animation begin
+        cloudPositionX -= 0.02f;
+
+
+        if(cloudPositionX < -100.0f)
+        {
+            cloudPositionX = 4.0f;
+        }
+        //cloud animation end
+
+        //goomba animation begin
+        if (legAnimationCycle == true)
+        {
+            animateLegScaleX -= 0.01f;
+            animateLegScaleY -= 0.01f;
+            if (animateLegScaleX <= -0.05f)
+            {
+                legAnimationCycle = false;
+            }
+        }
+        else if (legAnimationCycle == false)
+        {
+            animateLegScaleX += 0.01f;
+            animateLegScaleY += 0.01f;
+            if (animateLegScaleX >= 0.05f)
+            {
+                legAnimationCycle = true;
+            }
+        }
+        //goomba animation end
+
+
+
+
+        int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
+
+        for(int i=0;i<arrayLength;i++){
+                 emeneyPositionx[i]-=0.02;
+        }
+
+
+
+
+
+
+    //     textX+=marioPositionX;
+
+
+
+            //bullet property change
+              if(fireBullet){
+
+                    if(bulletY>=-1.0){
+                        bulletX+=0.2;
+                        bulletY-=0.1;
+                    }
+                    else if(bulletY<=-0.8f){
+                        bulletX+=0.2;
+                        bulletY+=0.1;
+                   }
+
+              }
+
+
+        if(!flowerUsed && showFlower)
+        {
+            if(flowerPositionY<=0)
+            {
+                flowerPositionY += 0.05f;
+            }
+        }
+
+        if(flowerPositionY >= 0)
+        {
+            enableFlowerCollision = true;
+        }
     }
 
 
