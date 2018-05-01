@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
+#include <ctime>
 
 #include <GL/GLUT.h>
 
@@ -19,7 +21,10 @@
 #endif
 
 #include "imageloader.h"
+#include <string>
+#include <sstream>
 
+#define RAND_MAX=22
 
 
 using namespace std;
@@ -59,7 +64,6 @@ GLuint _textureCastle;
 
 
 //location store
-
 bool storeLocation = true;
 
 //Cloud Property
@@ -100,6 +104,16 @@ bool legAnimationCycle = true;
 
 
 
+//enemy property
+
+
+float enemyX=20.0;
+
+
+//text property
+float textX=-2.5;
+int score=0;
+
 
 //Makes the image into a texture, and returns the id of the texture
 GLuint loadTexture(Image* image) {
@@ -117,6 +131,63 @@ GLuint loadTexture(Image* image) {
 				                   //as unsigned numbers
 				 image->pixels);               //The actual pixel data
 	return textureId; //Returns the id of the texture
+}
+
+void enableSound(string state){
+
+
+    if(state=="jump"){
+        PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
+       }
+
+     if(state=="collite"){
+        PlaySound("sounds/collite.wav", NULL, NULL | SND_ASYNC);
+    }
+
+     if(state=="coin"){
+        PlaySound("sounds/coin.wav", NULL, NULL | SND_ASYNC);
+    }
+
+      if(state=="enemycollite"){
+        PlaySound("sounds/enemycollite.wav", NULL, NULL | SND_ASYNC);
+    }
+
+       if(state=="mariodie"){
+        PlaySound("sounds/mariodie.wav", NULL, NULL | SND_ASYNC);
+    }
+
+
+}
+
+void printText(int x, int y,int z, char *string){
+//set the position of the text in the window using the x, y and z coordinates
+glRasterPos3f(x,y,z);
+//get the length of the string to display
+    int len = (int) strlen(string);
+
+    //loop to display character by character
+    for (int i = 0; i < len; i++)
+    {
+    glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,string[i]);
+    }
+};
+
+void delectCollisionWithEnemy(){
+
+
+    float positionDifference = enemyX-marioPositionX;
+
+    if(positionDifference<-0.25 && positionDifference>-1.0){
+            if(marioPositionY<-2.95){
+                  enableSound("mariodie");
+                  cout<<"Mario died"<<endl;
+            }
+            else if(marioPositionY<-2.5){
+                  enemyX=-50;
+                  enableSound("enemycollite");
+                  cout<<"Enemy died"<<endl;
+            }
+    }
 }
 
 int storeObjectPosition(float x, float y, int noOfObjects, int type){
@@ -222,23 +293,6 @@ void drawScoreBrick(float x, float y, int length, bool enabled){
     glPopMatrix();
 
      glDisable(GL_TEXTURE_2D);
-}
-
-void enableSound(string state){
-
-
-    if(state=="jump"){
-        PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
-       }
-
-     if(state=="collite"){
-        PlaySound("sounds/collite.wav", NULL, NULL | SND_ASYNC);
-    }
-
-     if(state=="coin"){
-        PlaySound("sounds/coin.wav", NULL, NULL | SND_ASYNC);
-    }
-
 }
 
 void fallFromTopIfNoObstacle(){
@@ -1460,7 +1514,7 @@ void drawHill(){
 }
 
 void moveMario(){
-    if(moveRight == true && marioPositionX<60.1 && marioPositionX>2){
+    if(moveRight == true && marioPositionX<80 && marioPositionX>2){
          marioPositionX +=0.1f;
          cameraX -=0.1f;
     }
@@ -2068,6 +2122,7 @@ if(key=='d'){
  if(key=='a'){
         marioDirectionRight=false;
         moveLeft = true;
+
  }
 
 glutPostRedisplay();
@@ -2188,6 +2243,18 @@ void drawScene() {
    // glTranslatef(0, 0.0, -7.0); //Move forward 5 units
 
     glTranslatef(cameraX, 0.0, -7.0); //Move forward 5 units
+
+
+
+
+
+    //draw score
+  glPushMatrix();
+
+    printText(textX+marioPositionX,1.5,0,"Score: ");
+
+  glPopMatrix();
+
 
 
 
@@ -2406,7 +2473,7 @@ void drawScene() {
     //drawenemy
 
         glPushMatrix();
-                    glTranslatef(17, -2.3, 0);
+                    glTranslatef(enemyX, -2.3, 0);
                     glScalef(0.25, 0.25, 1.0);
                     drawEnemy();
         glPopMatrix();
@@ -2416,9 +2483,24 @@ void drawScene() {
 
     //drawCastle
        glPushMatrix();
-                    glTranslatef(58, -2.5, 0);
+                    glTranslatef(75, -2.5, 0);
                     drawCastle();
        glPopMatrix();
+
+
+
+
+
+       //drawSlide
+       glPushMatrix();
+                    drawBrick(58,-0.5,3);
+       glPopMatrix();
+
+       glPushMatrix();
+                    drawBrick(62,-0.3,3);
+       glPopMatrix();
+
+
 
 
 
@@ -2441,6 +2523,8 @@ void update(int value) {
 
 
     detectCollision();
+
+    delectCollisionWithEnemy();
 
     //cloud animation begin
     cloudPositionX -= 0.02f;
@@ -2473,6 +2557,8 @@ void update(int value) {
     }
     //goomba animation end
 
+     enemyX-=0.02;
+//     textX+=marioPositionX;
 
     glutPostRedisplay(); //Tell GLUT that the display has changed
 
