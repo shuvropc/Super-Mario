@@ -546,36 +546,295 @@ void colliteMario(float x, float y){
 
 }
 
-void drawCastle(){
+//void drawCastle(){
+//
+//        enableTexture(_textureCastle);
+//        glPushMatrix();
+//
+//
+//
+//        glBegin(GL_POLYGON);
+//            glTexCoord2f(0.0f, 0.0f);
+//            glVertex3f(0, 0, 0);
+//
+//
+//
+//            glTexCoord2f(1.0f, 0.0f);
+//            glVertex3f(3, 0, 0);
+//
+//            glTexCoord2f(1.0f, 1.0f);
+//            glVertex3f(3, 3, 0);
+//
+//
+//
+//            glTexCoord2f(0.0f, 1.0f);
+//            glVertex3f(0, 3, 0);
+//
+//
+//        glEnd();
+//
+//    glDisable(GL_TEXTURE_2D);
+//    glPopMatrix();
+//
+//}
 
-        enableTexture(_textureCastle);
-        glPushMatrix();
+
+void drawCastle()
+{
+   glPushMatrix();
+    glTranslatef(0, 1.49, 0);
+    glScalef(0.2, 0.25, 1.0);
+	//Draw Lower Castle door
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 0, 0);
+
+	glVertex3f(-2, -6, 0);
+	glVertex3f(2, -6, 0);
+	glVertex3f(2, -2, 0);
+	glVertex3f(-2, -2, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+    //Draw Lower Castle base
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(128, 64, 0);
+
+	glVertex3f(-10, -6, 0);
+	glVertex3f(10, -6, 0);
+	glVertex3f(10, 0, 0);
+	glVertex3f(-10, 0, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+    //Draw Lower Castle left block1
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(-10, 0, 0);
+	glVertex3f(-9, 0, 0);
+	glVertex3f(-9, 1, 0);
+	glVertex3f(-10, 1, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+    //Draw Lower Castle left block2
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(-7, 0, 0);
+	glVertex3f(-5, 0, 0);
+	glVertex3f(-5, 1, 0);
+	glVertex3f(-7, 1, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+    //Draw Lower Castle left block3
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(-3, 0, 0);
+	glVertex3f(-1, 0, 0);
+	glVertex3f(-1, 1, 0);
+	glVertex3f(-3, 1, 0);
+
+	glEnd();
+
+	glPopMatrix();
 
 
+    //Draw Lower Castle right block3
+	glPushMatrix();
 
-        glBegin(GL_POLYGON);
-            glTexCoord2f(0.0f, 0.0f);
-            glVertex3f(0, 0, 0);
+	glBegin(GL_QUADS);
 
+	glColor3ub(255, 255, 255);
 
+	glVertex3f(1, 0, 0);
+	glVertex3f(3, 0, 0);
+	glVertex3f(3, 1, 0);
+	glVertex3f(1, 1, 0);
 
-            glTexCoord2f(1.0f, 0.0f);
-            glVertex3f(3, 0, 0);
+	glEnd();
 
-            glTexCoord2f(1.0f, 1.0f);
-            glVertex3f(3, 3, 0);
-
-
-
-            glTexCoord2f(0.0f, 1.0f);
-            glVertex3f(0, 3, 0);
+	glPopMatrix();
 
 
-        glEnd();
+	//Draw Lower Castle right block2
+	glPushMatrix();
 
-    glDisable(GL_TEXTURE_2D);
-    glPopMatrix();
+	glBegin(GL_QUADS);
 
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(5, 0, 0);
+	glVertex3f(7, 0, 0);
+	glVertex3f(7, 1, 0);
+	glVertex3f(5, 1, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//Draw Lower Castle right block1
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(9, 0, 0);
+	glVertex3f(10, 0, 0);
+	glVertex3f(10, 1, 0);
+	glVertex3f(9, 1, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+//Draw Upper Castle left window
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 0, 0);
+
+	glVertex3f(-4, 1, 0);
+	glVertex3f(-2, 1, 0);
+	glVertex3f(-2, 3, 0);
+	glVertex3f(-4, 3, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//Draw Upper Castle right window
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 0, 0);
+
+	glVertex3f(2, 1, 0);
+	glVertex3f(4, 1, 0);
+	glVertex3f(4, 3, 0);
+	glVertex3f(2, 3, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//Draw Upper Castle base
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(128, 64, 0);
+
+	glVertex3f(-6, 0, 0);
+	glVertex3f(6, 0, 0);
+	glVertex3f(6, 4, 0);
+	glVertex3f(-6, 4, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//Draw Upper Castle left block1
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(-6, 4, 0);
+	glVertex3f(-5, 4, 0);
+	glVertex3f(-5, 5, 0);
+	glVertex3f(-6, 5, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//Draw Upper Castle left bock2
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(-3, 4, 0);
+	glVertex3f(-1, 4, 0);
+	glVertex3f(-1, 5, 0);
+	glVertex3f(-3, 5, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//Draw Upper Castle right block2
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(1, 4, 0);
+	glVertex3f(3, 4, 0);
+	glVertex3f(3, 5, 0);
+	glVertex3f(1, 5, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//Draw Upper Castle right block1
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+	glVertex3f(6, 4, 0);
+	glVertex3f(5, 4, 0);
+	glVertex3f(5, 5, 0);
+	glVertex3f(6, 5, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+	glPopMatrix();
 }
 
 void drawFlag()
