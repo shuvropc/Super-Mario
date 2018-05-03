@@ -4100,7 +4100,7 @@ void collisionEvents(int brickNumber){
     }
     if(brickNumber != 7)
     {
-        if(jumpBottomCollisionOccuredCoin && brickCollisionStatus[brickNumber]==true && (brickNumber == 1 || brickNumber == 4 || brickNumber == 6 || brickNumber == 8 || brickNumber == 9 || brickNumber == 10 || brickNumber == 11))
+        if(jumpBottomCollisionOccuredCoin && brickCollisionStatus[brickNumber]==true && (brickNumber == 1 || brickNumber == 4 || brickNumber == 6 || brickNumber == 9 || brickNumber == 10 || brickNumber == 11 || brickNumber == 12 || brickNumber == 15 || brickNumber == 16 || brickNumber == 17))
         {
             enableSound("coin");
             score += 100;
