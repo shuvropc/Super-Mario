@@ -38,9 +38,7 @@ float _cameraAngle = 0.0;
 
 
 //cameraProperty
-//float cameraX=-5.52;
 float cameraX=-5.52;
-
 
 
 //Mario Property
@@ -118,14 +116,13 @@ bool onTheBrick = false;
 float emeneyPositionx[10]={10,15,20};
 
 
-
 //Fire Property
-
 bool fireBulletAbility = false;
 bool fireBullet = false;
 float bulletX=0;
 float bulletY=-0.8;
 bool bulletTouchedGround = false;
+
 
 //Fireflower Property
 bool enableFlowerCollision = false;
@@ -133,8 +130,36 @@ bool flowerUsed = false;
 bool showFlower = false;
 float flowerPositionY = -0.5; //initial Y position of the brick which the flower is in
 
+
 //text property
 int score=0;
+
+
+//slideBrickProperty
+float slideBrickX[3][2]={{59,0},{66,1}};
+bool valueChanageForSlide=true;
+
+
+
+//marioLife
+int marioLife=3;
+
+
+//Entered inside Cylinder
+bool insideTheCylinder=false;
+bool inCylinderArea=false;
+
+
+//LevelProperty
+int mariCrossedFlag=0;
+int levelComplete=0;
+
+//Flag Property
+float flagY=0;
+
+
+//GameMenu
+bool gamePauseMenu = false;
 
 
 //function declaration
@@ -160,6 +185,185 @@ GLuint loadTexture(Image* image) {
 	return textureId; //Returns the id of the texture
 }
 
+int storeObjectPosition(float x, float y, int noOfObjects, int type){
+
+    bottomCollisionArea[bottomAreaAssignCount][0]=x;
+    bottomCollisionArea[bottomAreaAssignCount][1]=y;
+    bottomCollisionArea[bottomAreaAssignCount][2]=x+0.5*noOfObjects;
+    bottomCollisionArea[bottomAreaAssignCount][3]=y;
+    bottomCollisionArea[bottomAreaAssignCount][4]=type;
+
+    int returnValue = bottomAreaAssignCount;
+    bottomAreaAssignCount++;
+    return returnValue;
+}
+
+void enableSound(string state){
+
+
+        if(state=="jump"){
+        PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="collite"){
+        PlaySound("sounds/collite.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="coin"){
+        PlaySound("sounds/coin.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="enemycollite"){
+        PlaySound("sounds/enemycollite.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="mariodie"){
+        PlaySound("sounds/mariodie.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="fire"){
+        PlaySound("sounds/fire.wav", NULL, NULL | SND_ASYNC);
+
+        }
+        if(state=="powerupappears")
+        {
+        PlaySound("sounds/powerupappears.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="powerup")
+        {
+        PlaySound("sounds/powerup.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="pause")
+        {
+        PlaySound("sounds/pause.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="background")
+        {
+        PlaySound("sounds/background.wav", NULL, NULL | SND_ASYNC);
+        }
+
+        if(state=="pipetravel")
+        {
+        PlaySound("sounds/pipetravel.wav", NULL, NULL | SND_ASYNC);
+        }
+        if(state=="flagcrossed")
+        {
+        PlaySound("sounds/flagcrossed.wav", NULL, NULL | SND_ASYNC);
+        }
+        if(state=="levelclear")
+        {
+        PlaySound("sounds/levelclear.wav", NULL, NULL | SND_ASYNC);
+        }
+
+
+
+
+}
+
+void drawMenu(){
+         glPushMatrix();
+
+            glColor4f(1.0, 1.0, 1.0,0.40);
+            glEnable (GL_BLEND);
+            glBlendFunc (GL_DST_COLOR,GL_ONE_MINUS_SRC_ALPHA);
+
+            glBegin(GL_POLYGON);
+                glVertex3f(0,-3,0);
+                glVertex3f(10,-3,0);
+                glVertex3f(10,3,0);
+                glVertex3f(0,3,0);
+            glEnd();
+
+    glPopMatrix();
+
+
+}
+
+void slideBrick(){
+
+
+
+
+    if(slideBrickX[0][1]==0){
+        slideBrickX[0][0]+=0.02f;
+        if(slideBrickX[0][0]>63){
+            slideBrickX[0][1]=1;
+        }
+    }else{
+        slideBrickX[0][0]-=0.02f;
+         if(slideBrickX[0][0]<59){
+            slideBrickX[0][1]=0;
+        }
+    }
+
+
+    if(valueChanageForSlide==true){
+        slideBrickX[1][0]+=4;
+        }
+
+
+    if(slideBrickX[1][1]==0){
+        slideBrickX[1][0]+=0.02f;
+        if(slideBrickX[1][0]>70){
+            slideBrickX[1][1]=1;
+        }
+    }
+
+    else if(slideBrickX[1][1]==1){
+        slideBrickX[1][0]-=0.02f;
+         if(slideBrickX[1][0]<66){
+            slideBrickX[1][1]=0;
+        }
+    }
+
+
+
+
+
+    if(marioPositionX>slideBrickX[0][0] && marioPositionX<slideBrickX[0][0]+4.5 && onTheBrick==true && slideBrickX[0][1]==0){
+        marioPositionX+=0.02f;
+        cameraX-=0.02f;
+    }
+    else if(marioPositionX>slideBrickX[0][0] && marioPositionX<slideBrickX[0][0]+4.5 && onTheBrick==true && slideBrickX[0][1]==1){
+        marioPositionX-=0.02f;
+        cameraX+=0.02f;
+        cout<<"it will lessen"<<endl;
+    }
+
+
+        if(marioPositionX>slideBrickX[1][0] && marioPositionX<slideBrickX[1][0]+4.5 && onTheBrick==true && slideBrickX[1][1]==0){
+        marioPositionX+=0.02f;
+        cameraX-=0.02f;
+    }
+    else if(marioPositionX>slideBrickX[1][0] && marioPositionX<slideBrickX[1][0]+4.5 && onTheBrick==true && slideBrickX[1][1]==1){
+        marioPositionX-=0.02f;
+        cameraX+=0.02f;
+    }
+
+
+
+
+
+
+
+
+    if(marioPositionX>60 && marioPositionX<73.3 && marioPositionY<-2.45){
+          enableSound("mariodie");
+          marioPositionY=-500;
+          Sleep(3000);
+          marioPositionX=57;
+          marioPositionY=-2.95;
+          cameraX=-57;
+    }
+
+
+
+
+    valueChanageForSlide=false;
+}
 
 void generateRandomEnemy(){
 
@@ -171,52 +375,6 @@ void generateRandomEnemy(){
      emeneyPositionx[i]=random;
      i++;
  }
-
-
-}
-
-void enableSound(string state){
-
-
-    if(state=="jump"){
-        PlaySound("sounds/jump.wav", NULL, NULL | SND_ASYNC);
-       }
-
-     if(state=="collite"){
-        PlaySound("sounds/collite.wav", NULL, NULL | SND_ASYNC);
-    }
-
-     if(state=="coin"){
-        PlaySound("sounds/coin.wav", NULL, NULL | SND_ASYNC);
-    }
-
-      if(state=="enemycollite"){
-        PlaySound("sounds/enemycollite.wav", NULL, NULL | SND_ASYNC);
-    }
-
-       if(state=="mariodie"){
-        PlaySound("sounds/mariodie.wav", NULL, NULL | SND_ASYNC);
-    }
-
-         if(state=="fire"){
-        PlaySound("sounds/fire.wav", NULL, NULL | SND_ASYNC);
-    }
-    if(state=="powerupappears")
-    {
-        PlaySound("sounds/powerupappears.wav", NULL, NULL | SND_ASYNC);
-    }
-
-    if(state=="powerup")
-    {
-        PlaySound("sounds/powerup.wav", NULL, NULL | SND_ASYNC);
-    }
-
-    if(state=="pause")
-    {
-        PlaySound("sounds/pause.wav", NULL, NULL | SND_ASYNC);
-    }
-
-
 
 
 }
@@ -274,10 +432,12 @@ for(int i=0; i<arrayLength;i++){
     if(positionDifference<-0.25 && positionDifference>-1.0){
             if(marioPositionY<-2.95){
                   enableSound("mariodie");
-                  cout<<"Mario died"<<endl;
+                  marioLife--;
+                  cout<<"Mario died Life: "<<marioLife<<endl;
                   marioPositionY=-500;
                   Sleep(3000);
                   marioPositionX+=2;
+                  cameraX-=2;
                   marioPositionY=-2.95;
 
 
@@ -294,8 +454,7 @@ for(int i=0; i<arrayLength;i++){
 
 }
 
-void detectCollisionWithFireflower()
-{
+void detectCollisionWithFireflower(){
     if(enableFlowerCollision)
     {
         float positionDifference = 25.3-marioPositionX;
@@ -308,19 +467,6 @@ void detectCollisionWithFireflower()
             flowerUsed = true;
         }
     }
-}
-
-int storeObjectPosition(float x, float y, int noOfObjects, int type){
-
-    bottomCollisionArea[bottomAreaAssignCount][0]=x;
-    bottomCollisionArea[bottomAreaAssignCount][1]=y;
-    bottomCollisionArea[bottomAreaAssignCount][2]=x+0.5*noOfObjects;
-    bottomCollisionArea[bottomAreaAssignCount][3]=y;
-    bottomCollisionArea[bottomAreaAssignCount][4]=type;
-
-    int returnValue = bottomAreaAssignCount;
-    bottomAreaAssignCount++;
-    return returnValue;
 }
 
 void enableTexture(GLuint textureName){
@@ -367,10 +513,10 @@ void drawScoreBrick(float x, float y, int length, bool enabled){
           glColor3f(1.0f, 0.0f, 0.0f);
       }
 
-      if(storeLocation){
+
          brickLocation[locationCounter] = storeObjectPosition(x,y,length,1);
          locationCounter++;
-      }
+
 
 
   glPushMatrix();
@@ -546,41 +692,7 @@ void colliteMario(float x, float y){
 
 }
 
-//void drawCastle(){
-//
-//        enableTexture(_textureCastle);
-//        glPushMatrix();
-//
-//
-//
-//        glBegin(GL_POLYGON);
-//            glTexCoord2f(0.0f, 0.0f);
-//            glVertex3f(0, 0, 0);
-//
-//
-//
-//            glTexCoord2f(1.0f, 0.0f);
-//            glVertex3f(3, 0, 0);
-//
-//            glTexCoord2f(1.0f, 1.0f);
-//            glVertex3f(3, 3, 0);
-//
-//
-//
-//            glTexCoord2f(0.0f, 1.0f);
-//            glVertex3f(0, 3, 0);
-//
-//
-//        glEnd();
-//
-//    glDisable(GL_TEXTURE_2D);
-//    glPopMatrix();
-//
-//}
-
-
-void drawCastle()
-{
+void drawCastle(){
    glPushMatrix();
     glTranslatef(0, 1.49, 0);
     glScalef(0.2, 0.25, 1.0);
@@ -837,8 +949,7 @@ void drawCastle()
 	glPopMatrix();
 }
 
-void drawFlag()
-{
+void drawFlag(){
     glPushMatrix();
 
     glTranslatef(0, 2.17, 0);
@@ -1017,13 +1128,16 @@ void drawFlag()
         glVertex3f(-0.3, 1.5, 0.0);
         glEnd();
         /***************Flag*******************/
+//
+//        glColor3ub(255,255,255);
+//        glBegin(GL_POLYGON);
+//        glVertex3f(0.0, 1.0, 0.0);
+//        glVertex3f(0.0, 1.8, 0.0);
+//        glVertex3f(-0.9, 1.8, 0.0);
+//        glEnd();
 
-        glColor3ub(255,255,255);
-        glBegin(GL_POLYGON);
-        glVertex3f(0.0, 1.0, 0.0);
-        glVertex3f(0.0, 1.8, 0.0);
-        glVertex3f(-0.9, 1.8, 0.0);
-        glEnd();
+
+
         /*****************Block********************/
         glColor3ub(255,255,255);
         glBegin(GL_POLYGON);
@@ -1037,12 +1151,13 @@ void drawFlag()
         glEnd();
         /***************Flag*******************/
 
-        glColor3ub(255,255,255);
-        glBegin(GL_POLYGON);
-        glVertex3f(0.0, 1.0, 0.0);
-        glVertex3f(0.0, 1.8, 0.0);
-        glVertex3f(-0.9, 1.8, 0.0);
-        glEnd();
+//        glColor3ub(255,255,255);
+//        glBegin(GL_POLYGON);
+//        glVertex3f(0.0, 1.0, 0.0);
+//        glVertex3f(0.0, 1.8, 0.0);
+//        glVertex3f(-0.9, 1.8, 0.0);
+//        glEnd();
+
         /*****************Block********************/
         glColor3ub(255,255,255);
         glBegin(GL_POLYGON);
@@ -1128,14 +1243,19 @@ void drawFlag()
         glVertex3f(-0.2, 1.5, 0.0);
         glVertex3f(-0.3, 1.5, 0.0);
         glEnd();
+
         /***************Flag*******************/
 
-        glColor3ub(255,255,255);
-        glBegin(GL_POLYGON);
-        glVertex3f(0.0, 1.0, 0.0);
-        glVertex3f(0.0, 1.8, 0.0);
-        glVertex3f(-0.9, 1.8, 0.0);
-        glEnd();
+        glPushMatrix();
+        glTranslatef(0,flagY,0);
+            glColor3ub(255,255,255);
+            glBegin(GL_POLYGON);
+            glVertex3f(0.0, 1.0, 0.0);
+            glVertex3f(0.0, 1.8, 0.0);
+            glVertex3f(-0.9, 1.8, 0.0);
+            glEnd();
+        glPopMatrix();
+
         /*****************Block********************/
         glColor3ub(255,255,255);
         glBegin(GL_POLYGON);
@@ -2001,12 +2121,12 @@ void drawCylinder(){
             glVertex3f(1, 0, 0);
 
             glTexCoord2f(1.0f, 1.0f);
-            glVertex3f(1, 2.0, 0);
+            glVertex3f(1, 3.1, 0);
 
 
 
             glTexCoord2f(0.0f, 1.0f);
-            glVertex3f(0, 2, 0);
+            glVertex3f(0, 3.1, 0);
 
 
         glEnd();
@@ -2233,8 +2353,7 @@ void drawHill(){
     glPopMatrix();
 }
 
-void drawFireFlower(float translateX, float translateY)
-{
+void drawFireFlower(float translateX, float translateY){
     glPushMatrix();
 
     glTranslatef(translateX, translateY, 0);
@@ -2255,16 +2374,83 @@ void drawFireFlower(float translateX, float translateY)
 }
 
 void moveMario(){
-    if(moveRight == true && marioPositionX<80 && marioPositionX>2){
-         marioPositionX +=0.1f;
-         cameraX -=0.1f;
+
+
+    if(moveRight == true && marioPositionX<87.5 && marioPositionX>2 && insideTheCylinder==false){
+
+                    if(marioPositionX<40.2 || marioPositionX>42){
+                        marioPositionX +=0.1f;
+                        cameraX -=0.1f;
+                    }
+                    else if(marioPositionX>40.2 &&  marioPositionX<42 && marioPositionY>-0.45){
+                              marioPositionX +=0.1f;
+                              cameraX -=0.1f;
+                    }
+
     }
-    else if(moveLeft == true){
-            if(marioPositionX>4){
-                marioPositionX -=0.1f;
-                cameraX +=0.1f;
-            }
+
+    else if(moveRight == true && marioPositionX<227 && insideTheCylinder==true){
+
+
+       if(marioPositionX<200 && marioPositionX>196){
+           marioPositionX +=0.1f;
+        }
+
+        else if(marioPositionX>220.8){
+              marioPositionX +=0.1f;
+        }
+
+        else{
+
+             marioPositionX +=0.1f;
+             cameraX -=0.1f;
+        }
+
+
+
     }
+
+    else if(moveLeft == true && marioPositionX<87.5 && marioPositionX>2 && insideTheCylinder==false){
+
+
+
+
+               if(marioPositionX<40.3 || marioPositionX>42){
+                    marioPositionX -=0.1f;
+                    cameraX +=0.1f;
+
+                }
+                else{
+                     if(marioPositionY>-0.45){
+                        cout<<"Left Key Pressed"<<endl;
+                        marioPositionX -=0.1f;
+                        cameraX +=0.1f;
+                    }
+
+                }
+
+
+}
+
+    else if(moveLeft == true && insideTheCylinder==true){
+
+        if(marioPositionX>196.5){
+
+                    if(marioPositionX<200 && marioPositionX>196){
+                        marioPositionX -=0.1f;
+                    }
+
+                    else if(marioPositionX>220.8){
+                         marioPositionX -=0.1f;
+                    }
+                    else{
+                         marioPositionX -=0.1f;
+                         cameraX +=0.1f;
+                    }
+
+        }
+    }
+
 
 }
 
@@ -2274,6 +2460,9 @@ void drawFloor(int length){
 
 
     enableTexture(_textureFloor);
+
+
+    if(insideTheCylinder){  glColor3f(0.0f, 0.0f, 1.0f);}
 
 
     for(int i=0;i<length;i++){
@@ -2306,6 +2495,48 @@ void drawFloor(int length){
      }
 
      glDisable(GL_TEXTURE_2D);
+}
+
+void drawVerticalFloor(int length){
+
+    float translateFloorX=0.0;
+    float translateFloorY=0.0;
+
+
+    enableTexture(_textureFloor);
+    glColor3f(0.0f, 0.0f, 1.0f);
+
+    for(int i=0;i<length;i++){
+
+    glPushMatrix();
+
+       //glColor3f(1, 0, 0);
+
+        float brickSize = 0.5;
+
+
+        glBegin(GL_POLYGON);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0, translateFloorY, 0);
+
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.5, translateFloorY, 0);
+
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.5, ++translateFloorY, 0);
+
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0, translateFloorY, 0);
+        glEnd();
+
+
+
+    glPopMatrix();
+
+     }
+
+     glDisable(GL_TEXTURE_2D);
+
 }
 
 void drawOldBrick(int length){
@@ -2358,10 +2589,10 @@ void drawOldBrick(int length){
 
 void drawBrick(float x, float y, int length){
 
-      if(storeLocation){
+
          brickLocation[locationCounter] = storeObjectPosition(x,y,length,0);
          locationCounter++;
-      }
+
 
 
     float translateFloorX=0.0;
@@ -2823,7 +3054,6 @@ glVertex3f(0.53, 0.48, 0.0);
     glPopMatrix();
 }
 
-
 void jumpMario(){
 
     if(jumpMarioKeyPressed)
@@ -2862,8 +3092,7 @@ void jumpMario(){
 
 }
 
-void collisionEvents(int brickNumber)
-{
+void collisionEvents(int brickNumber){
     if(brickNumber == 7 && !flowerUsed)
     {
         showFlower = true;
@@ -2892,7 +3121,6 @@ void collisionEvents(int brickNumber)
 void handleKeypress(unsigned char key, int x, int y) {
 
 
-
         if(key=='w' || key==' '){
                enableSound("jump");
                jumpMarioKeyPressed=true;
@@ -2917,6 +3145,7 @@ void handleKeypress(unsigned char key, int x, int y) {
                bulletY=marioPositionY+1.65;
 
          }
+
          if(key=='p')
          {
             if(isPaused)
@@ -2932,14 +3161,24 @@ void handleKeypress(unsigned char key, int x, int y) {
 
 
 
+         if(key=='s'){
+
+            if(marioPositionX>40.5 && marioPositionX<41.7){
+                enableSound("pipetravel");
+                marioPositionX=200;
+                cameraX=-200;
+            }
+
+         }
+
+
+
 
 
 glutPostRedisplay();
 }
 
 void handleKeypressUp(unsigned char key, int x, int y) {
-
-
 
 
 
@@ -2955,7 +3194,6 @@ void handleKeypressUp(unsigned char key, int x, int y) {
                 marioDirectionRight=false;
                 moveLeft = false;
          }
-
 
 
         glutPostRedisplay();
@@ -2975,7 +3213,6 @@ void initRendering() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
-
 
 
 
@@ -3059,6 +3296,11 @@ void drawScene() {
     glTranslatef(cameraX, 0.0, -7.0); //Move forward 5 units
 
 
+
+    //DrawMenu
+    glPushMatrix();
+        drawMenu();
+    glPopMatrix();
 
 
 
@@ -3186,12 +3428,6 @@ void drawScene() {
 
 
 
-   glPushMatrix();
-     glTranslatef(19, -2.5, 0);
-     drawHill();
-    glPopMatrix();
-
-
 
      glPushMatrix();
      drawBrick(25,-0.5,1);
@@ -3214,21 +3450,39 @@ void drawScene() {
     //draw floor
     glPushMatrix();
     glTranslatef(31, -3, 0);
-        drawFloor(35);
+        drawFloor(28);
     glPopMatrix();
 
 
     //draw cloud
+          if(marioPositionX<150){
     glPushMatrix();
         glTranslatef(cloudPositionX, 2, 0);
         drawCloud(100);
     glPopMatrix();
+            }
 
         //draw Cylinder
     glPushMatrix();
         glTranslatef(40, -3, 0);
         drawCylinder();
     glPopMatrix();
+
+     glPushMatrix();
+        drawBrick(40,-0.5,2);
+    glPopMatrix();
+
+    tempBrickCounter++;
+
+
+
+
+
+  //draw Cylinder
+
+
+
+
 
 
 
@@ -3309,6 +3563,8 @@ void drawScene() {
 
     int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
 
+    if(storeLocation==true){generateRandomEnemy();}
+
     for(int i=0;i<arrayLength;i++){
         glPushMatrix();
                     glTranslatef(emeneyPositionx[i], -2.3, 0);
@@ -3321,16 +3577,20 @@ void drawScene() {
 
 
 
+
+
+
     //drawCastle
        glPushMatrix();
-                    glTranslatef(75, -2.5, 0);
+                    glTranslatef(87, -2.5, 0);
                     drawCastle();
        glPopMatrix();
 
-       //draw flag
 
+
+//draw flag
        glPushMatrix();
-                    glTranslatef(70, -2.5, 0);
+                    glTranslatef(82, -2.5, 0);
                     drawFlag();
        glPopMatrix();
 
@@ -3341,22 +3601,229 @@ void drawScene() {
 
        //drawSlide
        glPushMatrix();
-                    drawBrick(58,-0.5,3);
+                    drawBrick(slideBrickX[0][0],-0.5,3);
+       glPopMatrix();
+       tempBrickCounter++;
+
+
+        glPushMatrix();
+                    drawBrick(slideBrickX[1][0],-0.5,3);
+       glPopMatrix();
+       tempBrickCounter++;
+
+
+
+
+
+
+
+    //scorebrickonslide
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(61,1.0,1,true);
+         glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(61,1.0,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+
+
+
+
+
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(66,1.0,1,true);
+         glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(66,1.0,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+
+
+
+
+
+
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(69,1.0,1,true);
+         glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        // glTranslatef(13, 0.5, 0);
+         drawScoreBrick(69,1.0,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+
+
+
+
+
+
+
+      //drawhfloor
+    glPushMatrix();
+    glTranslatef(73, -3, 0);
+        drawFloor(25);
+    glPopMatrix();
+
+
+
+
+
+
+   glPushMatrix();
+     glTranslatef(19, -2.5, 0);
+     drawHill();
+   glPopMatrix();
+
+
+
+
+
+
+
+
+
+       //After Entering into Pipe Environment
+      glPushMatrix();
+        glTranslatef(194, 2.5, 0);
+            drawFloor(5);
        glPopMatrix();
 
        glPushMatrix();
-                    drawBrick(61,-0.5,3);
+        glTranslatef(200, 2.5, 0);
+            drawFloor(25);
        glPopMatrix();
+
+         glPushMatrix();
+       glTranslatef(194, -3, 0);
+            drawFloor(34);
+       glPopMatrix();
+
+
+         glPushMatrix();
+        glTranslatef(195, -2.5, 0);
+            drawVerticalFloor(7);
+        glPopMatrix();
+
+         glPushMatrix();
+        glTranslatef(194.5, -2.5, 0);
+            drawVerticalFloor(7);
+        glPopMatrix();
+
+
+          glPushMatrix();
+        glTranslatef(194, -2.5, 0);
+            drawVerticalFloor(7);
+        glPopMatrix();
+
+
+           glPushMatrix();
+        glTranslatef(225, -2, 0);
+            drawVerticalFloor(7);
+        glPopMatrix();
+              glPushMatrix();
+        glTranslatef(225.5, -2, 0);
+            drawVerticalFloor(7);
+        glPopMatrix();
+        glPushMatrix();
+        glTranslatef(226, -2, 0);
+            drawVerticalFloor(7);
+        glPopMatrix();
+
+
+
+   //After Entering into Pipe Environment
+
 
 
 
 
    storeLocation = false;
+   bottomAreaAssignCount=0;
    tempBrickCounter = 0;
    glutSwapBuffers();
 }
 
 void update(int value) {
+
+
+    if(mariCrossedFlag==2){
+        if(flagY>-3){
+            isPaused=true;
+            flagY-=0.1f;
+        }else{
+                isPaused=false;
+            }
+    }
+
+
+    if(mariCrossedFlag==1){
+        enableSound("flagcrossed");
+        mariCrossedFlag=2;
+//        Sleep(4000);
+    }
+
+       if(levelComplete==1){
+        enableSound("levelclear");
+        levelComplete=2;
+        Sleep(6000);
+     }
+
+
+
+    if(mariCrossedFlag==0 && marioPositionX>83.2){
+        mariCrossedFlag=1;
+    }
+
+    if(levelComplete==0 && marioPositionX>87.5){
+        levelComplete=1;
+    }
+
+
+
+    if(marioPositionX>226.5 && marioPositionX<230){
+        marioPositionX=41;
+        marioPositionY=-0.1;
+        cameraX=-41;
+    }
+
+
+    if(marioPositionX>190){
+        insideTheCylinder=true;
+    }else{
+        insideTheCylinder=false;
+    }
+
+
+    slideBrick();
 
     if(!isPaused)
     {
@@ -3398,13 +3865,17 @@ void update(int value) {
         detectCollisionWithFireflower();
 
         //cloud animation begin
-        cloudPositionX -= 0.02f;
 
+
+        cloudPositionX -= 0.02f;
 
         if(cloudPositionX < -100.0f)
         {
-            cloudPositionX = 4.0f;
+        cloudPositionX = 4.0f;
         }
+
+
+
         //cloud animation end
 
         //goomba animation begin
@@ -3479,7 +3950,6 @@ void update(int value) {
 
 
 
-
     glutPostRedisplay(); //Tell GLUT that the display has changed
 
     //Tell GLUT to call update again in 25 milliseconds
@@ -3500,6 +3970,7 @@ int main(int argc, char** argv) {
 
 
     //PlaySound("sounds/background.wav", NULL, SND_LOOP | SND_ASYNC);
+    //enableSound("background");
 
     //Set handler functions
     glutDisplayFunc(drawScene);
@@ -3514,6 +3985,3 @@ int main(int argc, char** argv) {
     glutMainLoop();
 
 }
-
-
-
