@@ -4797,11 +4797,11 @@ void update(int value) {
 
 
 
-    if(mariCrossedFlag==0 && marioPositionX>83.2){
+    if(mariCrossedFlag==0 && marioPositionX>83.2 && marioPositionX<85){
         mariCrossedFlag=1;
     }
 
-    if(levelComplete==0 && marioPositionX>87.5){
+    if(levelComplete==0 && marioPositionX>87.5 && marioPositionX<89){
         levelComplete=1;
     }
 
