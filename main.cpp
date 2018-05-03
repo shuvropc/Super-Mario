@@ -219,6 +219,7 @@ void enableSound(string state){
 
         if(state=="mariodie"){
         PlaySound("sounds/mariodie.wav", NULL, NULL | SND_ASYNC);
+        mciSendString("close background", 0, 0, 0);
         }
 
         if(state=="fire"){
@@ -256,6 +257,7 @@ void enableSound(string state){
         if(state=="levelclear")
         {
         PlaySound("sounds/levelclear.wav", NULL, NULL | SND_ASYNC);
+        mciSendString("close background", 0, 0, 0);
         }
 
 
@@ -4954,6 +4956,13 @@ void update(int value) {
     glutTimerFunc(25, update, 0);
 }
 
+void playBackgroundMusic()
+{
+    mciSendString("open ./sounds/background.wav alias background", 0, 0, 0);
+    mciSendString("play background", 0, 0, 0);
+}
+
+
 int main(int argc, char** argv) {
     //Initialize GLUT
     glutInit(&argc, argv);
@@ -4965,6 +4974,8 @@ int main(int argc, char** argv) {
     glutCreateWindow("Super Mario");
     initValues();
     initRendering();
+
+    playBackgroundMusic();
 
 
     //PlaySound("sounds/background.wav", NULL, SND_LOOP | SND_ASYNC);
@@ -4981,5 +4992,6 @@ int main(int argc, char** argv) {
     glutTimerFunc(25, update, 0); //Add a timer
 
     glutMainLoop();
+
 
 }
