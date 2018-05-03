@@ -4297,7 +4297,7 @@ void drawScene() {
 
     //DrawMenu
     glPushMatrix();
-        drawMenu();
+        //drawMenu();
     glPopMatrix();
 
 
