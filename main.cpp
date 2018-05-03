@@ -2356,19 +2356,1017 @@ void drawHill(){
 void drawFireFlower(float translateX, float translateY){
     glPushMatrix();
 
-    glTranslatef(translateX, translateY, 0);
-    glScalef(0.5, 0.5, 1);
+    glTranslatef(translateX+0.25, translateY+0.30, 0);
+    glScalef(0.03, 0.03, 1);
 
-    glBegin(GL_QUADS);
+//    glBegin(GL_QUADS);
+//
+//    glColor3ub(0, 240, 110);
+//
+//    glVertex3f(0, 0, 0);
+//    glVertex3f(1, 0, 0);
+//    glVertex3f(1, 1, 0);
+//    glVertex3f(0, 1, 0);
+//
+//    glEnd();
 
-    glColor3ub(0, 240, 110);
+    glPushMatrix(); //Save the current state of transformations
 
-    glVertex3f(0, 0, 0);
-    glVertex3f(1, 0, 0);
-    glVertex3f(1, 1, 0);
-    glVertex3f(0, 1, 0);
+	glBegin(GL_QUADS);
 
-    glEnd();
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-4, 0, 0);
+	glVertex3f(4, 0, 0);
+	glVertex3f(4, 1, 0);
+	glVertex3f(-4, 1, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //red block2 left part1 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(-3, 2, 0);
+	glVertex3f(-6, 2, 0);
+	glVertex3f(-6, 1, 0);
+	glVertex3f(-3, 1, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //red block3 right part1 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(3, 2, 0);
+	glVertex3f(6, 2, 0);
+	glVertex3f(6, 1, 0);
+	glVertex3f(3, 1, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //red block4 left part2 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(-5, 5, 0);
+	glVertex3f(-7, 5, 0);
+	glVertex3f(-7, 2, 0);
+	glVertex3f(-5, 2, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //red block5 right part2 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(5, 5, 0);
+	glVertex3f(7, 5, 0);
+	glVertex3f(7, 2, 0);
+	glVertex3f(5, 2, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //red block6 left part3 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(-6, 5, 0);
+	glVertex3f(-3, 5, 0);
+	glVertex3f(-3, 6, 0);
+	glVertex3f(-6, 6, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //red block7 right part3 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(6, 5, 0);
+	glVertex3f(3, 5, 0);
+	glVertex3f(3, 6, 0);
+	glVertex3f(6, 6, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //red block8 upper part with plus minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-4, 6, 0);
+	glVertex3f(4, 6, 0);
+	glVertex3f(4, 7, 0);
+	glVertex3f(-4, 7, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//gold block1 lower part with plus minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(-3, 1, 0);
+	glVertex3f(3, 1, 0);
+	glVertex3f(3, 2, 0);
+	glVertex3f(-3, 2, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//gold block2 left part1 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(-5, 2, 0);
+	glVertex3f(-3, 2, 0);
+	glVertex3f(-3, 3, 0);
+	glVertex3f(-5, 3, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+
+	//gold block3 right part1 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(5, 2, 0);
+	glVertex3f(3, 2, 0);
+	glVertex3f(3, 3, 0);
+	glVertex3f(5, 3, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+	//gold block4 left part2 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(-5, 3, 0);
+	glVertex3f(-4, 3, 0);
+	glVertex3f(-4, 4, 0);
+	glVertex3f(-5, 4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//gold block5 right part2 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(5, 3, 0);
+	glVertex3f(4, 3, 0);
+	glVertex3f(4, 4, 0);
+	glVertex3f(5, 4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//gold block6 left part3 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(-5, 4, 0);
+	glVertex3f(-3, 4, 0);
+	glVertex3f(-3, 5, 0);
+	glVertex3f(-5, 5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//gold block7 right part3 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(5, 4, 0);
+	glVertex3f(3, 4, 0);
+	glVertex3f(3, 5, 0);
+	glVertex3f(5, 5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//gold block8 upper part with plus minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 128, 0);
+
+
+	glVertex3f(-3, 5, 0);
+	glVertex3f(3, 5, 0);
+	glVertex3f(3, 6, 0);
+	glVertex3f(-3, 6, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//yellow block1 lower part with plus minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(-1, 2, 0);
+	glVertex3f(1, 2, 0);
+	glVertex3f(1, 3, 0);
+	glVertex3f(-1, 3, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//yellow block2 left part1 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(-3, 2, 0);
+	glVertex3f(-2, 2, 0);
+	glVertex3f(-2, 3, 0);
+	glVertex3f(-3, 3, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//yellow block3 right part1 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(3, 2, 0);
+	glVertex3f(2, 2, 0);
+	glVertex3f(2, 3, 0);
+	glVertex3f(3, 3, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+	//yellow block4 left part2 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(-4, 3, 0);
+	glVertex3f(-3, 3, 0);
+	glVertex3f(-3, 4, 0);
+	glVertex3f(-4, 4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//yellow block5 right part2 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(4, 3, 0);
+	glVertex3f(3, 3, 0);
+	glVertex3f(3, 4, 0);
+	glVertex3f(4, 4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//yellow block6 left part3 with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(-3, 4, 0);
+	glVertex3f(-2, 4, 0);
+	glVertex3f(-2, 5, 0);
+	glVertex3f(-3, 5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//yellow block7 right part3 with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(3, 4, 0);
+	glVertex3f(2, 4, 0);
+	glVertex3f(2, 5, 0);
+	glVertex3f(3, 5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//yellow block8 upper part with plus minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 0);
+
+
+	glVertex3f(-1, 4, 0);
+	glVertex3f(1, 4, 0);
+	glVertex3f(1, 5, 0);
+	glVertex3f(-1, 5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//white block1 middle part with plus minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+
+	glVertex3f(-1, 3, 0);
+	glVertex3f(1, 3, 0);
+	glVertex3f(1, 4, 0);
+	glVertex3f(-1, 4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//white block2 left part with minus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+
+	glVertex3f(-3, 3, 0);
+	glVertex3f(-2, 3, 0);
+	glVertex3f(-2, 4, 0);
+	glVertex3f(-3, 4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//white block3 right part with plus side
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 255, 255);
+
+
+	glVertex3f(3, 3, 0);
+	glVertex3f(2, 3, 0);
+	glVertex3f(2, 4, 0);
+	glVertex3f(3, 4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block1 middle part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(-1, 0, 0);
+	glVertex3f(-1, -6, 0);
+	glVertex3f(1, -6, 0);
+	glVertex3f(1, 0, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block2 left part1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(-1, -6, 0);
+	glVertex3f(-1, -5, 0);
+	glVertex3f(-4, -5, 0);
+	glVertex3f(-4, -6, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block3 right part1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(1, -6, 0);
+	glVertex3f(4, -6, 0);
+	glVertex3f(4, -5, 0);
+	glVertex3f(1, -5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block4 left part2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(-2, -5, 0);
+	glVertex3f(-2, -4, 0);
+	glVertex3f(-6, -4, 0);
+	glVertex3f(-6, -5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+
+	//green block5 right part2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(2, -5, 0);
+	glVertex3f(6, -5, 0);
+	glVertex3f(6, -4, 0);
+	glVertex3f(2, -4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block6 left part3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(-2, -4, 0);
+	glVertex3f(-2, -3, 0);
+	glVertex3f(-7, -3, 0);
+	glVertex3f(-7, -4, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block7 right part3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(2, -4, 0);
+	glVertex3f(7, -4, 0);
+	glVertex3f(7, -3, 0);
+	glVertex3f(2, -3, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block8 left part4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(-4, -3, 0);
+	glVertex3f(-4, -2, 0);
+	glVertex3f(-7, -2, 0);
+	glVertex3f(-7, -3, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block9 right part4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(3, -3, 0);
+	glVertex3f(7, -3, 0);
+	glVertex3f(7, -2, 0);
+	glVertex3f(3, -2, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block10 left part5
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(-5, -2, 0);
+	glVertex3f(-5, -1, 0);
+	glVertex3f(-7, -1, 0);
+	glVertex3f(-7, -2, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//green block11 right part5
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(0, 255, 0);
+
+
+	glVertex3f(5, -2, 0);
+	glVertex3f(7, -2, 0);
+	glVertex3f(7, -1, 0);
+	glVertex3f(5, -1, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix();
 
     glPopMatrix();
 }
