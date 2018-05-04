@@ -9601,10 +9601,12 @@ void handleKeypress(unsigned char key, int x, int y) {
             if(isPaused)
             {
                 isPaused = false;
+                mciSendString("resume background", 0, 0, 0);
             }
             else if(!isPaused)
             {
                 isPaused = true;
+                mciSendString("pause background", 0, 0, 0);
             }
             enableSound("pause");
          }
