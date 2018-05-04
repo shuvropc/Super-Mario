@@ -332,7 +332,7 @@ void slideBrick(){
     else if(marioPositionX>slideBrickX[0][0] && marioPositionX<slideBrickX[0][0]+4.5 && onTheBrick==true && slideBrickX[0][1]==1){
         marioPositionX-=0.02f;
         cameraX+=0.02f;
-        cout<<"it will lessen"<<endl;
+//        cout<<"it will lessen"<<endl;
     }
 
 
@@ -407,7 +407,7 @@ for(int i=0; i<arrayLength;i++){
      float positionDifference = emeneyPositionx[i]-bulletX;
      float enemyMarioDifference = emeneyPositionx[i]-marioPositionX;
 
-        if(positionDifference<-0.25 && positionDifference>-1.0){
+        if(positionDifference<-0.25 && positionDifference>-1.0 && fireBullet==true){
                    if(enemyMarioDifference<10 && enemyMarioDifference>-10){
                           emeneyPositionx[i]=-50;
                           enableSound("enemycollite");
@@ -4017,6 +4017,7 @@ void handleKeypress(unsigned char key, int x, int y) {
                bulletX=marioPositionX-2.5;
                bulletY=marioPositionY+1.65;
 
+               cout<<"Fired"<<endl;
          }
 
          if(key=='p')
@@ -4829,12 +4830,10 @@ void update(int value) {
     glutTimerFunc(25, update, 0);
 }
 
-void playBackgroundMusic()
-{
+void playBackgroundMusic(){
     mciSendString("open ./sounds/background.wav alias background", 0, 0, 0);
     mciSendString("play background", 0, 0, 0);
 }
-
 
 int main(int argc, char** argv) {
     //Initialize GLUT
