@@ -42,6 +42,9 @@ float cameraX=-5.52;
 
 
 //Mario Property
+int marioState = 0; // 0 is idle, 1 is running, 2 is jump
+int previousMarioState;
+float marioRunCounter = 0.0;
 float marioPositionX=4;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
@@ -666,6 +669,7 @@ void detectCollision(){
                              //marioPositionY=bottomCollisionArea[i][1];
 
                              onTheBrick = true;
+
                             //cout<<"On the brick: "<<marioPositionY<<endl;
 
                     }
@@ -4368,357 +4372,5087 @@ void drawMarioNew(){
 
 
 
-        glBegin(GL_POLYGON);
+glPushMatrix();
 
-        glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
 
-glVertex3f(0.41, 0.90, 0.0);
-glVertex3f(0.41, 0.93, 0.0);
-glVertex3f(0.26, 0.93, 0.0);
-glVertex3f(0.26, 0.90, 0.0);
-glVertex3f(0.23, 0.90, 0.0);
-glVertex3f(0.23, 0.87, 0.0);
-glVertex3f(0.50, 0.87, 0.0);
-glVertex3f(0.50, 0.90, 0.0);
+    glBegin(GL_POLYGON);
 
-glEnd();
+    glColor3ub(255, 0, 0);
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+    glVertex3f(0.41, 0.90, 0.0);
+    glVertex3f(0.41, 0.93, 0.0);
+    glVertex3f(0.26, 0.93, 0.0);
+    glVertex3f(0.26, 0.90, 0.0);
+    glVertex3f(0.23, 0.90, 0.0);
+    glVertex3f(0.23, 0.87, 0.0);
+    glVertex3f(0.50, 0.87, 0.0);
+    glVertex3f(0.50, 0.90, 0.0);
 
-glVertex3f(0.23, 0.87, 0.0);
-glVertex3f(0.32, 0.87, 0.0);
-glVertex3f(0.32, 0.84, 0.0);
-glVertex3f(0.23, 0.84, 0.0);
+    glEnd();
 
-glEnd();
+    glPopMatrix();
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
 
-glVertex3f(0.29, 0.81, 0.0);
-glVertex3f(0.29, 0.84, 0.0);
-glVertex3f(0.26, 0.84, 0.0);
-glVertex3f(0.26, 0.78, 0.0);
-glVertex3f(0.32, 0.78, 0.0);
-glVertex3f(0.32, 0.81, 0.0);
+    //mario hair part1 under cap greenish block
+    glPushMatrix();
 
+    glBegin(GL_POLYGON);
 
+    glColor3ub(153, 115, 0);
 
-glEnd();
+    glVertex3f(0.23, 0.87, 0.0);
+    glVertex3f(0.32, 0.87, 0.0);
+    glVertex3f(0.32, 0.84, 0.0);
+    glVertex3f(0.23, 0.84, 0.0);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.32, 0.84, 0.0);
-glVertex3f(0.29, 0.84, 0.0);
-glVertex3f(0.29, 0.81, 0.0);
-glVertex3f(0.32, 0.81, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
-glVertex3f(0.38, 0.87, 0.0);
-glVertex3f(0.32, 0.87, 0.0);
+    glPopMatrix();
 
 
+    //mario hair part2/chip greenish block
+    glPushMatrix();
 
+    glBegin(GL_POLYGON);
 
-glEnd();
+    glColor3ub(153, 115, 0);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glVertex3f(0.29, 0.81, 0.0);
+    glVertex3f(0.29, 0.84, 0.0);
+    glVertex3f(0.26, 0.84, 0.0);
+    glVertex3f(0.26, 0.78, 0.0);
+    glVertex3f(0.32, 0.78, 0.0);
+    glVertex3f(0.32, 0.81, 0.0);
 
-glVertex3f(0.26, 0.84, 0.0);
-glVertex3f(0.23, 0.84, 0.0);
-glVertex3f(0.23, 0.78, 0.0);
-glVertex3f(0.26, 0.78, 0.0);
+    glEnd();
 
+    glPopMatrix();
 
 
-glEnd();
+    //mario face centre part skinnish block1
+    glPushMatrix();
 
+    glBegin(GL_POLYGON);
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+    glColor3ub(255, 184, 77);
 
-glVertex3f(0.23, 0.84, 0.0);
-glVertex3f(0.20, 0.84, 0.0);
-glVertex3f(0.20, 0.78, 0.0);
-glVertex3f(0.23, 0.78, 0.0);
+    glVertex3f(0.32, 0.84, 0.0);
+    glVertex3f(0.29, 0.84, 0.0);
+    glVertex3f(0.29, 0.81, 0.0);
+    glVertex3f(0.32, 0.81, 0.0);
+    glVertex3f(0.32, 0.72, 0.0);
+    glVertex3f(0.38, 0.72, 0.0);
+    glVertex3f(0.38, 0.87, 0.0);
+    glVertex3f(0.32, 0.87, 0.0);
 
 
-glEnd();
+    glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+    glPopMatrix();
 
-glVertex3f(0.23, 0.78, 0.0);
-glVertex3f(0.26, 0.78, 0.0);
-glVertex3f(0.26, 0.75, 0.0);
-glVertex3f(0.23, 0.75, 0.0);
 
-glEnd();
+    //mario ear skinnish block2
+    glPushMatrix();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glBegin(GL_POLYGON);
 
-glVertex3f(0.26, 0.78, 0.0);
-glVertex3f(0.32, 0.78, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.26, 0.72, 0.0);
+    glColor3ub(255, 184, 77);
 
-glEnd();
+    glVertex3f(0.26, 0.84, 0.0);
+    glVertex3f(0.23, 0.84, 0.0);
+    glVertex3f(0.23, 0.78, 0.0);
+    glVertex3f(0.26, 0.78, 0.0);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 0.0, 0.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.41, 0.81, 0.0);
-glVertex3f(0.41, 0.87, 0.0);
-glVertex3f(0.38, 0.87, 0.0);
-glVertex3f(0.38, 0.81, 0.0);
-glVertex3f(0.44, 0.81, 0.0);
-glVertex3f(0.44, 0.78, 0.0);
-glVertex3f(0.41, 0.78, 0.0);
+    glPopMatrix();
 
 
+    //mario back side hair part3 greenish block1 adjacent to ear
+    glPushMatrix();
 
-glEnd();
+    glBegin(GL_POLYGON);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glColor3ub(153, 115, 0);
 
-glVertex3f(0.41, 0.81, 0.0);
-glVertex3f(0.38, 0.81, 0.0);
-glVertex3f(0.38, 0.78, 0.0);
-glVertex3f(0.41, 0.78, 0.0);
+    glVertex3f(0.23, 0.84, 0.0);
+    glVertex3f(0.20, 0.84, 0.0);
+    glVertex3f(0.20, 0.78, 0.0);
+    glVertex3f(0.23, 0.78, 0.0);
 
-glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.44, 0.84, 0.0);
-glVertex3f(0.44, 0.87, 0.0);
-glVertex3f(0.41, 0.87, 0.0);
-glVertex3f(0.41, 0.81, 0.0);
-glVertex3f(0.44, 0.81, 0.0);
-glVertex3f(0.44, 0.78, 0.0);
-glVertex3f(0.50, 0.78, 0.0);
-glVertex3f(0.50, 0.84, 0.0);
 
+    glPopMatrix();
 
-glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    //mario back side hair part4 greenish block2
+    glPushMatrix();
 
-glVertex3f(0.50, 0.81, 0.0);
-glVertex3f(0.50, 0.78, 0.0);
-glVertex3f(0.53, 0.78, 0.0);
-glVertex3f(0.53, 0.81, 0.0);
+    glBegin(GL_POLYGON);
 
+    glColor3ub(153, 115, 0);
 
-glEnd();
+    glVertex3f(0.23, 0.78, 0.0);
+    glVertex3f(0.26, 0.78, 0.0);
+    glVertex3f(0.26, 0.75, 0.0);
+    glVertex3f(0.23, 0.75, 0.0);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 0.0, 0.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.38, 0.75, 0.0);
-glVertex3f(0.50, 0.75, 0.0);
-glVertex3f(0.50, 0.78, 0.0);
-glVertex3f(0.38, 0.78, 0.0);
+    glPopMatrix();
 
-glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    //mario goola/ghaar skinnish block3 under chip
+    glPushMatrix();
 
-glVertex3f(0.38, 0.75, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
-glVertex3f(0.44, 0.72, 0.0);
-glVertex3f(0.44, 0.75, 0.0);
+    glBegin(GL_POLYGON);
 
+    glColor3ub(255, 184, 77);
 
+    glVertex3f(0.26, 0.78, 0.0);
+    glVertex3f(0.32, 0.78, 0.0);
+    glVertex3f(0.32, 0.72, 0.0);
+    glVertex3f(0.26, 0.72, 0.0);
 
-glEnd();
+    glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
+    glPopMatrix();
 
-glVertex3f(0.26, 0.63, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.29, 0.72, 0.0);
-glVertex3f(0.23, 0.72, 0.0);
-glVertex3f(0.23, 0.69, 0.0);
-glVertex3f(0.20, 0.69, 0.0);
-glVertex3f(0.20, 0.66, 0.0);
-glVertex3f(0.17, 0.66, 0.0);
-glVertex3f(0.17, 0.63, 0.0);
-glVertex3f(0.23, 0.63, 0.0);
-glVertex3f(0.23, 0.60, 0.0);
-glVertex3f(0.26, 0.60, 0.0);
+    //mario eye + goof of nose greenish block1
+    glPushMatrix();
 
-glEnd();
+    glBegin(GL_POLYGON);
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
+    glColor3ub(153, 115, 0);
 
-glVertex3f(0.32, 0.63, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.29, 0.72, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.32, 0.63, 0.0);
-glVertex3f(0.32, 0.54, 0.0);
-glVertex3f(0.38, 0.54, 0.0);
-glVertex3f(0.38, 0.66, 0.0);
-glVertex3f(0.32, 0.66, 0.0);
+    glVertex3f(0.41, 0.81, 0.0);
+    glVertex3f(0.41, 0.87, 0.0);
+    glVertex3f(0.38, 0.87, 0.0);
+    glVertex3f(0.38, 0.81, 0.0);
+    glVertex3f(0.44, 0.81, 0.0);
+    glVertex3f(0.44, 0.78, 0.0);
+    glVertex3f(0.41, 0.78, 0.0);
 
-glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.38, 0.63, 0.0);
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.41, 0.72, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
+    glPopMatrix();
 
+    //mario gaal/back end goof of nose side skinnish block4
+    glPushMatrix();
 
-glEnd();
+    glBegin(GL_POLYGON);
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
+    glColor3ub(255, 184, 77);
 
-glVertex3f(0.32, 0.66, 0.0);
-glVertex3f(0.32, 0.72, 0.0);
-glVertex3f(0.38, 0.72, 0.0);
-glVertex3f(0.38, 0.66, 0.0);
+    glVertex3f(0.41, 0.81, 0.0);
+    glVertex3f(0.38, 0.81, 0.0);
+    glVertex3f(0.38, 0.78, 0.0);
+    glVertex3f(0.41, 0.78, 0.0);
 
-glEnd();
+    glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 1.0, 0.0);//(R,G,B)
 
-glVertex3f(0.44, 0.63, 0.0);
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.41, 0.72, 0.0);
-glVertex3f(0.47, 0.72, 0.0);
-glVertex3f(0.47, 0.69, 0.0);
-glVertex3f(0.50, 0.69, 0.0);
-glVertex3f(0.50, 0.66, 0.0);
-glVertex3f(0.53, 0.66, 0.0);
-glVertex3f(0.53, 0.63, 0.0);
-glVertex3f(0.47, 0.63, 0.0);
-glVertex3f(0.47, 0.60, 0.0);
-glVertex3f(0.44, 0.60, 0.0);
+    glPopMatrix();
 
 
-glEnd();
+    //mario frontal nose side skinnish block5
+    glPushMatrix();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glBegin(GL_POLYGON);
 
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.38, 0.63, 0.0);
-glVertex3f(0.38, 0.60, 0.0);
-glVertex3f(0.41, 0.60, 0.0);
+    glColor3ub(255, 184, 77);
 
-glEnd();
+    glVertex3f(0.44, 0.84, 0.0);
+    glVertex3f(0.44, 0.87, 0.0);
+    glVertex3f(0.41, 0.87, 0.0);
+    glVertex3f(0.41, 0.81, 0.0);
+    glVertex3f(0.44, 0.81, 0.0);
+    glVertex3f(0.44, 0.78, 0.0);
+    glVertex3f(0.50, 0.78, 0.0);
+    glVertex3f(0.50, 0.84, 0.0);
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.32, 0.63, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.29, 0.60, 0.0);
-glVertex3f(0.32, 0.60, 0.0);
 
-glEnd();
+    glPopMatrix();
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
 
-glVertex3f(0.44, 0.57, 0.0);
-glVertex3f(0.44, 0.63, 0.0);
-glVertex3f(0.41, 0.63, 0.0);
-glVertex3f(0.41, 0.60, 0.0);
-glVertex3f(0.38, 0.60, 0.0);
-glVertex3f(0.38, 0.51, 0.0);
-glVertex3f(0.47, 0.51, 0.0);
-glVertex3f(0.47, 0.57, 0.0);
+    //mario frontal nose side small skinnish block6
+    glPushMatrix();
 
-glEnd();
+    glBegin(GL_POLYGON);
 
-glBegin(GL_POLYGON);
-glColor3f(0.0, 0.0, 1.0);//(R,G,B)
+    glColor3ub(255, 184, 77);
 
-glVertex3f(0.26, 0.57, 0.0);
-glVertex3f(0.26, 0.63, 0.0);
-glVertex3f(0.29, 0.63, 0.0);
-glVertex3f(0.29, 0.60, 0.0);
-glVertex3f(0.32, 0.60, 0.0);
-glVertex3f(0.32, 0.51, 0.0);
-glVertex3f(0.23, 0.51, 0.0);
-glVertex3f(0.23, 0.57, 0.0);
+    glVertex3f(0.50, 0.81, 0.0);
+    glVertex3f(0.50, 0.78, 0.0);
+    glVertex3f(0.53, 0.78, 0.0);
+    glVertex3f(0.53, 0.81, 0.0);
 
-glEnd();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.23, 0.60, 0.0);
-glVertex3f(0.23, 0.63, 0.0);
-glVertex3f(0.17, 0.63, 0.0);
-glVertex3f(0.17, 0.54, 0.0);
-glVertex3f(0.23, 0.54, 0.0);
-glVertex3f(0.23, 0.57, 0.0);
-glVertex3f(0.26, 0.57, 0.0);
-glVertex3f(0.26, 0.60, 0.0);
+    glPopMatrix();
 
-glEnd();
+    //mario big goof greenish block2
+    glPushMatrix();
 
-glBegin(GL_POLYGON);
-glColor3f(1.0, 1.0, 0.0);//(R,G,B)
+    glBegin(GL_POLYGON);
 
-glVertex3f(0.47, 0.60, 0.0);
-glVertex3f(0.47, 0.63, 0.0);
-glVertex3f(0.53, 0.63, 0.0);
-glVertex3f(0.53, 0.54, 0.0);
-glVertex3f(0.47, 0.54, 0.0);
-glVertex3f(0.47, 0.57, 0.0);
-glVertex3f(0.44, 0.57, 0.0);
-glVertex3f(0.44, 0.60, 0.0);
+    glColor3ub(153, 115, 0);
 
-glEnd();
+    glVertex3f(0.38, 0.75, 0.0);
+    glVertex3f(0.50, 0.75, 0.0);
+    glVertex3f(0.50, 0.78, 0.0);
+    glVertex3f(0.38, 0.78, 0.0);
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+    glEnd();
 
-glVertex3f(0.20, 0.48, 0.0);
-glVertex3f(0.20, 0.51, 0.0);
-glVertex3f(0.29, 0.51, 0.0);
-glVertex3f(0.29, 0.45, 0.0);
-glVertex3f(0.17, 0.45, 0.0);
-glVertex3f(0.17, 0.48, 0.0);
+    glPopMatrix();
 
+    //mario goola/thutni skinnish block7
+    glPushMatrix();
 
-glEnd();
+    glBegin(GL_POLYGON);
 
+    glColor3ub(255, 184, 77);
 
-glBegin(GL_POLYGON);
-glColor3f(0.33, 0.0, 0.0);//(R,G,B)
+    glVertex3f(0.38, 0.75, 0.0);
+    glVertex3f(0.38, 0.72, 0.0);
+    glVertex3f(0.44, 0.72, 0.0);
+    glVertex3f(0.44, 0.75, 0.0);
 
-glVertex3f(0.50, 0.48, 0.0);
-glVertex3f(0.50, 0.51, 0.0);
-glVertex3f(0.41, 0.51, 0.0);
-glVertex3f(0.41, 0.45, 0.0);
-glVertex3f(0.53, 0.45, 0.0);
-glVertex3f(0.53, 0.48, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario right hand greenish block
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(153, 115, 0);
+
+    glVertex3f(0.26, 0.63, 0.0);
+    glVertex3f(0.29, 0.63, 0.0);
+    glVertex3f(0.29, 0.72, 0.0);
+    glVertex3f(0.23, 0.72, 0.0);
+    glVertex3f(0.23, 0.69, 0.0);
+    glVertex3f(0.20, 0.69, 0.0);
+    glVertex3f(0.20, 0.66, 0.0);
+    glVertex3f(0.17, 0.66, 0.0);
+    glVertex3f(0.17, 0.63, 0.0);
+    glVertex3f(0.23, 0.63, 0.0);
+    glVertex3f(0.23, 0.60, 0.0);
+    glVertex3f(0.26, 0.60, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+    //mario dress red block2 right side shoulder + centre part
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 0, 0);
+
+    glVertex3f(0.32, 0.63, 0.0);
+    glVertex3f(0.32, 0.72, 0.0);
+    glVertex3f(0.29, 0.72, 0.0);
+    glVertex3f(0.29, 0.63, 0.0);
+    glVertex3f(0.32, 0.63, 0.0);
+    glVertex3f(0.32, 0.54, 0.0);
+    glVertex3f(0.38, 0.54, 0.0);
+    glVertex3f(0.38, 0.66, 0.0);
+    glVertex3f(0.32, 0.66, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+    //mario dress red block3 left shoulder joint adjacent skinnish button
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 0, 0);
+
+    glVertex3f(0.38, 0.63, 0.0);
+    glVertex3f(0.41, 0.63, 0.0);
+    glVertex3f(0.41, 0.72, 0.0);
+    glVertex3f(0.38, 0.72, 0.0);
+
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario goola/chest/centre part greenish block
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(153, 115, 0);
+
+    glVertex3f(0.32, 0.66, 0.0);
+    glVertex3f(0.32, 0.72, 0.0);
+    glVertex3f(0.38, 0.72, 0.0);
+    glVertex3f(0.38, 0.66, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario leg hand greenish block
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(153, 115, 0);
+
+    glVertex3f(0.44, 0.63, 0.0);
+    glVertex3f(0.41, 0.63, 0.0);
+    glVertex3f(0.41, 0.72, 0.0);
+    glVertex3f(0.47, 0.72, 0.0);
+    glVertex3f(0.47, 0.69, 0.0);
+    glVertex3f(0.50, 0.69, 0.0);
+    glVertex3f(0.50, 0.66, 0.0);
+    glVertex3f(0.53, 0.66, 0.0);
+    glVertex3f(0.53, 0.63, 0.0);
+    glVertex3f(0.47, 0.63, 0.0);
+    glVertex3f(0.47, 0.60, 0.0);
+    glVertex3f(0.44, 0.60, 0.0);
+
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario left side button skinnish block8
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 184, 77);
+
+    glVertex3f(0.41, 0.63, 0.0);
+    glVertex3f(0.38, 0.63, 0.0);
+    glVertex3f(0.38, 0.60, 0.0);
+    glVertex3f(0.41, 0.60, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario right side button skinnish block9
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 184, 77);
+
+    glVertex3f(0.32, 0.63, 0.0);
+    glVertex3f(0.29, 0.63, 0.0);
+    glVertex3f(0.29, 0.60, 0.0);
+    glVertex3f(0.32, 0.60, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+    //mario dress red block4 left leg part
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 0, 0);
+
+    glVertex3f(0.44, 0.57, 0.0);
+    glVertex3f(0.44, 0.63, 0.0);
+    glVertex3f(0.41, 0.63, 0.0);
+    glVertex3f(0.41, 0.60, 0.0);
+    glVertex3f(0.38, 0.60, 0.0);
+    glVertex3f(0.38, 0.51, 0.0);
+    glVertex3f(0.47, 0.51, 0.0);
+    glVertex3f(0.47, 0.57, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+    //mario dress red block5 right leg part
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 0, 0);
+
+    glVertex3f(0.26, 0.57, 0.0);
+    glVertex3f(0.26, 0.63, 0.0);
+    glVertex3f(0.29, 0.63, 0.0);
+    glVertex3f(0.29, 0.60, 0.0);
+    glVertex3f(0.32, 0.60, 0.0);
+    glVertex3f(0.32, 0.51, 0.0);
+    glVertex3f(0.23, 0.51, 0.0);
+    glVertex3f(0.23, 0.57, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario right hand finger skinnish block10
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 184, 77);
+
+    glVertex3f(0.23, 0.60, 0.0);
+    glVertex3f(0.23, 0.63, 0.0);
+    glVertex3f(0.17, 0.63, 0.0);
+    glVertex3f(0.17, 0.54, 0.0);
+    glVertex3f(0.23, 0.54, 0.0);
+    glVertex3f(0.23, 0.57, 0.0);
+    glVertex3f(0.26, 0.57, 0.0);
+    glVertex3f(0.26, 0.60, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario left hand finger skinnish block11
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(255, 184, 77);
+
+    glVertex3f(0.47, 0.60, 0.0);
+    glVertex3f(0.47, 0.63, 0.0);
+    glVertex3f(0.53, 0.63, 0.0);
+    glVertex3f(0.53, 0.54, 0.0);
+    glVertex3f(0.47, 0.54, 0.0);
+    glVertex3f(0.47, 0.57, 0.0);
+    glVertex3f(0.44, 0.57, 0.0);
+    glVertex3f(0.44, 0.60, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario right leg greenish block
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(153, 115, 0);
+
+    glVertex3f(0.20, 0.48, 0.0);
+    glVertex3f(0.20, 0.51, 0.0);
+    glVertex3f(0.29, 0.51, 0.0);
+    glVertex3f(0.29, 0.45, 0.0);
+    glVertex3f(0.17, 0.45, 0.0);
+    glVertex3f(0.17, 0.48, 0.0);
+
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    //mario left leg greenish block
+    glPushMatrix();
+
+    glBegin(GL_POLYGON);
+
+    glColor3ub(153, 115, 0);
+
+    glVertex3f(0.50, 0.48, 0.0);
+    glVertex3f(0.50, 0.51, 0.0);
+    glVertex3f(0.41, 0.51, 0.0);
+    glVertex3f(0.41, 0.45, 0.0);
+    glVertex3f(0.53, 0.45, 0.0);
+    glVertex3f(0.53, 0.48, 0.0);
+
+    glEnd();
+
+
+    glPopMatrix();
+
+
+    glPopMatrix();
+}
+
+void drawMarioRun()
+{
+    float runSpeedInc = 0.25;
+    glPushMatrix();
+
+    glTranslatef(0.45, 0.9, 0);
+
+    if(marioDirectionRight==false){
+            glTranslatef(marioPositionX-1.3, marioPositionY, 0);
+            glRotatef(180,0.0,1.0,0.0);
+        }else{
+             glTranslatef(marioPositionX-1.1, marioPositionY, 0);
+            glRotatef(0,0.0,0.0,0.0);
+        }
+    glScalef(0.02, 0.025, 1);
+
+
+    if(marioRunCounter >= 0.0 && marioRunCounter < 1.0)
+    {
+
+        glPushMatrix(); //Save the current state of transformations
+
+
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+        glVertex3f(4, 0, 0);
+        glVertex3f(4, 1.5, 0);
+        glVertex3f(-3.5, 1.5, 0);
+        glVertex3f(-3.5, 0, 0);
+
+        glEnd();
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario red cap lower block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+        glVertex3f(-5, -1.5, 0);
+        glVertex3f(8.5, -1.5, 0);
+        glVertex3f(8.5, 0, 0);
+        glVertex3f(-5, 0, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+        //mario hair block1 under cap
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.65, 0.30, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(-5, -1.5, 0);
+        glVertex3f(-5, -2.5, 0);
+        glVertex3f(0, -2.5, 0);
+        glVertex3f(0, -1.5, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario hair with chip block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+
+        glVertex3f(-3.5, -2.5, 0);
+        glVertex3f(-3.5, -4, 0);
+        glVertex3f(-2, -4, 0);
+        glVertex3f(-2, -2.5, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario hair with chip block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(-3.5, -4, 0);
+        glVertex3f(-3.5, -5.5, 0);
+        glVertex3f(0, -5.5, 0);
+        glVertex3f(0, -4, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario ear skinnish block
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.65, -0.15, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(-5, -2.5, 0);
+        glVertex3f(-5, -5.5, 0);
+        glVertex3f(-3.5, -5.5, 0);
+        glVertex3f(-3.5, -2.5, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario hair block1 backside of ear skinnish block
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(-0.65, -0.15, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(-5, -2.5, 0);
+        glVertex3f(-6.5, -2.5, 0);
+        glVertex3f(-6.5, -5.5, 0);
+        glVertex3f(-5, -5.5, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario hair block2 backside of ear skinnish block
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -0.85, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(-6.5, -5.5, 0);
+        glVertex3f(-6.5, -7, 0);
+        glVertex3f(-3.5, -7, 0);
+        glVertex3f(-3.5, -5.5, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario kopal skinnish block infront chip block1 under cap
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(-0.20, -0.85, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(0, -2.5, 0);
+        glVertex3f(3, -2.5, 0);
+        glVertex3f(3, -1.5, 0);
+        glVertex3f(0, -1.5, 0);
+
+        glEnd();
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario gaal/chowal block1 infront of chip block
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(-0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(3, -2.5, 0);
+        glVertex3f(-3.5, -2.5, 0);
+        glVertex3f(-3.5, -4, 0);
+        glVertex3f(3, -4, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+        //mario eye greenish part under cap
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(3, -1.5, 0);
+        glVertex3f(3, -4, 0);
+        glVertex3f(4, -4, 0);
+        glVertex3f(4, -1.5, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+        //mario gaal/chowal block2 infront of chip block beside small goof nose
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(0, -4, 0);
+        glVertex3f(0, -5.5, 0);
+        glVertex3f(4, -5.5, 0);
+        glVertex3f(4, -4, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+        //mario gaal/chowal block3 under chip block beside goof big part
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(-3.5, -5.5, 0);
+        glVertex3f(-3.5, -8, 0);
+        glVertex3f(3, -8, 0);
+        glVertex3f(3, -5.5, 0);
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario eye greenish block infront of kopal under cap
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(4, -1.5, 0);
+        glVertex3f(4, -4, 0);
+        glVertex3f(5.5, -4, 0);
+        glVertex3f(5.5, -1.5, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario nose with goof small part
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(4, -4, 0);
+        glVertex3f(4, -5.5, 0);
+        glVertex3f(5.5, -5.5, 0);
+        glVertex3f(5.5, -4, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario eye skinnish block infront gaal skinnish block1 adjacent small goof of nose
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(5.5, -5.5, 0);
+        glVertex3f(7, -5.5, 0);
+        glVertex3f(7, -2.5, 0);
+        glVertex3f(5.5, -2.5, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario eye infront of gaal skinnish block2 adjacent small goof of nose
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(7, -5.5, 0);
+        glVertex3f(11, -5.5, 0);
+        glVertex3f(11, -4, 0);
+        glVertex3f(7, -4, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario goof big part
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(10, -5.5, 0);
+        glVertex3f(3, -5.5, 0);
+        glVertex3f(3, -7, 0);
+        glVertex3f(10, -7, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario thutni under big goof part
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(3, -8, 0);
+        glVertex3f(7, -8, 0);
+        glVertex3f(7, -6.5, 0);
+        glVertex3f(3, -6.5, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+        //mario left hand greenish block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(1, -8, 0);
+        glVertex3f(1, -9, 0);
+        glVertex3f(4, -9, 0);
+        glVertex3f(4, -8, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+        //mario left hand greenish block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(3, -9, 0);
+        glVertex3f(3, -10, 0);
+        glVertex3f(7, -10, 0);
+        glVertex3f(7, -9, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+        //mario left hand greenish block3
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(5.5, -10, 0);
+        glVertex3f(5.5, -11, 0);
+        glVertex3f(10, -11, 0);
+        glVertex3f(10, -10, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario left hand with finger skinnish block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(7, -9, 0);
+        glVertex3f(7, -10, 0);
+        glVertex3f(12, -10, 0);
+        glVertex3f(12, -9, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+
+        //mario left hand with finger skinnish block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+        glVertex3f(10, -10, 0);
+        glVertex3f(10, -11, 0);
+        glVertex3f(12, -11, 0);
+        glVertex3f(12, -10, 0);
+
+
+        glEnd();
+
+        //glutSolidCube(1.0);
+
+        glPopMatrix();//Undo the move to the center of the pentagon
+
+
+        //mario right hand arm block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+
+        glVertex3f(-2, -8, 0);
+        glVertex3f(-7.5, -8, 0);
+        glVertex3f(-7.5, -10, 0);
+        glVertex3f(-2, -10, 0);
+
 
         glEnd();
 
 
-    glPopMatrix();
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+        //mario right hand arm block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(-2, -10, 0);
+        glVertex3f(-5, -10, 0);
+        glVertex3f(-5, -11, 0);
+        glVertex3f(-2, -11, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right hand arm finger block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+
+        glVertex3f(-7.5, -9, 0);
+        glVertex3f(-10, -9, 0);
+        glVertex3f(-10, -12.5, 0);
+        glVertex3f(-7.5, -12.5, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right hand arm finger block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+
+        glVertex3f(-7.5, -10, 0);
+        glVertex3f(-7.5, -11, 0);
+        glVertex3f(-6.5, -11, 0);
+        glVertex3f(-6.5, -10, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+
+        //mario right leg finger block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+
+        glVertex3f(-6.5, -14.5, 0);
+        glVertex3f(-8.5, -14.5, 0);
+        glVertex3f(-8.5, -15.5, 0);
+        glVertex3f(-6.5, -15.5, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right leg finger block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+
+        glVertex3f(-8.5, -15.5, 0);
+        glVertex3f(-8.5, -16.5, 0);
+        glVertex3f(-5, -16.5, 0);
+        glVertex3f(-5, -15.5, 0);
+
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right leg finger block3
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(-7.5, -16.5, 0);
+        glVertex3f(-7.5, -17.5, 0);
+        glVertex3f(-3.5, -17.5, 0);
+        glVertex3f(-3.5, -16.5, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right leg red block1 adjacent to right leg finger block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(-6.5, -14.5, 0);
+        glVertex3f(-6.5, -15.5, 0);
+        glVertex3f(-2, -15.5, 0);
+        glVertex3f(-2, -14.5, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario left leg red block2 adjacent to left leg finger block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(7, -14.5, 0);
+        glVertex3f(3, -14.5, 0);
+        glVertex3f(3, -15.5, 0);
+        glVertex3f(7, -15.5, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right left leg centre part red block3
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(-7.5, -13.5, 0);
+        glVertex3f(-7.5, -14.5, 0);
+        glVertex3f(7, -14.5, 0);
+        glVertex3f(7, -13.5, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right left leg centre part red block4
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(-6.5, -12.5, 0);
+        glVertex3f(-6.5, -13.5, 0);
+        glVertex3f(7, -13.5, 0);
+        glVertex3f(7, -12.5, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right left leg centre part red block5
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(-5, -11, 0);
+        glVertex3f(-5, -12.5, 0);
+        glVertex3f(5.5, -12.5, 0);
+        glVertex3f(5.5, -11, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right left leg centre part red block5 adjacent right hand block2 greenish part
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(-2, -11, 0);
+        glVertex3f(0, -11, 0);
+        glVertex3f(0, -10, 0);
+        glVertex3f(-2, -10, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario centre body skinish button1 beside centre part red block6
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 184, 77);
+
+
+        glVertex3f(0, -11, 0);
+        glVertex3f(1, -11, 0);
+        glVertex3f(1, -10, 0);
+        glVertex3f(0, -10, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right left leg centre body red block7 beside skinish button1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(1, -11, 0);
+        glVertex3f(5.5, -11, 0);
+        glVertex3f(5.5, -10, 0);
+        glVertex3f(1, -10, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right left leg centre body red block8
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(-2, -10, 0);
+        glVertex3f(3, -10, 0);
+        glVertex3f(3, -9, 0);
+        glVertex3f(-2, -9, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario right left leg centre body red block9
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(255, 0, 0);
+
+
+        glVertex3f(-2, -9, 0);
+        glVertex3f(1, -9, 0);
+        glVertex3f(1, -8, 0);
+        glVertex3f(-2, -8, 0);
+
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario left leg greenish block1
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(7, -15.5, 0);
+        glVertex3f(11, -15.5, 0);
+        glVertex3f(11, -12.5, 0);
+        glVertex3f(7, -12.5, 0);
+
+        glEnd();
+
+
+        //glutSolidCube(4.0);
+
+        glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+        //mario left leg greenish block2
+        glPushMatrix(); //Save the current state of transformations
+
+        //glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+        //glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+        //glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+        glBegin(GL_QUADS);
+
+        glColor3ub(153, 115, 0);
+
+        glVertex3f(11, -12.5, 0);
+        glVertex3f(11, -11, 0);
+        glVertex3f(10, -11, 0);
+        glVertex3f(10, -12.5, 0);
+
+        glEnd();
+
+        glPopMatrix();
+
+    }
+
+    else if(marioRunCounter >= 1.0 && marioRunCounter < 2.0)
+    {
+        glTranslatef(0, 1.8, 0);
+        glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(4, 0, 0);
+	glVertex3f(4, 1.5, 0);
+	glVertex3f(-3.5, 1.5, 0);
+	glVertex3f(-3.5, 0, 0);
+
+	glEnd();
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario red cap lower block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(-5, -1.5, 0);
+	glVertex3f(8.5, -1.5, 0);
+	glVertex3f(8.5, 0, 0);
+	glVertex3f(-5, 0, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //mario hair block1 under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-5, -1.5, 0);
+	glVertex3f(-5, -2.5, 0);
+	glVertex3f(0, -2.5, 0);
+	glVertex3f(0, -1.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair with chip block1
+    glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-3.5, -2.5, 0);
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(-2, -4, 0);
+	glVertex3f(-2, -2.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair with chip block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(-3.5, -5.5, 0);
+	glVertex3f(0, -5.5, 0);
+    glVertex3f(0, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.65, -0.15, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(-5, -2.5, 0);
+	glVertex3f(-5, -5.5, 0);
+	glVertex3f(-3.5, -5.5, 0);
+	glVertex3f(-3.5, -2.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair block1 backside of ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, -0.15, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(-5, -2.5, 0);
+	glVertex3f(-6.5, -2.5, 0);
+	glVertex3f(-6.5, -5.5, 0);
+	glVertex3f(-5, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair block2 backside of ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -0.85, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-6.5, -5.5, 0);
+    glVertex3f(-6.5, -7, 0);
+    glVertex3f(-3.5, -7, 0);
+	glVertex3f(-3.5, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario kopal skinnish block infront chip block1 under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.20, -0.85, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(0, -2.5, 0);
+    glVertex3f(3, -2.5, 0);
+    glVertex3f(3, -1.5, 0);
+	glVertex3f(0, -1.5, 0);
+
+	glEnd();
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario gaal/chowal block1 infront of chip block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(3, -2.5, 0);
+    glVertex3f(-3.5, -2.5, 0);
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(3, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario eye greenish part under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(3, -1.5, 0);
+    glVertex3f(3, -4, 0);
+	glVertex3f(4, -4, 0);
+	glVertex3f(4, -1.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+	//mario gaal/chowal block2 infront of chip block beside small goof nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(0, -4, 0);
+    glVertex3f(0, -5.5, 0);
+	glVertex3f(4, -5.5, 0);
+	glVertex3f(4, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+    //mario gaal/chowal block3 under chip block beside goof big part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(-3.5, -5.5, 0);
+    glVertex3f(-3.5, -8, 0);
+	glVertex3f(3, -8, 0);
+	glVertex3f(3, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario eye greenish block infront of kopal under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(4, -1.5, 0);
+	glVertex3f(4, -4, 0);
+	glVertex3f(5.5, -4, 0);
+	glVertex3f(5.5, -1.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario nose with goof small part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(4, -4, 0);
+	glVertex3f(4, -5.5, 0);
+	glVertex3f(5.5, -5.5, 0);
+	glVertex3f(5.5, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario eye skinnish block infront gaal skinnish block1 adjacent small goof of nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(5.5, -5.5, 0);
+	glVertex3f(7, -5.5, 0);
+	glVertex3f(7, -2.5, 0);
+	glVertex3f(5.5, -2.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+    //mario eye infront of gaal skinnish block2 adjacent small goof of nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(7, -5.5, 0);
+	glVertex3f(11, -5.5, 0);
+	glVertex3f(11, -4, 0);
+	glVertex3f(7, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario goof big part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(10, -5.5, 0);
+	glVertex3f(3, -5.5, 0);
+	glVertex3f(3, -7, 0);
+	glVertex3f(10, -7, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario thutni under big goof part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(3, -8, 0);
+    glVertex3f(7, -8, 0);
+	glVertex3f(7, -6.5, 0);
+	glVertex3f(3, -6.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+	//mario left hand with finger skinnish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(-5, -10, 0);
+	glVertex3f(-5, -12, 0);
+	glVertex3f(-6.5, -12, 0);
+	glVertex3f(-6.5, -10, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+
+	//mario left hand with finger skinnish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(-5, -12, 0);
+	glVertex3f(-8, -12, 0);
+	glVertex3f(-8, -14, 0);
+	glVertex3f(-5, -14, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario right hand arm greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-5, -8, 0);
+	glVertex3f(-5, -10, 0);
+	glVertex3f(2, -10, 0);
+	glVertex3f(2, -8, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //mario right hand arm greenish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-5, -10, 0);
+	glVertex3f(-5, -12, 0);
+	glVertex3f(4, -12, 0);
+	glVertex3f(4, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario right hand arm greenish block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(4, -10, 0);
+	glVertex3f(4, -8, 0);
+	glVertex3f(3, -8, 0);
+	glVertex3f(3, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario right hand arm greenish block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-3.5, -12, 0);
+	glVertex3f(-3.5, -14, 0);
+	glVertex3f(4, -14, 0);
+	glVertex3f(4, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon*/
+
+
+
+	//mario right hand arm finger block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(4, -14, 0);
+	glVertex3f(7, -14, 0);
+	glVertex3f(7, -10, 0);
+	glVertex3f(4, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm finger block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(7, -10, 0);
+	glVertex3f(7, -8, 0);
+	glVertex3f(5.5, -8, 0);
+	glVertex3f(5.5, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm finger block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(7, -10, 0);
+	glVertex3f(7, -12, 0);
+	glVertex3f(10, -12, 0);
+	glVertex3f(10, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg red block1 adjacent to right leg finger blocks
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-2, -20, 0);
+	glVertex3f(-6.5, -20, 0);
+	glVertex3f(-6.5, -18, 0);
+	glVertex3f(-2, -18, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario left leg red block2 adjacent to left leg finger blocks
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(0, -18, 0);
+	glVertex3f(0, -20, 0);
+	glVertex3f(4, -20, 0);
+	glVertex3f(4, -18, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right left leg centre part red block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-6.5, -18, 0);
+	glVertex3f(5.5, -18, 0);
+	glVertex3f(5.5, -16, 0);
+	glVertex3f(-6.5, -16, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right left leg centre part red block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(5.5, -16, 0);
+	glVertex3f(5.5, -14, 0);
+	glVertex3f(-5, -14, 0);
+	glVertex3f(-5, -16, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right left leg centre part red block5
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-5, -14, 0);
+	glVertex3f(-3.5, -14, 0);
+	glVertex3f(-3.5, -12, 0);
+	glVertex3f(-5, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right left leg centre part red block5 under thutni
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(3, -10, 0);
+	glVertex3f(3, -8, 0);
+	glVertex3f(2, -8, 0);
+	glVertex3f(2, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-5, -14, 0);
+	glVertex3f(-8, -14, 0);
+	glVertex3f(-8, -16, 0);
+	glVertex3f(-5, -16, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg greenish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-8, -16, 0);
+	glVertex3f(-8, -20, 0);
+	glVertex3f(-6.5, -20, 0);
+	glVertex3f(-6.5, -16, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg greenish block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-8, -18, 0);
+	glVertex3f(-9.5, -18, 0);
+	glVertex3f(-9.5, -22, 0);
+	glVertex3f(-8, -22, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario left leg greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-2, -20, 0);
+	glVertex3f(-2, -24, 0);
+	glVertex3f(3, -24, 0);
+	glVertex3f(3, -20, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario left leg greenish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(3, -24, 0);
+	glVertex3f(4, -24, 0);
+	glVertex3f(4, -22, 0);
+	glVertex3f(3, -22, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    }
+
+    else if (marioRunCounter >= 2.0 && marioRunCounter < 3.0)
+    {
+        glTranslatef(0, -1.8, 0);
+        glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(4, 0, 0);
+	glVertex3f(4, 1.5, 0);
+	glVertex3f(-3.5, 1.5, 0);
+	glVertex3f(-3.5, 0, 0);
+
+	glEnd();
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario red cap lower block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(-5, -1.5, 0);
+	glVertex3f(8.5, -1.5, 0);
+	glVertex3f(8.5, 0, 0);
+	glVertex3f(-5, 0, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //mario hair block1 under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-5, -1.5, 0);
+	glVertex3f(-5, -2.5, 0);
+	glVertex3f(0, -2.5, 0);
+	glVertex3f(0, -1.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair with chip block1
+    glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-3.5, -2.5, 0);
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(-2, -4, 0);
+	glVertex3f(-2, -2.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair with chip block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(-3.5, -5.5, 0);
+	glVertex3f(0, -5.5, 0);
+    glVertex3f(0, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.65, -0.15, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(-5, -2.5, 0);
+	glVertex3f(-5, -5.5, 0);
+	glVertex3f(-3.5, -5.5, 0);
+	glVertex3f(-3.5, -2.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair block1 backside of ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, -0.15, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(-5, -2.5, 0);
+	glVertex3f(-6.5, -2.5, 0);
+	glVertex3f(-6.5, -5.5, 0);
+	glVertex3f(-5, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair block2 backside of ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -0.85, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-6.5, -5.5, 0);
+    glVertex3f(-6.5, -7, 0);
+    glVertex3f(-3.5, -7, 0);
+	glVertex3f(-3.5, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario kopal skinnish block infront chip block1 under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.20, -0.85, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(0, -2.5, 0);
+    glVertex3f(3, -2.5, 0);
+    glVertex3f(3, -1.5, 0);
+	glVertex3f(0, -1.5, 0);
+
+	glEnd();
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario gaal/chowal block1 infront of chip block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(3, -2.5, 0);
+    glVertex3f(-3.5, -2.5, 0);
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(3, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario eye greenish part under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(3, -1.5, 0);
+    glVertex3f(3, -4, 0);
+	glVertex3f(4, -4, 0);
+	glVertex3f(4, -1.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+	//mario gaal/chowal block2 infront of chip block beside small goof nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(0, -4, 0);
+    glVertex3f(0, -5.5, 0);
+	glVertex3f(4, -5.5, 0);
+	glVertex3f(4, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+    //mario gaal/chowal block3 under chip block beside goof big part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(-3.5, -5.5, 0);
+    glVertex3f(-3.5, -8, 0);
+	glVertex3f(3, -8, 0);
+	glVertex3f(3, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario eye greenish block infront of kopal under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(4, -1.5, 0);
+	glVertex3f(4, -4, 0);
+	glVertex3f(5.5, -4, 0);
+	glVertex3f(5.5, -1.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario nose with goof small part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(4, -4, 0);
+	glVertex3f(4, -5.5, 0);
+	glVertex3f(5.5, -5.5, 0);
+	glVertex3f(5.5, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario eye skinnish block infront gaal skinnish block1 adjacent small goof of nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(5.5, -5.5, 0);
+	glVertex3f(7, -5.5, 0);
+	glVertex3f(7, -2.5, 0);
+	glVertex3f(5.5, -2.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+    //mario eye infront of gaal skinnish block2 adjacent small goof of nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(7, -5.5, 0);
+	glVertex3f(11, -5.5, 0);
+	glVertex3f(11, -4, 0);
+	glVertex3f(7, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario goof big part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(10, -5.5, 0);
+	glVertex3f(3, -5.5, 0);
+	glVertex3f(3, -7, 0);
+	glVertex3f(10, -7, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario thutni under big goof part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(3, -8, 0);
+    glVertex3f(7, -8, 0);
+	glVertex3f(7, -6.5, 0);
+	glVertex3f(3, -6.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario left hand under thutni greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(0, -8, 0);
+	glVertex3f(0, -9, 0);
+	glVertex3f(4, -9, 0);
+	glVertex3f(4, -8, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+    //mario left hand greenish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(3, -9, 0);
+	glVertex3f(3, -10, 0);
+	glVertex3f(5.5, -10, 0);
+	glVertex3f(5.5, -9, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+	//mario left hand with finger skinnish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(5.5, -10, 0);
+	glVertex3f(5.5, -11, 0);
+	glVertex3f(7, -11, 0);
+	glVertex3f(7, -10, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-6.5, -9, 0);
+	glVertex3f(-6.5, -12, 0);
+	glVertex3f(-5, -12, 0);
+	glVertex3f(-5, -9, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //mario right hand arm greenish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-5, -8, 0);
+	glVertex3f(-5, -13, 0);
+	glVertex3f(-3.5, -13, 0);
+	glVertex3f(-3.5, -8, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario right hand arm greenish block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-3.5, -8, 0);
+	glVertex3f(-3.5, -14, 0);
+	glVertex3f(-2, -14, 0);
+	glVertex3f(-2, -8, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario right hand arm greenish block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-2, -9, 0);
+	glVertex3f(-2, -10, 0);
+	glVertex3f(0, -10, 0);
+	glVertex3f(0, -9, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm greenish block5
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-2, -11, 0);
+	glVertex3f(-2, -12, 0);
+	glVertex3f(0, -12, 0);
+	glVertex3f(0, -11, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm finger block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(-2, -12, 0);
+	glVertex3f(-2, -13, 0);
+	glVertex3f(3, -13, 0);
+	glVertex3f(3, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm finger block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(-2, -13, 0);
+	glVertex3f(-2, -14, 0);
+	glVertex3f(2, -14, 0);
+	glVertex3f(2, -13, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+
+	//mario right red block1 adjacent to/under right hand greenish blocks
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-6.5, -12, 0);
+	glVertex3f(-6.5, -13, 0);
+	glVertex3f(-5, -13, 0);
+	glVertex3f(-5, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right red block2 adjacent to/under right hand greenish blocks
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-5, -13, 0);
+	glVertex3f(-5, -14, 0);
+	glVertex3f(-3.5, -14, 0);
+	glVertex3f(-3.5, -13, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre red block3 under thutni/goola adjacent right hand greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-2, -8, 0);
+	glVertex3f(-2, -9, 0);
+	glVertex3f(0, -9, 0);
+	glVertex3f(0, -8, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right left hand centre part red block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(0, -9, 0);
+	glVertex3f(0, -10, 0);
+	glVertex3f(3, -10, 0);
+	glVertex3f(3, -9, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right left centre part red block5 beside right hand greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-2, -10, 0);
+	glVertex3f(-2, -11, 0);
+	glVertex3f(2, -11, 0);
+	glVertex3f(2, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right left centre part red block6 adjacent left hand greenish part and skinnish finger
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(3, -10, 0);
+	glVertex3f(3, -11, 0);
+	glVertex3f(5.5, -11, 0);
+	glVertex3f(5.5, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block7 beside right hand finger blocks
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(0, -11, 0);
+	glVertex3f(0, -12, 0);
+	glVertex3f(7, -12, 0);
+	glVertex3f(7, -11, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block8
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(3, -12, 0);
+	glVertex3f(3, -13, 0);
+	glVertex3f(7, -13, 0);
+	glVertex3f(7, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block9 adjacent left leg finger blocks
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(2, -13, 0);
+	glVertex3f(2, -14, 0);
+	glVertex3f(5.5, -14, 0);
+	glVertex3f(5.5, -13, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block10 adjacent right leg finger blocks
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-3.5, -14, 0);
+	glVertex3f(-3.5, -15, 0);
+	glVertex3f(2, -15, 0);
+	glVertex3f(2, -14, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body skinish button1 under centre part red block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(3, -10, 0);
+	glVertex3f(2, -10, 0);
+	glVertex3f(2, -11, 0);
+	glVertex3f(3, -11, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario left leg greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(2, -14, 0);
+	glVertex3f(2, -15, 0);
+	glVertex3f(7, -15, 0);
+	glVertex3f(7, -14, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg + left leg greenish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-3.5, -15, 0);
+	glVertex3f(-3.5, -16, 0);
+	glVertex3f(7, -16, 0);
+	glVertex3f(7, -15, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+
+	//mario right leg leg greenish block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-3.5, -16, 0);
+	glVertex3f(-3.5, -17, 0);
+	glVertex3f(3, -17, 0);
+	glVertex3f(3, -16, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    }
+
+    marioRunCounter += runSpeedInc;
+    if(marioRunCounter >= 3.0)
+    {
+        marioRunCounter = 0.0;
+    }
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+}
+
+void drawMarioJump()
+{
+    glPushMatrix(); //Save the current state of transformations
+    glTranslatef(0.45, 0.9, 0);
+
+    if(marioDirectionRight==false){
+            glTranslatef(marioPositionX-1.3, marioPositionY, 0);
+            glRotatef(180,0.0,1.0,0.0);
+        }else{
+             glTranslatef(marioPositionX-1.1, marioPositionY, 0);
+            glRotatef(0,0.0,0.0,0.0);
+        }
+    glScalef(0.02, 0.025, 1);
+
+    glPushMatrix();
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(4, 0, 0);
+	glVertex3f(4, 1.5, 0);
+	glVertex3f(-3.5, 1.5, 0);
+	glVertex3f(-3.5, 0, 0);
+
+	glEnd();
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario red cap lower block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.80, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.50, 0.50, 0.40); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(-5, -1.5, 0);
+	glVertex3f(8.5, -1.5, 0);
+	glVertex3f(8.5, 0, 0);
+	glVertex3f(-5, 0, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //mario hair block1 under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-5, -1.5, 0);
+	glVertex3f(-5, -2.5, 0);
+	glVertex3f(0, -2.5, 0);
+	glVertex3f(0, -1.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair with chip block1
+    glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-3.5, -2.5, 0);
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(-2, -4, 0);
+	glVertex3f(-2, -2.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair with chip block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, 0.30, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(-3.5, -5.5, 0);
+	glVertex3f(0, -5.5, 0);
+    glVertex3f(0, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.65, -0.15, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(-5, -2.5, 0);
+	glVertex3f(-5, -5.5, 0);
+	glVertex3f(-3.5, -5.5, 0);
+	glVertex3f(-3.5, -2.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair block1 backside of ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.65, -0.15, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(-5, -2.5, 0);
+	glVertex3f(-6.5, -2.5, 0);
+	glVertex3f(-6.5, -5.5, 0);
+	glVertex3f(-5, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario hair block2 backside of ear skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -0.85, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-6.5, -5.5, 0);
+    glVertex3f(-6.5, -7, 0);
+    glVertex3f(-3.5, -7, 0);
+	glVertex3f(-3.5, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario kopal skinnish block infront chip block1 under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.20, -0.85, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.50, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(0, -2.5, 0);
+    glVertex3f(3, -2.5, 0);
+    glVertex3f(3, -1.5, 0);
+	glVertex3f(0, -1.5, 0);
+
+	glEnd();
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario gaal/chowal block1 infront of chip block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(-0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(3, -2.5, 0);
+    glVertex3f(-3.5, -2.5, 0);
+	glVertex3f(-3.5, -4, 0);
+	glVertex3f(3, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario eye greenish part under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(3, -1.5, 0);
+    glVertex3f(3, -4, 0);
+	glVertex3f(4, -4, 0);
+	glVertex3f(4, -1.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+	//mario gaal/chowal block2 infront of chip block beside small goof nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(0, -4, 0);
+    glVertex3f(0, -5.5, 0);
+	glVertex3f(4, -5.5, 0);
+	glVertex3f(4, -4, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+    //mario gaal/chowal block3 under chip block beside goof big part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(-3.5, -5.5, 0);
+    glVertex3f(-3.5, -8, 0);
+	glVertex3f(3, -8, 0);
+	glVertex3f(3, -5.5, 0);
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario eye greenish block infront of kopal under cap
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(4, -1.5, 0);
+	glVertex3f(4, -4, 0);
+	glVertex3f(5.5, -4, 0);
+	glVertex3f(5.5, -1.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario nose with goof small part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(4, -4, 0);
+	glVertex3f(4, -5.5, 0);
+	glVertex3f(5.5, -5.5, 0);
+	glVertex3f(5.5, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario eye skinnish block infront gaal skinnish block1 adjacent small goof of nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(5.5, -5.5, 0);
+	glVertex3f(7, -5.5, 0);
+	glVertex3f(7, -2.5, 0);
+	glVertex3f(5.5, -2.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+    //mario eye infront of gaal skinnish block2 adjacent small goof of nose
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(7, -5.5, 0);
+	glVertex3f(10, -5.5, 0);
+	glVertex3f(10, -4, 0);
+	glVertex3f(7, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario goof big part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(10, -5.5, 0);
+	glVertex3f(3, -5.5, 0);
+	glVertex3f(3, -7, 0);
+	glVertex3f(10, -7, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario thutni under big goof part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+    glVertex3f(3, -8, 0);
+    glVertex3f(7, -8, 0);
+	glVertex3f(7, -6.5, 0);
+	glVertex3f(3, -6.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+
+	//mario left hand greenish small part adjacent thutni under big goof block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(7, -8, 0);
+	glVertex3f(8.5, -8, 0);
+	glVertex3f(8.5, -6.5, 0);
+	glVertex3f(7, -6.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario left hand elbow small part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(10, -5.5, 0);
+	glVertex3f(11, -5.5, 0);
+	glVertex3f(11, -4, 0);
+	glVertex3f(10, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+    //mario left hand arm block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(11, -4, 0);
+	glVertex3f(11, -1.5, 0);
+	glVertex3f(7, -1.5, 0);
+	glVertex3f(7, -4, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+    //mario left hand arm block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(11, -1.5, 0);
+	glVertex3f(11, 0, 0);
+	glVertex3f(8, 0, 0);
+	glVertex3f(8, -1.5, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario left hand with finger skinnish block
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.20, -1.10, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.40, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(11, 3, 0);
+	glVertex3f(7, 3, 0);
+	glVertex3f(7, 0, 0);
+	glVertex3f(11, 0, 0);
+
+
+	glEnd();
+
+	//glutSolidCube(1.0);
+
+	glPopMatrix();//Undo the move to the center of the pentagon
+
+
+	//mario right hand arm block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-9, -9, 0);
+	glVertex3f(-2, -9, 0);
+	glVertex3f(-2, -8, 0);
+	glVertex3f(-9, -8, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+    //mario right hand arm block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-10.5, -10, 0);
+	glVertex3f(0, -10, 0);
+	glVertex3f(0, -9, 0);
+	glVertex3f(-10.5, -9, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario right hand arm block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-9, -12, 0);
+	glVertex3f(0, -12, 0);
+	glVertex3f(0, -10, 0);
+	glVertex3f(-9, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+    //mario right hand arm block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-3.5, -13, 0);
+	glVertex3f(-2, -13, 0);
+	glVertex3f(-2, -12, 0);
+	glVertex3f(-3.5, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm finger block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(-9, -10, 0);
+	glVertex3f(-12, -10, 0);
+	glVertex3f(-12, -13, 0);
+	glVertex3f(-9, -13, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm finger block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(-9, -13, 0);
+	glVertex3f(-10.5, -13, 0);
+	glVertex3f(-10.5, -14, 0);
+	glVertex3f(-9, -14, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right hand arm finger block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(-9, -13, 0);
+	glVertex3f(-8, -13, 0);
+	glVertex3f(-8, -12, 0);
+	glVertex3f(-9, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+
+	//mario right leg finger block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-10.5, -18, 0);
+	glVertex3f(-9, -18, 0);
+	glVertex3f(-9, -15, 0);
+	glVertex3f(-10.5, -15, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg finger block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-9, -16.5, 0);
+	glVertex3f(-7.5, -16.5, 0);
+	glVertex3f(-7.5, -14, 0);
+	glVertex3f(-9, -14, 0);
+
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg finger block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(-6.5, -16.5, 0);
+	glVertex3f(-6.5, -13, 0);
+	glVertex3f(-7.5, -13, 0);
+	glVertex3f(-7.5, -16.5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg finger block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+
+	glVertex3f(-6.5, -15, 0);
+	glVertex3f(-5, -15, 0);
+	glVertex3f(-5, -14, 0);
+	glVertex3f(-6.5, -14, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg red block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-6.5, -14, 0);
+	glVertex3f(-5, -14, 0);
+	glVertex3f(-5, -12, 0);
+	glVertex3f(-6.5, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg red block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-5, -15, 0);
+	glVertex3f(-6.5, -15, 0);
+	glVertex3f(-6.5, -18, 0);
+	glVertex3f(-5, -18, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg red block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-3.5, -12, 0);
+	glVertex3f(-5, -12, 0);
+	glVertex3f(-5, -18, 0);
+	glVertex3f(-3.5, -18, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg red block4
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-2, -13, 0);
+	glVertex3f(-3.5, -13, 0);
+	glVertex3f(-3.5, -18, 0);
+	glVertex3f(-2, -18, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario right leg red block5
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(0, -12, 0);
+	glVertex3f(-2, -12, 0);
+	glVertex3f(-2, -18, 0);
+	glVertex3f(0, -18, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario dress joint with shoulder red small block1 under thutni
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(-2, -9, 0);
+	glVertex3f(0, -9, 0);
+	glVertex3f(0, -8, 0);
+	glVertex3f(-2, -8, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario under goola greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(0, -9, 0);
+	glVertex3f(4, -9, 0);
+	glVertex3f(4, -8, 0);
+	glVertex3f(0, -8, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario dress joint with shoulder red small block2 under thutni
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(4, -9, 0);
+	glVertex3f(5.5, -9, 0);
+	glVertex3f(5.5, -8, 0);
+	glVertex3f(4, -8, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario under goola greenish small part beside joint red block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(5.5, -9, 0);
+	glVertex3f(7, -9, 0);
+	glVertex3f(7, -8, 0);
+	glVertex3f(5.5, -8, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario under goola greenish block3
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+    glVertex3f(5.5, -9, 0);
+	glVertex3f(2, -9, 0);
+	glVertex3f(2, -10, 0);
+	glVertex3f(5.5, -10, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block1 goolas greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(2, -9, 0);
+	glVertex3f(0, -9, 0);
+	glVertex3f(0, -16.5, 0);
+	glVertex3f(2, -16.5, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block2 under goolas greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(2, -10, 0);
+	glVertex3f(2, -12, 0);
+	glVertex3f(3.5, -12, 0);
+	glVertex3f(3.5, -10, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body skinish button1 under red block2 under goolas greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+
+	glVertex3f(2, -12, 0);
+	glVertex3f(2, -13, 0);
+	glVertex3f(3.5, -13, 0);
+	glVertex3f(3.5, -12, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block3 under goolas greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(2, -13, 0);
+	glVertex3f(2, -16.5, 0);
+	glVertex3f(3.5, -16.5, 0);
+	glVertex3f(3.5, -13, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+    //mario centre body red block4 under goolas greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(3.5, -9, 0);
+	glVertex3f(3.5, -16.5, 0);
+	glVertex3f(4, -16.5, 0);
+	glVertex3f(4, -9, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block5 under goolas greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+
+	glVertex3f(3.5, -9, 0);
+	glVertex3f(3.5, -15, 0);
+	glVertex3f(5.5, -15, 0);
+	glVertex3f(5.5, -9, 0);
+
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block6 adjacent red block joint under goolas greenish small part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(5.5, -9, 0);
+	glVertex3f(5.5, -12, 0);
+	glVertex3f(7, -12, 0);
+	glVertex3f(7, -9, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+	//mario centre body skinish button2 under red block6 under goolas greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 184, 77);
+
+	glVertex3f(5.5, -12, 0);
+	glVertex3f(5.5, -13, 0);
+	glVertex3f(7, -13, 0);
+	glVertex3f(7, -12, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario centre body red block7 adjacent red block5 joint under skinnish button2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(5.5, -13, 0);
+	glVertex3f(5.5, -15, 0);
+	glVertex3f(7, -15, 0);
+	glVertex3f(7, -13, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+
+	//mario centre body red block8 adjacent red block7 adjacent left leg greenish part
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(255, 0, 0);
+
+	glVertex3f(7, -12, 0);
+	glVertex3f(7, -15, 0);
+	glVertex3f(8.5, -15, 0);
+	glVertex3f(8.5, -12, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario left leg greenish block1
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(8.5, -12, 0);
+	glVertex3f(8.5, -15, 0);
+	glVertex3f(11, -15, 0);
+	glVertex3f(11, -12, 0);
+
+	glEnd();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
+
+
+	//mario left leg greenish block2
+	glPushMatrix(); //Save the current state of transformations
+
+	//glTranslatef(0.0, 0.0, 0.0); //Move to the center of the pentagon
+	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
+	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
+
+	glBegin(GL_QUADS);
+
+	glColor3ub(153, 115, 0);
+
+	glVertex3f(11, -12, 0);
+	glVertex3f(11, -9, 0);
+	glVertex3f(10, -9, 0);
+	glVertex3f(10, -12, 0);
+
+	glEnd();
+
+	glPopMatrix();
+
+
+	//glutSolidCube(4.0);
+
+	glPopMatrix(); //Undo the move to the center of the pentagon
+
 }
 
 void jumpMario(){
@@ -4744,12 +9478,20 @@ void jumpMario(){
             {
                 jumpTopReached = false;
                 jumpMarioKeyPressed = false;
+                if(previousMarioState == 1)
+                    marioState = 1;
+                else
+                    marioState = 0;
             }
             else if (marioPositionY <= -2.95)
             {
                 jumpCounter = 0;
                 jumpTopReached = false;
                 jumpMarioKeyPressed = false;
+                if(previousMarioState == 1)
+                    marioState = 1;
+                else
+                    marioState = 0;
             }
 
         }
@@ -4827,16 +9569,20 @@ void handleKeypress(unsigned char key, int x, int y) {
         if(key=='w' || key==' '){
                enableSound("jump");
                jumpMarioKeyPressed=true;
+               previousMarioState = marioState;
+               marioState = 2;
         }
 
         if(key=='d'){
                marioDirectionRight=true;
                moveRight = true;
+               marioState = 1;
         }
 
         if(key=='a'){
                 marioDirectionRight=false;
                 moveLeft = true;
+                marioState = 1;
 
          }
 
@@ -4893,10 +9639,12 @@ void handleKeypressUp(unsigned char key, int x, int y) {
         if(key=='d'){
                marioDirectionRight=true;
                moveRight = false;
+               marioState = 0;
         }
          if(key=='a'){
                 marioDirectionRight=false;
                 moveLeft = false;
+                marioState = 0;
          }
 
 
@@ -5028,11 +9776,35 @@ void drawScene() {
 
 
 
+    if(marioState==0)
+    {
+        glPushMatrix();
 
-
-    glPushMatrix();
         drawMarioNew();
-    glPopMatrix();
+
+        glPopMatrix();
+    }
+    else if (marioState == 1)
+    {
+        glPushMatrix();
+
+        drawMarioRun();
+
+        glPopMatrix();
+    }
+    else if (marioState == 2)
+    {
+        glPushMatrix();
+
+        drawMarioJump();
+
+        glPopMatrix();
+    }
+
+
+
+
+
 
 //draw floor
     glPushMatrix();
