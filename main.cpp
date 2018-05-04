@@ -38,14 +38,16 @@ float _cameraAngle = 0.0;
 
 
 //cameraProperty
-float cameraX=-5.52;
+//float cameraX=-5.52;
+float cameraX=-31;
 
 
 //Mario Property
 int marioState = 0; // 0 is idle, 1 is running, 2 is jump
 int previousMarioState;
 float marioRunCounter = 0.0;
-float marioPositionX=4;
+//float marioPositionX=4;
+float marioPositionX=31;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
@@ -111,7 +113,7 @@ float animateLegScaleY = 0.0;
 bool legAnimationCycle = true;
 
 //piranha plant animation variables
-float piranhaPlantY = -1.0;
+float piranhaPlantY = -4;
 bool movePlantUp = true;
 int piranhaWaitCounter = 40;
 
@@ -4047,15 +4049,19 @@ void drawFireFlower(float translateX, float translateY){
 void moveMario(){
 
 
+
     if(moveRight == true && marioPositionX<87.5 && marioPositionX>2 && insideTheCylinder==false){
 
-                    if(marioPositionX<40.2 || marioPositionX>42){
+
+
+                    if((marioPositionX<40.377 || marioPositionX>41.677)) {
                         marioPositionX +=0.1f;
                         cameraX -=0.1f;
                     }
-                    else if(marioPositionX>40.2 &&  marioPositionX<42 && marioPositionY>-0.45){
-                              marioPositionX +=0.1f;
-                              cameraX -=0.1f;
+
+                    else if(marioPositionX>40.377 &&  marioPositionX<41.677 && marioPositionY>-0.4777){
+                              marioPositionX +=0.2f;
+                              cameraX -=0.2f;
                     }
 
     }
@@ -4086,13 +4092,14 @@ void moveMario(){
 
 
 
-               if(marioPositionX<40.3 || marioPositionX>42){
+               if(marioPositionX<40.4 || marioPositionX>41.7){
                     marioPositionX -=0.1f;
                     cameraX +=0.1f;
 
                 }
+
                 else{
-                     if(marioPositionY>-0.45){
+                     if(marioPositionY>-0.47){
                         cout<<"Left Key Pressed"<<endl;
                         marioPositionX -=0.1f;
                         cameraX +=0.1f;
@@ -9545,7 +9552,7 @@ void animatePiranhaPlant()
         }
         else
         {
-            if(piranhaPlantY<=-1.0)
+            if(piranhaPlantY<=-4)
             {
                 movePlantUp = true;
                 piranhaWaitCounter = 40;
@@ -9946,7 +9953,7 @@ void drawScene() {
         drawCylinder();
     glPopMatrix();
 
-     glPushMatrix();
+    glPushMatrix();
         drawBrick(40,-0.5,2);
     glPopMatrix();
 
@@ -9958,15 +9965,14 @@ void drawScene() {
 
   //draw Cylinder with piranha plant
 
-    glPushMatrix();
 
-    glTranslatef (32, -3, 0);
-    drawCylinder();
 
-    glPopMatrix();
+//    glPushMatrix();
+//    glTranslatef (32, -3, 0);
+//    drawCylinder();
+//    glPopMatrix();
 
-    //draw piranta plant
-
+//    draw piranta plant
     glPushMatrix();
 
     glTranslatef(32, piranhaPlantY, 0);
@@ -10265,6 +10271,7 @@ void drawScene() {
 }
 
 void update(int value) {
+
 
 
     if(mariCrossedFlag==2){
