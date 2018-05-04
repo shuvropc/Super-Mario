@@ -9516,7 +9516,7 @@ void collisionEvents(int brickNumber){
     }
     if(brickNumber != 7)
     {
-        if(jumpBottomCollisionOccuredCoin && brickCollisionStatus[brickNumber]==true && (brickNumber == 1 || brickNumber == 4 || brickNumber == 6 || brickNumber == 9 || brickNumber == 10 || brickNumber == 11 || brickNumber == 12 || brickNumber == 15 || brickNumber == 16 || brickNumber == 17))
+        if(jumpBottomCollisionOccuredCoin && brickCollisionStatus[brickNumber]==true && (brickNumber == 1 || brickNumber == 4 || brickNumber == 6 || (brickNumber >=9 && brickNumber <= 28) || (brickNumber >=31 && brickNumber <=33)))
         {
             enableSound("coin");
             score += 100;
@@ -10046,6 +10046,264 @@ void drawScene() {
         glPushMatrix();
             //glTranslatef(1.5, 0.8, 0);
             drawScoreBrick(47.5,1.0,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+
+    //underground score bricks
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(202,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(202,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(202.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(202.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(203,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(203,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(203.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(203.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(208,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(208,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(208.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(208.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(209,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(209,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(209.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(209.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(214,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(214,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(214.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(214.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(215,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(215,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(215.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(215.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(220,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(220,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(220.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(220.5,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(221,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(221,-0.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(221.5,-0.5,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(221.5,-0.5,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
