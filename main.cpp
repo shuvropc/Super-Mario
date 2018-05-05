@@ -39,16 +39,16 @@ float _cameraAngle = 0.0;
 
 
 //cameraProperty
-//float cameraX=-5.52;
-float cameraX=-200;
+float cameraX=-5.52;
+//float cameraX=-200;
 
 
 //Mario Property
 int marioState = 0; // 0 is idle, 1 is running, 2 is jump
 int previousMarioState;
 float marioRunCounter = 0.0;
-//float marioPositionX=4;
-float marioPositionX=200;
+float marioPositionX=4;
+//float marioPositionX=200;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
