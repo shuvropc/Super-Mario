@@ -509,8 +509,10 @@ void slideBrick(){
 
     if(marioPositionX>60 && marioPositionX<73.3 && marioPositionY<-2.45){
           enableSound("mariodie");
+          marioLife -= 1;
           marioPositionY=-500;
           Sleep(3000);
+          restartBackgroundMusic();
           marioPositionX=57;
           marioPositionY=-2.95;
           cameraX=-57;
@@ -11063,13 +11065,32 @@ const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
     //showScore
     glPushMatrix();
     glColor3f(1,1,1);
-    print(abs(cameraX)-4,2,0,"Score: 5");
+
+    stringstream ss;
+    ss << score;
+    string scoreString = ss.str();
+    string displayScoreString = "Score: " + scoreString;
+    int scoreStringLength = displayScoreString.length();
+    char char_array1[scoreStringLength];
+    strcpy(char_array1, displayScoreString.c_str());
+    print(abs(cameraX)-4,2,0,char_array1);
+
+
     glPopMatrix();
 
     //showScore
     glPushMatrix();
     glColor3f(1,1,1);
-    print(abs(cameraX)-4,1.5,0,"Life: 3");
+
+    stringstream l;
+    l << marioLife;
+    string lifeString = l.str();
+    string displayLifeString = "Life: " + lifeString;
+    int lifeStringLength = displayLifeString.length();
+    char char_array2[lifeStringLength];
+    strcpy(char_array2, displayLifeString.c_str());
+    print(abs(cameraX)-4,1.5,0,char_array2);
+
     glPopMatrix();
 
 
