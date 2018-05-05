@@ -189,6 +189,8 @@ float backgroundColor[1][3]={{0.48,0.47,1.0}};
 //function declaration
 void jumpMario();
 void collisionEvents(int brickNumber);
+void playBackgroundMusic();
+void restartBackgroundMusic();
 
 //Makes the image into a texture, and returns the id of the texture
 GLuint loadTexture(Image* image) {
@@ -343,6 +345,10 @@ float   slideBrickX[3][2]={{59,0},{66,1}};
 
         //BackgroundColorProperty
 float         backgroundColor[1][3]={{0.48,0.47,1.0}};
+
+
+    restartBackgroundMusic();
+
 
 
 
@@ -568,6 +574,7 @@ void marioCollisionWithPiranha(){
                   cout<<"Mario died Life: "<<marioLife<<endl;
 //                  marioPositionY=-500;
                   Sleep(3000);
+                  restartBackgroundMusic();
                   marioPositionX-=2;
                   cameraX+=2;
                   marioPositionY=-2.95;
@@ -624,6 +631,7 @@ for(int i=0; i<arrayLength;i++){
                   cout<<"Mario died Life: "<<marioLife<<endl;
                   marioPositionY=-500;
                   Sleep(3000);
+                  restartBackgroundMusic();
                   marioPositionX+=2;
                   cameraX-=2;
                   marioPositionY=-2.95;
@@ -12047,6 +12055,12 @@ void update(int value) {
 
     //Tell GLUT to call update again in 25 milliseconds
     glutTimerFunc(25, update, 0);
+}
+
+void restartBackgroundMusic()
+{
+    mciSendString("close background", 0,0,0);
+    playBackgroundMusic();
 }
 
 void playBackgroundMusic(){
