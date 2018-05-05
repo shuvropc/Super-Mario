@@ -43,7 +43,7 @@ float _cameraAngle = 0.0;
 
 //cameraProperty
 float cameraX=-4;
-//float cameraX=-220;
+
 
 
 //Mario Property
@@ -51,7 +51,6 @@ int marioState = 0; // 0 is idle, 1 is running, 2 is jump
 int previousMarioState;
 float marioRunCounter = 0.0;
 float marioPositionX=4;
-//float marioPositionX=220;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
@@ -72,6 +71,8 @@ GLuint _textureCylinder;
 GLuint _textureEnemy;
 GLuint _textureCastle;
 GLuint _textureMenu;
+GLuint _textureGameOver;
+GLuint _textureGameStart;
 
 
 //game logic variables
@@ -160,6 +161,10 @@ bool valueChanageForSlide=true;
 //marioLife
 int marioLife=3;
 
+
+//GameOver
+bool gameOver = false;
+bool gameStart = true;
 
 //Entered inside Cylinder
 bool insideTheCylinder=false;
@@ -314,13 +319,21 @@ void restartGame(){
 
 
         //slideBrickProperty
-float   slideBrickX[3][2]={{59,0},{66,1}};
+
+//        float slideBrickX[3][2]={{59,0},{66,1}};
+
+        slideBrickX[0][0]=59;
+        slideBrickX[0][1]=0;
+
+        slideBrickX[1][0]=66;
+        slideBrickX[1][1]=1;
+
         valueChanageForSlide=true;
 
 
         //marioLife
         marioLife=3;
-
+        gameOver = false;
 
         //Entered inside Cylinder
         insideTheCylinder=false;
@@ -1147,6 +1160,64 @@ void drawCastle(){
 
 	glPopMatrix();
 }
+
+
+void drawGameOverMenu(){
+
+
+
+         enableTexture(_textureGameOver);
+         glPushMatrix();
+            glColor4f(1.0, 1, 1, 0.5);
+
+
+            glBegin(GL_POLYGON);
+                    glTexCoord2f(0.0f, 0.0f);
+                    glVertex3f(marioPositionX-5.5,-3,0);
+
+                    glTexCoord2f(1.0f, 0.0f);
+                    glVertex3f(marioPositionX+5.5,-3,0);
+
+                    glTexCoord2f(1.0f, 1.0f);
+                    glVertex3f(marioPositionX+5.5,3,0);
+
+                    glTexCoord2f(0.0f, 1.0f);
+                    glVertex3f(marioPositionX-5.5,3,0);
+            glEnd();
+
+    glPopMatrix();
+
+
+}
+
+void drawStartMenu(){
+
+
+
+         enableTexture(_textureGameStart);
+         glPushMatrix();
+            glColor4f(1.0, 1, 1, 0.5);
+
+
+            glBegin(GL_POLYGON);
+                    glTexCoord2f(0.0f, 0.0f);
+                    glVertex3f(marioPositionX-5.5,-3,0);
+
+                    glTexCoord2f(1.0f, 0.0f);
+                    glVertex3f(marioPositionX+5.5,-3,0);
+
+                    glTexCoord2f(1.0f, 1.0f);
+                    glVertex3f(marioPositionX+5.5,3,0);
+
+                    glTexCoord2f(0.0f, 1.0f);
+                    glVertex3f(marioPositionX-5.5,3,0);
+            glEnd();
+
+    glPopMatrix();
+
+
+}
+
 
 void drawMenu(){
 
@@ -10869,22 +10940,29 @@ void handleKeypress(unsigned char key, int x, int y) {
 
          }
 
-           if(key=='r' && gamePauseMenu==true){
+           if(key=='r' && (gamePauseMenu==true || gameOver==true)){
 
                 restartGame();
                 enableSound("startlevel");
          }
 
 
+            if(key == 0x0D && gameStart==true){
+                gameStart=false;
+                isPaused = false;
+                 mciSendString("resume background", 0, 0, 0);
+            }
 
-         if(key == 0x1B){
 
 
-                if(gamePauseMenu==true){
+         if(key == 0x1B && gameOver==false){
+
+
+                if(gamePauseMenu==true && levelComplete!=2){
                      gamePauseMenu=false;;
                 }else{
                     gamePauseMenu=true;;
-               }
+                 }
 
 
                 if(isPaused)
@@ -10901,9 +10979,6 @@ void handleKeypress(unsigned char key, int x, int y) {
 
 
          }
-
-
-
 
 
 
@@ -10967,7 +11042,7 @@ void initRendering() {
 
     glClearColor(backgroundColor[0][0],backgroundColor[0][1],backgroundColor[0][2],1.0);
 
-     glEnable(GL_BLEND);
+    glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
@@ -11034,6 +11109,14 @@ void initRendering() {
 	delete image11;
 
 
+	Image* image12 = loadBMP("images/gameover.bmp");
+	_textureGameOver = loadTexture(image12);
+	delete image12;
+
+
+	Image* image13 = loadBMP("images/gamestart.bmp");
+	_textureGameStart = loadTexture(image13);
+	delete image13;
 }
 
 //Called when the window is resized
@@ -11061,6 +11144,7 @@ void drawScene() {
 
 const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 
+if(gameStart==false){
 
     //showScore
     glPushMatrix();
@@ -11093,13 +11177,34 @@ const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 
     glPopMatrix();
 
+}
 
+
+
+
+    if(gameStart){
+            glPushMatrix();
+            drawStartMenu();
+            glPopMatrix();
+            isPaused = true;
+            mciSendString("pause background", 0, 0, 0);
+    }
 
 
     //DrawMenu
-    if(gamePauseMenu){
+    if(gamePauseMenu==true && gameOver==false){
             glPushMatrix();
             drawMenu();
+            glPopMatrix();
+    }
+    else if(gamePauseMenu==false && gameOver==true){
+
+
+            isPaused = true;
+            mciSendString("pause background", 0, 0, 0);
+
+            glPushMatrix();
+            drawGameOverMenu();
             glPopMatrix();
     }
 
@@ -11625,7 +11730,7 @@ const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(221.5,0,1,false);
+            drawScoreBrick(221,0,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
@@ -11874,11 +11979,18 @@ const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 
 void update(int value) {
 
-//   if(marioPositionX>150){
-//            backgroundColor[0][0]=0.4;
-//            backgroundColor[0][1]=0.1;
-//            backgroundColor[0][2]=0.8;
-//    }
+   if(insideTheCylinder){
+            backgroundColor[0][0]=0;
+            backgroundColor[0][1]=0;
+            backgroundColor[0][2]=0;
+            //initRendering();
+    }
+
+
+    if(marioLife==0){
+        gameOver=true;
+    }
+
 
 
     marioCollisionWithPiranha();
@@ -11898,7 +12010,7 @@ void update(int value) {
             isPaused=true;
             flagY-=0.1f;
         }else{
-                isPaused=false;
+            isPaused=false;
             }
     }
 
@@ -12079,8 +12191,7 @@ void update(int value) {
     glutTimerFunc(25, update, 0);
 }
 
-void restartBackgroundMusic()
-{
+void restartBackgroundMusic(){
     mciSendString("close background", 0,0,0);
     playBackgroundMusic();
 }
@@ -12101,7 +12212,6 @@ int main(int argc, char** argv) {
     glutCreateWindow("Super Mario");
     initValues();
     initRendering();
-
     playBackgroundMusic();
 
     //glutFullScreen();           // making the window full screen
