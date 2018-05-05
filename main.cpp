@@ -4,6 +4,7 @@
 #include <time.h>
 #include <ctime>
 #include <unistd.h>
+#include <fstream>
 
 
 #include <GL/GLUT.h>
@@ -10609,6 +10610,35 @@ void animatePiranhaPlant(){
 
 }
 
+void writeHighscore()
+{
+    ifstream scorefile ("highscore.txt");
+    int previousScore;
+    bool isEmpty = (scorefile.get(), scorefile.eof());
+    if(isEmpty)
+    {
+        ofstream scorefile;
+        scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
+        scorefile << " " << score <<endl;
+        scorefile.close();
+    }
+    else
+    {
+        scorefile >> previousScore;
+        cout << "Previous Score: " << previousScore << endl;
+        if(score > previousScore)
+        {
+            ofstream scorefile;
+            scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
+            scorefile << " " << score <<endl;
+            scorefile.close();
+        }
+    }
+
+
+
+}
+
 void handleKeypress(unsigned char key, int x, int y) {
 
 
@@ -11609,6 +11639,7 @@ cout<<marioPositionX<<endl;
        if(levelComplete==1){
         enableSound("levelclear");
         levelComplete=2;
+        writeHighscore();
         Sleep(6000);
      }
 
