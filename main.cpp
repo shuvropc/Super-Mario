@@ -10583,24 +10583,25 @@ void animatePiranhaPlant(){
 
 void writeHighscore()
 {
-    ifstream scorefile;
+    ifstream scorefile ("highscore.txt");
     int previousScore;
-    bool isEmpty = scorefile.peek()==ifstream::traits_type::eof();
+    bool isEmpty = (scorefile.get(), scorefile.eof());
     if(isEmpty)
     {
         ofstream scorefile;
         scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
-        scorefile << score;
+        scorefile << " " << score <<endl;
         scorefile.close();
     }
     else
     {
         scorefile >> previousScore;
+        cout << "Previous Score: " << previousScore << endl;
         if(score > previousScore)
         {
             ofstream scorefile;
             scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
-            scorefile << score;
+            scorefile << " " << score <<endl;
             scorefile.close();
         }
     }
