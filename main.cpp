@@ -11905,6 +11905,7 @@ void update(int value) {
 
     if(mariCrossedFlag==1){
         enableSound("flagcrossed");
+        score += 5000;
         mariCrossedFlag=2;
 //        Sleep(4000);
     }
