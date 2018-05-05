@@ -4,6 +4,7 @@
 #include <time.h>
 #include <ctime>
 #include <unistd.h>
+#include <fstream>
 
 
 #include <GL/GLUT.h>
@@ -10580,6 +10581,34 @@ void animatePiranhaPlant(){
 
 }
 
+void writeHighscore()
+{
+    ifstream scorefile;
+    int previousScore;
+    bool isEmpty = scorefile.peek()==ifstream::traits_type::eof();
+    if(isEmpty)
+    {
+        ofstream scorefile;
+        scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
+        scorefile << score;
+        scorefile.close();
+    }
+    else
+    {
+        scorefile >> previousScore;
+        if(score > previousScore)
+        {
+            ofstream scorefile;
+            scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
+            scorefile << score;
+            scorefile.close();
+        }
+    }
+
+
+
+}
+
 void handleKeypress(unsigned char key, int x, int y) {
 
 
@@ -11570,6 +11599,7 @@ void update(int value) {
        if(levelComplete==1){
         enableSound("levelclear");
         levelComplete=2;
+        writeHighscore();
         Sleep(6000);
      }
 
