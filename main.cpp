@@ -197,6 +197,8 @@ void jumpMario();
 void collisionEvents(int brickNumber);
 void playBackgroundMusic();
 void restartBackgroundMusic();
+void floatScore(string score);
+void print(float x, float y, float z,char* text);
 
 //Makes the image into a texture, and returns the id of the texture
 GLuint loadTexture(Image* image) {
@@ -11345,6 +11347,7 @@ void collisionEvents(int brickNumber){
             enableSound("coin");
             score += 100;
             cout << "Score: " << score << endl;
+            floatScore("100");
             jumpBottomCollisionOccuredCoin=false;
             brickCollisionStatus[brickNumber]=false;
         }
@@ -11393,6 +11396,21 @@ void animatePiranhaPlant(){
 
 }
 
+void floatScore(string score)
+{
+    glPushMatrix();
+
+    glColor3ub(255,255,255);
+    float coordinateX = marioPositionX;
+    float coordinateY = marioPositionY + 1.5;
+    int scoreLen = score.length();
+    char carry[scoreLen];
+    strcpy(carry, score.c_str());
+    print(coordinateX, coordinateY, 0, carry);
+
+    glPopMatrix();
+}
+
 void writeHighscore(){
     ifstream scorefile ("highscore.txt");
     int previousScore;
@@ -11410,6 +11428,18 @@ void writeHighscore(){
         cout << "Previous Score: " << previousScore << endl;
         if(score > previousScore)
         {
+            glPushMatrix();
+            glColor3ub(255,0,0);
+            stringstream hs;
+            hs << score;
+            string hscoreString = hs.str();
+            string displayHScoreString = "Congratulations! New High Score: " + hscoreString;
+            int hscoreStringLength = displayHScoreString.length();
+            char char_array3[hscoreStringLength];
+            strcpy(char_array3, displayHScoreString.c_str());
+            print(88,2,0,char_array3);
+            glPopMatrix();
+
             ofstream scorefile;
             scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
             scorefile << " " << score <<endl;
@@ -12759,7 +12789,7 @@ int main(int argc, char** argv) {
     initRendering();
     playBackgroundMusic();
 
-    //glutFullScreen();           // making the window full screen
+    glutFullScreen();           // making the window full screen
 
     //PlaySound("sounds/background.wav", NULL, SND_LOOP | SND_ASYNC);
     //enableSound("background");
