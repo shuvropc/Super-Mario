@@ -6,8 +6,9 @@
 #include <unistd.h>
 #include <fstream>
 #include <conio.h>
+#include <string>
 
-
+#include <sstream>
 
 #include <GL/GLUT.h>
 
@@ -207,6 +208,146 @@ GLuint loadTexture(Image* image) {
 	return textureId; //Returns the id of the texture
 }
 
+void restartGame(){
+
+
+        _cameraAngle = 0.0;
+
+
+
+        //cameraProperty
+        cameraX=-4;
+        //float cameraX=-220;
+
+
+        //Mario Property
+        marioState = 0; // 0 is idle, 1 is running, 2 is jump
+        previousMarioState;
+        marioRunCounter = 0.0;
+        marioPositionX=4;
+        //float marioPositionX=220;
+        marioPositionY=-2.95;
+        jumpMarioKeyPressed=false;
+        jumpTopReached=false;
+        marioDirectionRight=true;
+        moveRight, moveLeft = false;
+        keyarr[4];
+
+        //game logic variables
+        isPaused = false;
+
+        //location store
+        storeLocation = true;
+
+        //Cloud Property
+        cloudPositionX=4.0;
+
+
+        //collision information
+
+        bottomAreaAssignCount=0;
+
+
+        bottomCollisionArea[500][5];
+
+        //float  bottomCollisionArea[2][4]={{5.0,-0.5,5.5,-0.5},{6.0,-0.5,6.5,-0.5}};
+
+
+        //collision property
+
+        marioCollisionOccured = false;
+        jumpBottomCollisionOccured = false;
+        jumpBottomCollisionOccuredCoin = false;
+
+
+        //coin collision
+        currentCollisionBrick;
+        collisionedCoinX;
+        collisionedCoinY;
+        brickCollisionStatus[100]; // true for no collision, false for collision
+        brickLocation[100]; //brickLocation value comes from bottomAreaAssignCount
+        locationCounter = 0; //used as brickLocation array's counter
+        tempBrickCounter = 0; //a temp counter used while calling drawbrick. Will be reset each time drawScene finishs looping
+
+
+
+        //goomba animation variables
+        animateLegScaleX = 0.0;
+        animateLegScaleY = 0.0;
+        legAnimationCycle = true;
+
+        //piranha plant animation variables
+        piranhaPlantY = -4;
+        movePlantUp = true;
+        piranhaWaitCounter = 20;
+
+       float  piranhaPlantX[5]={32,206,213,220,224};
+
+        //jump variables
+        jumpCounter = 0;
+        onTheBrick = false;
+
+
+        //enemy property
+       float emeneyPositionx[10]={10,15,20};
+
+
+        //Fire Property
+        fireBulletAbility = false;
+        fireBullet = false;
+        bulletX=0;
+        bulletY=-0.8;
+        bulletTouchedGround = false;
+
+
+        //Fireflower Property
+        enableFlowerCollision = false;
+        flowerUsed = false;
+        showFlower = false;
+        flowerPositionY = -0.5; //initial Y position of the brick which the flower is in
+
+
+        //text property
+        score=0;
+
+
+        //slideBrickProperty
+float   slideBrickX[3][2]={{59,0},{66,1}};
+        valueChanageForSlide=true;
+
+
+        //marioLife
+        marioLife=3;
+
+
+        //Entered inside Cylinder
+        insideTheCylinder=false;
+        inCylinderArea=false;
+
+
+        //LevelProperty
+        mariCrossedFlag=0;
+        levelComplete=0;
+
+        //Flag Property
+        flagY=0;
+
+
+        //GameMenu
+        gamePauseMenu = false;
+
+
+        //Enemy Property
+        generateRandomEnemyInsidePipe = 0;
+
+
+        //BackgroundColorProperty
+float         backgroundColor[1][3]={{0.48,0.47,1.0}};
+
+
+
+}
+
 int storeObjectPosition(float x, float y, int noOfObjects, int type){
 
     bottomCollisionArea[bottomAreaAssignCount][0]=x;
@@ -218,13 +359,6 @@ int storeObjectPosition(float x, float y, int noOfObjects, int type){
     int returnValue = bottomAreaAssignCount;
     bottomAreaAssignCount++;
     return returnValue;
-}
-
-void showScore(){
-
-
-
-
 }
 
 void enableSound(string state){
@@ -283,6 +417,11 @@ void enableSound(string state){
         {
         PlaySound("sounds/flagcrossed.wav", NULL, NULL | SND_ASYNC);
         }
+        if(state=="startlevel")
+        {
+        PlaySound("sounds/startlevel.wav", NULL, NULL | SND_ASYNC);
+        }
+
         if(state=="levelclear")
         {
         PlaySound("sounds/levelclear.wav", NULL, NULL | SND_ASYNC);
@@ -10720,6 +10859,13 @@ void handleKeypress(unsigned char key, int x, int y) {
 
          }
 
+           if(key=='r' && gamePauseMenu==true){
+
+                restartGame();
+                enableSound("startlevel");
+         }
+
+
 
          if(key == 0x1B){
 
@@ -10793,9 +10939,6 @@ void renderBitmapString(float x, float y, void *font,const char *string){
     }
 }
 
-
-
-
 void print(float x, float y, float z,char* text) {
     glPushMatrix();
     glTranslatef(x, y, 0);
@@ -10808,7 +10951,6 @@ void print(float x, float y, float z,char* text) {
     }
     glPopMatrix();
 }
-
 
 //Initializes 3D rendering
 void initRendering() {
@@ -10908,6 +11050,7 @@ void drawScene() {
 
 
 const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
+
 
     //showScore
     glPushMatrix();
@@ -11739,6 +11882,7 @@ void update(int value) {
 
        if(levelComplete==1){
         enableSound("levelclear");
+        gamePauseMenu=true;
         levelComplete=2;
         writeHighscore();
         Sleep(6000);
