@@ -39,7 +39,7 @@ float _cameraAngle = 0.0;
 
 //cameraProperty
 float cameraX=-5.52;
-//float cameraX=-31;
+//float cameraX=-200;
 
 
 //Mario Property
@@ -47,7 +47,7 @@ int marioState = 0; // 0 is idle, 1 is running, 2 is jump
 int previousMarioState;
 float marioRunCounter = 0.0;
 float marioPositionX=4;
-//float marioPositionX=31;
+//float marioPositionX=200;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
@@ -172,9 +172,15 @@ float flagY=0;
 bool gamePauseMenu = false;
 
 
+//Enemy Property
+int generateRandomEnemyInsidePipe = 0;
+
+
+
 //function declaration
 void jumpMario();
 void collisionEvents(int brickNumber);
+
 
 
 //Makes the image into a texture, and returns the id of the texture
@@ -377,18 +383,24 @@ void slideBrick(){
     valueChanageForSlide=false;
 }
 
+void generateRandomEnemy2(){
+
+        srand (time(NULL));
+
+        for(int i=5;i<11;i++){
+         int  random = 204 + (rand() % static_cast<int>(224 - 204 + 1));
+         emeneyPositionx[i]=random;
+        }
+    }
+
 void generateRandomEnemy(){
 
  srand (time(NULL));
- int i=0;
 
- while(i<3){
-     int  random = rand() % 30 + 10;
-     emeneyPositionx[i]=random;
-     i++;
- }
-
-
+    for(int i=0;i<5;i++){
+         int  random = rand() % 39 + 10;
+         emeneyPositionx[i]=random;
+   }
 }
 
 void drawFire(){
@@ -691,7 +703,7 @@ void detectCollision(){
 
 }
 
-void colliteMario(float x, float y){
+void collideMario(float x, float y){
 
       if(marioPositionY>-2.95 && !onTheBrick){
            jumpTopReached = true;
@@ -1989,8 +2001,7 @@ glPushMatrix();
     glPopMatrix();
 }
 
-void drawEnemy2()
-{
+void drawEnemy2(){
     glPushMatrix();
 
     glTranslatef(0,0,0);
@@ -3026,8 +3037,7 @@ void drawCylinder(){
     glPopMatrix();
 }
 
-void drawPiranhaPlant()
-{
+void drawPiranhaPlant(){
 glPushMatrix();
 
     glTranslatef(0.5, 0, 0);
@@ -5919,8 +5929,7 @@ glPushMatrix();
     glPopMatrix();
 }
 
-void drawMarioRun()
-{
+void drawMarioRun(){
     float runSpeedInc = 0.25;
     glPushMatrix();
 
@@ -9032,8 +9041,7 @@ void drawMarioRun()
 	glPopMatrix(); //Undo the move to the center of the pentagon
 }
 
-void drawMarioJump()
-{
+void drawMarioJump(){
     glPushMatrix(); //Save the current state of transformations
     glTranslatef(0.45, 0.9, 0);
 
@@ -10537,8 +10545,7 @@ void collisionEvents(int brickNumber){
     }
 }
 
-void animatePiranhaPlant()
-{
+void animatePiranhaPlant(){
     if(piranhaWaitCounter <= 0)
     {
         if(movePlantUp == true)
@@ -10976,18 +10983,22 @@ void drawScene() {
 //    glPopMatrix();
 
 //    draw piranta plant
-    glPushMatrix();
-
-    glTranslatef(32, piranhaPlantY, 0);
-    drawPiranhaPlant();
-
-    glPopMatrix();
-
-
+//    glPushMatrix();
+//
+//    glTranslatef(32, piranhaPlantY, 0);
+//    drawPiranhaPlant();
+//
+//    glPopMatrix();
 
 
 
-    //draw score brick group
+
+
+    //draw brick+score  group
+
+
+
+
 
     if(brickCollisionStatus[brickLocation[tempBrickCounter]])
     {
@@ -11054,22 +11065,24 @@ void drawScene() {
     tempBrickCounter++;
 
 
-    //underground score bricks
-    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(202,-0.5,1,true);
-        glPopMatrix();
-    }
-    else
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(202,-0.5,1,false);
-        glPopMatrix();
-    }
+
+
+
+
+
+    //underground score bricks+ normal brick
+
+
+    glPushMatrix();
+        drawBrick(201.5,-0.5,1);
+    glPopMatrix();
     tempBrickCounter++;
+
+     glPushMatrix();
+        drawBrick(202,-0.5,1);
+    glPopMatrix();
+    tempBrickCounter++;
+
 
     if(brickCollisionStatus[brickLocation[tempBrickCounter]])
     {
@@ -11087,6 +11100,8 @@ void drawScene() {
     }
     tempBrickCounter++;
 
+
+
     if(brickCollisionStatus[brickLocation[tempBrickCounter]])
     {
         glPushMatrix();
@@ -11103,37 +11118,19 @@ void drawScene() {
     }
     tempBrickCounter++;
 
-    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(203.5,-0.5,1,true);
-        glPopMatrix();
-    }
-    else
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(203.5,-0.5,1,false);
-        glPopMatrix();
-    }
+
+
+    glPushMatrix();
+        drawBrick(203.5,-0.5,1);
+    glPopMatrix();
+    tempBrickCounter++;
+     glPushMatrix();
+        drawBrick(204,-0.5,1);
+    glPopMatrix();
     tempBrickCounter++;
 
-    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(208,-0.5,1,true);
-        glPopMatrix();
-    }
-    else
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(208,-0.5,1,false);
-        glPopMatrix();
-    }
-    tempBrickCounter++;
+
+
 
     if(brickCollisionStatus[brickLocation[tempBrickCounter]])
     {
@@ -11167,6 +11164,7 @@ void drawScene() {
     }
     tempBrickCounter++;
 
+
     if(brickCollisionStatus[brickLocation[tempBrickCounter]])
     {
         glPushMatrix();
@@ -11183,18 +11181,42 @@ void drawScene() {
     }
     tempBrickCounter++;
 
+
+
+
+        glPushMatrix();
+            drawBrick(214,-0.5,1);
+            glPopMatrix();
+        tempBrickCounter++;
+
+        glPushMatrix();
+            drawBrick(214.5,-0.5,1);
+            glPopMatrix();
+        tempBrickCounter++;
+
+        glPushMatrix();
+            drawBrick(215,-0.5,1);
+            glPopMatrix();
+        tempBrickCounter++;
+
+
+
+
+
+
+
     if(brickCollisionStatus[brickLocation[tempBrickCounter]])
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(214,-0.5,1,true);
+            drawScoreBrick(214,1.5,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(214,-0.5,1,false);
+            drawScoreBrick(214,1.5,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
@@ -11203,14 +11225,14 @@ void drawScene() {
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(214.5,-0.5,1,true);
+            drawScoreBrick(214.5,1.5,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(214.5,-0.5,1,false);
+            drawScoreBrick(214.5,1.5,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
@@ -11219,14 +11241,35 @@ void drawScene() {
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(215,-0.5,1,true);
+            drawScoreBrick(215,1.5,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(215,-0.5,1,false);
+            drawScoreBrick(215,1.5,1,false);
+        glPopMatrix();
+    }
+    tempBrickCounter++;
+
+
+
+
+
+
+    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(220,0,1,true);
+        glPopMatrix();
+    }
+    else
+    {
+        glPushMatrix();
+        //glTranslatef(5.5, -0.5, 0);
+            drawScoreBrick(220,0,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
@@ -11235,81 +11278,36 @@ void drawScene() {
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(215.5,-0.5,1,true);
+            drawScoreBrick(220.5,0,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(215.5,-0.5,1,false);
+            drawScoreBrick(220.5,0,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
 
-    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
+
+     if(brickCollisionStatus[brickLocation[tempBrickCounter]])
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(220,-0.5,1,true);
+            drawScoreBrick(221,0,1,true);
         glPopMatrix();
     }
     else
     {
         glPushMatrix();
         //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(220,-0.5,1,false);
+            drawScoreBrick(221.5,0,1,false);
         glPopMatrix();
     }
     tempBrickCounter++;
 
-    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(220.5,-0.5,1,true);
-        glPopMatrix();
-    }
-    else
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(220.5,-0.5,1,false);
-        glPopMatrix();
-    }
-    tempBrickCounter++;
 
-    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(221,-0.5,1,true);
-        glPopMatrix();
-    }
-    else
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(221,-0.5,1,false);
-        glPopMatrix();
-    }
-    tempBrickCounter++;
-
-    if(brickCollisionStatus[brickLocation[tempBrickCounter]])
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(221.5,-0.5,1,true);
-        glPopMatrix();
-    }
-    else
-    {
-        glPushMatrix();
-        //glTranslatef(5.5, -0.5, 0);
-            drawScoreBrick(221.5,-0.5,1,false);
-        glPopMatrix();
-    }
-    tempBrickCounter++;
 
     //glPopMatrix();
 
@@ -11325,25 +11323,24 @@ void drawScene() {
     if(storeLocation==true){generateRandomEnemy();}
 
     for(int i=0;i<arrayLength;i++){
-        glPushMatrix();
-                    glTranslatef(emeneyPositionx[i], -2.3, 0);
-                    glScalef(0.25, 0.25, 1.0);
-                    drawEnemy();
-        glPopMatrix();
+
+         if(i<5){
+                glPushMatrix();
+                glTranslatef(emeneyPositionx[i], -2.3, 0);
+                glScalef(0.25, 0.25, 1.0);
+                drawEnemy();
+                glPopMatrix();
+         }else{
+                glPushMatrix();
+                glTranslatef(emeneyPositionx[i], -2.5, 0);
+                glScalef(0.25, 0.25, 1.0);
+                drawEnemy2();
+                glPopMatrix();
+         }
+
+
+
     }
-
-    for(int i=0;i<arrayLength;i++){
-        glPushMatrix();
-                    glTranslatef(emeneyPositionx[i]+2, -2.5, 0);
-                    glScalef(0.25, 0.25, 1.0);
-                    drawEnemy2();
-        glPopMatrix();
-    }
-
-
-
-
-
 
 
 
@@ -11543,6 +11540,17 @@ void update(int value) {
 
 
 
+
+    if(generateRandomEnemyInsidePipe==1){
+        generateRandomEnemy2();
+        generateRandomEnemyInsidePipe=2;
+    }
+
+    if(marioPositionX>199 && generateRandomEnemyInsidePipe==0){
+          generateRandomEnemyInsidePipe=1;
+      }
+
+
     if(mariCrossedFlag==2){
         if(flagY>-3){
             isPaused=true;
@@ -11614,7 +11622,7 @@ void update(int value) {
 
 
         if(marioCollisionOccured==true){
-             colliteMario(0,0);
+             collideMario(0,0);
         }
 
         jumpMario();
