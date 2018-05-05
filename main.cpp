@@ -187,6 +187,7 @@ float backgroundColor[1][3]={{0.48,0.47,1.0}};
 
 
 //function declaration
+void initValues();
 void jumpMario();
 void collisionEvents(int brickNumber);
 void playBackgroundMusic();
@@ -345,6 +346,8 @@ float   slideBrickX[3][2]={{59,0},{66,1}};
 
         //BackgroundColorProperty
 float         backgroundColor[1][3]={{0.48,0.47,1.0}};
+
+    initValues();
 
 
     restartBackgroundMusic();
