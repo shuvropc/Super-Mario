@@ -11823,6 +11823,7 @@ int main(int argc, char** argv) {
 
     playBackgroundMusic();
 
+    //glutFullScreen();           // making the window full screen
 
     //PlaySound("sounds/background.wav", NULL, SND_LOOP | SND_ASYNC);
     //enableSound("background");
