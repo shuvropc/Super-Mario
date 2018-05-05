@@ -5,6 +5,8 @@
 #include <ctime>
 #include <unistd.h>
 #include <fstream>
+#include <conio.h>
+
 
 
 #include <GL/GLUT.h>
@@ -39,7 +41,7 @@ float _cameraAngle = 0.0;
 
 
 //cameraProperty
-float cameraX=-5.52;
+float cameraX=-4;
 //float cameraX=-200;
 
 
@@ -68,6 +70,7 @@ GLuint _textureCloud;
 GLuint _textureCylinder;
 GLuint _textureEnemy;
 GLuint _textureCastle;
+GLuint _textureMenu;
 
 
 //game logic variables
@@ -179,6 +182,10 @@ bool gamePauseMenu = false;
 int generateRandomEnemyInsidePipe = 0;
 
 
+//BackgroundColorProperty
+
+float backgroundColor[1][3]={{0.48,0.47,1.0}};
+
 
 //function declaration
 void jumpMario();
@@ -284,24 +291,7 @@ void enableSound(string state){
 
 }
 
-void drawMenu(){
-         glPushMatrix();
 
-            glColor4f(1.0, 1.0, 1.0,0.40);
-            glEnable (GL_BLEND);
-            glBlendFunc (GL_DST_COLOR,GL_ONE_MINUS_SRC_ALPHA);
-
-            glBegin(GL_POLYGON);
-                glVertex3f(0,-3,0);
-                glVertex3f(10,-3,0);
-                glVertex3f(10,3,0);
-                glVertex3f(0,3,0);
-            glEnd();
-
-    glPopMatrix();
-
-
-}
 
 void slideBrick(){
 
@@ -436,7 +426,7 @@ void marioCollisionWithPiranha(){
                   enableSound("mariodie");
                   marioLife--;
                   cout<<"Mario died Life: "<<marioLife<<endl;
-                  marioPositionY=-500;
+//                  marioPositionY=-500;
                   Sleep(3000);
                   marioPositionX-=2;
                   cameraX+=2;
@@ -1002,6 +992,34 @@ void drawCastle(){
 	glPopMatrix();
 
 	glPopMatrix();
+}
+
+void drawMenu(){
+
+
+
+         enableTexture(_textureMenu);
+         glPushMatrix();
+            glColor4f(1.0, 1, 1, 0.5);
+
+
+            glBegin(GL_POLYGON);
+                    glTexCoord2f(0.0f, 0.0f);
+                    glVertex3f(marioPositionX-5.5,-3,0);
+
+                    glTexCoord2f(1.0f, 0.0f);
+                    glVertex3f(marioPositionX+5.5,-3,0);
+
+                    glTexCoord2f(1.0f, 1.0f);
+                    glVertex3f(marioPositionX+5.5,3,0);
+
+                    glTexCoord2f(0.0f, 1.0f);
+                    glVertex3f(marioPositionX-5.5,3,0);
+            glEnd();
+
+    glPopMatrix();
+
+
 }
 
 void drawFlag(){
@@ -5130,8 +5148,7 @@ void moveMario(){
 
     }
 
-    else if(moveLeft == true && marioPositionX<87.5 && marioPositionX>2 && insideTheCylinder==false){
-
+    else if(moveLeft == true && marioPositionX<87.5 && marioPositionX>4 && insideTheCylinder==false){
 
 
 
@@ -10700,6 +10717,35 @@ void handleKeypress(unsigned char key, int x, int y) {
          }
 
 
+         if(key == 0x1B){
+
+
+                if(gamePauseMenu==true){
+                     gamePauseMenu=false;;
+                }else{
+                    gamePauseMenu=true;;
+               }
+
+
+                if(isPaused)
+                {
+                    isPaused = false;
+                    mciSendString("resume background", 0, 0, 0);
+                }
+                else if(!isPaused)
+                {
+                    isPaused = true;
+                    mciSendString("pause background", 0, 0, 0);
+                }
+                enableSound("pause");
+
+
+         }
+
+
+
+
+
 
 
 
@@ -10738,8 +10784,9 @@ void initValues(){
 //Initializes 3D rendering
 void initRendering() {
 
-    glClearColor(0.48,0.47,1.0,1.0);
-    glEnable(GL_BLEND);
+    glClearColor(backgroundColor[0][0],backgroundColor[0][1],backgroundColor[0][2],1.0);
+
+     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
@@ -10801,6 +10848,10 @@ void initRendering() {
 	delete image10;
 
 
+	Image* image11 = loadBMP("images/menu.bmp");
+	_textureMenu = loadTexture(image11);
+	delete image11;
+
 
 }
 
@@ -10828,9 +10879,13 @@ void drawScene() {
 
 
     //DrawMenu
-    glPushMatrix();
-        //drawMenu();
-    glPopMatrix();
+
+    if(gamePauseMenu){
+            glPushMatrix();
+            drawMenu();
+            glPopMatrix();
+    }
+
 
 
 
@@ -10886,8 +10941,8 @@ void drawScene() {
 
 //draw floor
     glPushMatrix();
-    glTranslatef(0, -3, 0);
-        drawFloor(38);
+    glTranslatef(-2, -3, 0);
+        drawFloor(40);
     glPopMatrix();
 
 
@@ -11009,8 +11064,8 @@ void drawScene() {
 
 
     //draw cloud
-          if(marioPositionX<150){
-    glPushMatrix();
+     if(marioPositionX<150){
+        glPushMatrix();
         glTranslatef(cloudPositionX, 2, 0);
         drawCloud(100);
     glPopMatrix();
@@ -11606,7 +11661,12 @@ void drawScene() {
 
 void update(int value) {
 
-cout<<marioPositionX<<endl;
+//   if(marioPositionX>150){
+//            backgroundColor[0][0]=0.4;
+//            backgroundColor[0][1]=0.1;
+//            backgroundColor[0][2]=0.8;
+//    }
+
 
     marioCollisionWithPiranha();
 
@@ -11717,7 +11777,7 @@ cout<<marioPositionX<<endl;
 
         if(cloudPositionX < -100.0f)
         {
-        cloudPositionX = 4.0f;
+            cloudPositionX = 4.0f;
         }
 
 
@@ -11839,6 +11899,5 @@ int main(int argc, char** argv) {
     glutTimerFunc(25, update, 0); //Add a timer
 
     glutMainLoop();
-
 
 }
