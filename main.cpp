@@ -5424,7 +5424,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5449,7 +5449,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5474,7 +5474,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5499,7 +5499,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5524,7 +5524,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5549,7 +5549,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5574,7 +5574,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5599,7 +5599,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5624,7 +5624,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5649,7 +5649,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5680,7 +5680,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5705,7 +5705,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5730,7 +5730,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5755,7 +5755,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5780,7 +5780,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5805,7 +5805,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5830,7 +5830,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5855,7 +5855,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5880,7 +5880,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
@@ -5905,7 +5905,7 @@ void drawBackground(float scaleValue, int length)
     glRotatef(90, 1, 0, 0);
 //	glScalef(5, 0.5, 0);
 
-    glColor3ub(110, 121, 51);
+    glColor3ub(0, 121, 51);
 
     gluQuadricNormals(quadObj, GL_SMOOTH);
 
