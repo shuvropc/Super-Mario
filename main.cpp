@@ -192,6 +192,7 @@ float backgroundColor[1][3]={{0.48,0.47,1.0}};
 
 
 //function declaration
+void initValues();
 void jumpMario();
 void collisionEvents(int brickNumber);
 void playBackgroundMusic();
@@ -358,6 +359,8 @@ void restartGame(){
 
         //BackgroundColorProperty
 float         backgroundColor[1][3]={{0.48,0.47,1.0}};
+
+    initValues();
 
 
     restartBackgroundMusic();
@@ -4320,17 +4323,7 @@ void drawFireFlower(float translateX, float translateY){
     glTranslatef(translateX+0.25, translateY+0.30, 0);
     glScalef(0.03, 0.03, 1);
 
-//    glBegin(GL_QUADS);
-//
-//    glColor3ub(0, 240, 110);
-//
-//    glVertex3f(0, 0, 0);
-//    glVertex3f(1, 0, 0);
-//    glVertex3f(1, 1, 0);
-//    glVertex3f(0, 1, 0);
-//
-//    glEnd();
-
+    //red block1 lower part with plus minus side
     glPushMatrix(); //Save the current state of transformations
 
 	glBegin(GL_QUADS);
@@ -5458,6 +5451,554 @@ void drawFloor(int length){
      }
 
      glDisable(GL_TEXTURE_2D);
+}
+
+void drawBackground(float scaleValue, int length)
+{
+    GLUquadricObj *quadObj = gluNewQuadric(); // declaring quadric object for glCylinder
+
+    glPushMatrix();
+
+    glScalef(scaleValue, scaleValue, 1);
+
+    for(int i=0; i<length; i++)
+    {
+    glTranslatef(10, 0, 0);
+    glPushMatrix(); //Save the transformations performed thus far
+    glTranslatef(-10.2, 0, 0);
+	glPushMatrix();
+
+	glTranslatef(0.2, -1.3, -1);
+	glScalef(6, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+    glBegin(GL_QUADS);
+
+    glVertex3f(-1, 0, 0);
+    glVertex3f(1, 0, 0);
+    glVertex3f(1, 1, 0);
+    glVertex3f(-1, 1, 0);
+
+    glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix(); // group of trees 1
+
+	glTranslatef(-4.5, 0, 0);
+
+	glPushMatrix(); //tree 1
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(0, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(0, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 2
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(1, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(1, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 3
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(2, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(2, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 4
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(3, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(3, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 5
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(4, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(4, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 6
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(5, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(5, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 7
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(6, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(6, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 8
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(7, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(7, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 9
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(8, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(8, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 10
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(9, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(9, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPopMatrix(); // group of trees 1 end;
+
+	glPushMatrix(); // group of trees 2
+
+	glTranslatef(-4, 0.0, -0.3);
+
+	glPushMatrix(); //tree 1
+    glTranslatef(-0.5, 0.0, 0.0);
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(0, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(0, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 2
+    glTranslatef(-0.4, 0.0, 0.0);
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(1, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(1, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 3
+    glTranslatef(-0.3, 0.0, 0.0);
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(2, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(2, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 4
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(3, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(3, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 5
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(4, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(4, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 6
+
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(5, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(5, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 7
+    glTranslatef(0.3, 0.0, 0.0);
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(6, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(6, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 8
+    glTranslatef(0.4, 0.0, 0.0);
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(7, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(7, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 9
+    glTranslatef(0.5, 0.0, 0.0);
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(8, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(8, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPushMatrix(); //tree 10
+    glTranslatef(0.6, 0.0, 0.0);
+	glPushMatrix(); //tree trunk
+
+	glTranslatef(9, -0.29, 0);
+    glRotatef(90, 1, 0, 0);
+//	glScalef(5, 0.5, 0);
+
+    glColor3ub(0, 121, 51);
+
+    gluQuadricNormals(quadObj, GL_SMOOTH);
+
+    gluCylinder(quadObj, 0.1, 0.1, 0.7, 25, 26);
+
+	glPopMatrix();
+
+	glPushMatrix(); // tree top
+	glTranslatef(9, -0.29, 0);
+    glRotatef(90, -1, 0, 0);
+	glutSolidCone(0.5 , 0.8, 15, 20);
+
+	glPopMatrix();
+
+	glPopMatrix(); // tree end
+
+	glPopMatrix(); // group of trees 2 end;
+
+	glPopMatrix();
+    }
+
+    glPopMatrix();
 }
 
 void drawVerticalFloor(int length){
@@ -11968,7 +12509,11 @@ if(gameStart==false){
             glPopMatrix();
     }
 
-
+//    glPushMatrix();
+//    glTranslatef(1.3,-2.15,-0.5);
+//    glRotatef(15, -1, 0, 0);
+//    drawBackground(0.5, 12);
+//    glPopMatrix();
 
 
    storeLocation = false;
