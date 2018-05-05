@@ -10543,7 +10543,7 @@ void animatePiranhaPlant()
     {
         if(movePlantUp == true)
         {
-            if(piranhaPlantY>=0.0)
+            if(piranhaPlantY>=-2.5)
             {
                 movePlantUp = false;
                 piranhaWaitCounter = 40;
