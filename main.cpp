@@ -42,7 +42,7 @@ float _cameraAngle = 0.0;
 
 //cameraProperty
 float cameraX=-4;
-//float cameraX=-200;
+//float cameraX=-220;
 
 
 //Mario Property
@@ -50,7 +50,7 @@ int marioState = 0; // 0 is idle, 1 is running, 2 is jump
 int previousMarioState;
 float marioRunCounter = 0.0;
 float marioPositionX=4;
-//float marioPositionX=200;
+//float marioPositionX=220;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
@@ -221,7 +221,10 @@ int storeObjectPosition(float x, float y, int noOfObjects, int type){
 }
 
 void showScore(){
-//    glutBitmapCharacter()
+
+
+
+
 }
 
 void enableSound(string state){
@@ -10782,6 +10785,31 @@ void initValues(){
         {brickCollisionStatus[i] = true;};
 }
 
+void renderBitmapString(float x, float y, void *font,const char *string){
+    const char *c;
+    glRasterPos2f(x, y);
+    for (c=string; *c != '\0'; c++) {
+        glutBitmapCharacter(font, *c);
+    }
+}
+
+
+
+
+void print(float x, float y, float z,char* text) {
+    glPushMatrix();
+    glTranslatef(x, y, 0);
+    glScalef(1/552.0,1/552.0,1);
+    glRotatef(z,0,0,1);
+
+      for( char* p = text; *p; p++)
+    {
+        glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
+    }
+    glPopMatrix();
+}
+
+
 //Initializes 3D rendering
 void initRendering() {
 
@@ -10879,8 +10907,24 @@ void drawScene() {
 
 
 
-    //DrawMenu
+const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 
+    //showScore
+    glPushMatrix();
+    glColor3f(1,1,1);
+    print(abs(cameraX)-4,2,0,"Score: 5");
+    glPopMatrix();
+
+    //showScore
+    glPushMatrix();
+    glColor3f(1,1,1);
+    print(abs(cameraX)-4,1.5,0,"Life: 3");
+    glPopMatrix();
+
+
+
+
+    //DrawMenu
     if(gamePauseMenu){
             glPushMatrix();
             drawMenu();
@@ -10888,22 +10932,13 @@ void drawScene() {
     }
 
 
-    //showScore
-     glPushMatrix();
-            showScore();
-     glPopMatrix();
-
-
-
-
-       //draw Fire
-
-         if(fireBullet==true){
-                glPushMatrix();
-                glTranslatef(bulletX,bulletY,0);
-                drawFire();
-                glPopMatrix();
-            }
+   //draw Fire
+     if(fireBullet==true){
+            glPushMatrix();
+            glTranslatef(bulletX,bulletY,0);
+            drawFire();
+            glPopMatrix();
+        }
 
 
 
@@ -11655,7 +11690,6 @@ void drawScene() {
                 drawPiranhaPlant();
             glPopMatrix();
     }
-
 
 
 
