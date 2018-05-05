@@ -5670,7 +5670,7 @@ void drawBackground(float scaleValue, int length)
 
 	glPushMatrix(); // group of trees 2
 
-	glTranslatef(-4, 0.0, -0.8);
+	glTranslatef(-4, 0.0, -0.3);
 
 	glPushMatrix(); //tree 1
     glTranslatef(-0.5, 0.0, 0.0);
@@ -12407,7 +12407,7 @@ const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 //    glPushMatrix();
 //    glTranslatef(1.3,-2.15,-0.5);
 //    glRotatef(15, -1, 0, 0);
-//    drawBackground(0.5, 10);
+//    drawBackground(0.5, 12);
 //    glPopMatrix();
 
 
