@@ -156,7 +156,6 @@ float slideBrickX[3][2]={{59,0},{66,1}};
 bool valueChanageForSlide=true;
 
 
-
 //marioLife
 int marioLife=3;
 
@@ -183,15 +182,12 @@ int generateRandomEnemyInsidePipe = 0;
 
 
 //BackgroundColorProperty
-
 float backgroundColor[1][3]={{0.48,0.47,1.0}};
 
 
 //function declaration
 void jumpMario();
 void collisionEvents(int brickNumber);
-
-
 
 //Makes the image into a texture, and returns the id of the texture
 GLuint loadTexture(Image* image) {
@@ -222,6 +218,10 @@ int storeObjectPosition(float x, float y, int noOfObjects, int type){
     int returnValue = bottomAreaAssignCount;
     bottomAreaAssignCount++;
     return returnValue;
+}
+
+void showScore(){
+//    glutBitmapCharacter()
 }
 
 void enableSound(string state){
@@ -290,8 +290,6 @@ void enableSound(string state){
 
 
 }
-
-
 
 void slideBrick(){
 
@@ -441,6 +439,10 @@ void marioCollisionWithPiranha(){
 
 void bulletCollisionWithEnemy(){
 
+
+    if((bulletX-marioPositionX)>20){
+        bulletY=-500;
+    }
 
 int arrayLength = sizeof(emeneyPositionx) / sizeof(int);
 
@@ -10627,8 +10629,7 @@ void animatePiranhaPlant(){
 
 }
 
-void writeHighscore()
-{
+void writeHighscore(){
     ifstream scorefile ("highscore.txt");
     int previousScore;
     bool isEmpty = (scorefile.get(), scorefile.eof());
@@ -10885,6 +10886,12 @@ void drawScene() {
             drawMenu();
             glPopMatrix();
     }
+
+
+    //showScore
+     glPushMatrix();
+            showScore();
+     glPopMatrix();
 
 
 
