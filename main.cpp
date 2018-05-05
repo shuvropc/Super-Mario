@@ -38,16 +38,16 @@ float _cameraAngle = 0.0;
 
 
 //cameraProperty
-float cameraX=-5.52;
-//float cameraX=-200;
+//float cameraX=-5.52;
+float cameraX=-200;
 
 
 //Mario Property
 int marioState = 0; // 0 is idle, 1 is running, 2 is jump
 int previousMarioState;
 float marioRunCounter = 0.0;
-float marioPositionX=4;
-//float marioPositionX=200;
+//float marioPositionX=4;
+float marioPositionX=200;
 float marioPositionY=-2.95;
 bool jumpMarioKeyPressed=false;
 bool jumpTopReached=false;
@@ -115,7 +115,9 @@ bool legAnimationCycle = true;
 //piranha plant animation variables
 float piranhaPlantY = -4;
 bool movePlantUp = true;
-int piranhaWaitCounter = 40;
+int piranhaWaitCounter = 20;
+
+float piranhaPlantX[5]={32,206,213,220,224};
 
 //jump variables
 int jumpCounter = 0;
@@ -416,6 +418,33 @@ void drawFire(){
   glEnd();
 
     glPopMatrix();
+
+}
+
+void marioCollisionWithPiranha(){
+    int arrayLength = sizeof(piranhaPlantX) / sizeof(int);
+
+    for(int i=0; i<arrayLength;i++){
+
+       float verticalDistence= marioPositionY-piranhaPlantY;
+
+       if(marioPositionX>piranhaPlantX[i]+0.5 && marioPositionX<piranhaPlantX[i]+1.8){
+
+        if(verticalDistence>-1.05 && verticalDistence<0.75){
+
+                  enableSound("mariodie");
+                  marioLife--;
+                  cout<<"Mario died Life: "<<marioLife<<endl;
+                  marioPositionY=-500;
+                  Sleep(3000);
+                  marioPositionX-=2;
+                  cameraX+=2;
+                  marioPositionY=-2.95;
+
+        }
+
+       }
+    }
 
 }
 
@@ -10550,14 +10579,14 @@ void animatePiranhaPlant(){
     {
         if(movePlantUp == true)
         {
-            if(piranhaPlantY>=-2.5)
+            if(piranhaPlantY>=0)
             {
                 movePlantUp = false;
-                piranhaWaitCounter = 40;
+                piranhaWaitCounter = 20;
             }
             else
             {
-                piranhaPlantY += 0.01;
+                piranhaPlantY += 0.1;
             }
         }
         else
@@ -10565,11 +10594,11 @@ void animatePiranhaPlant(){
             if(piranhaPlantY<=-4)
             {
                 movePlantUp = true;
-                piranhaWaitCounter = 40;
+                piranhaWaitCounter = 20;
             }
             else
             {
-                piranhaPlantY -= 0.01;
+                piranhaPlantY -= 0.1;
             }
         }
     }
@@ -10983,12 +11012,7 @@ void drawScene() {
 //    glPopMatrix();
 
 //    draw piranta plant
-//    glPushMatrix();
-//
-//    glTranslatef(32, piranhaPlantY, 0);
-//    drawPiranhaPlant();
-//
-//    glPopMatrix();
+
 
 
 
@@ -11529,6 +11553,20 @@ void drawScene() {
 
 
 
+   //drawPiranha
+
+       int totalPiranha = sizeof(piranhaPlantX) / sizeof(int);
+
+    for(int i=0 ;i <totalPiranha; i++){
+            glPushMatrix();
+                glTranslatef(piranhaPlantX[i], piranhaPlantY, 0);
+                drawPiranhaPlant();
+            glPopMatrix();
+    }
+
+
+
+
 
    storeLocation = false;
    bottomAreaAssignCount=0;
@@ -11538,8 +11576,9 @@ void drawScene() {
 
 void update(int value) {
 
+cout<<marioPositionX<<endl;
 
-
+    marioCollisionWithPiranha();
 
     if(generateRandomEnemyInsidePipe==1){
         generateRandomEnemy2();
