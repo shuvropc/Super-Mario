@@ -151,6 +151,7 @@ float flowerPositionY = -0.5; //initial Y position of the brick which the flower
 
 //text property
 int score=0;
+bool highScore = false;
 
 
 //slideBrickProperty
@@ -223,7 +224,7 @@ void restartGame(){
 
         _cameraAngle = 0.0;
 
-
+        highScore = false;
 
         //cameraProperty
         cameraX=-4;
@@ -6762,7 +6763,7 @@ void drawMarioRun(){
 
     if(marioRunCounter >= 0.0 && marioRunCounter < 1.0)
     {
-
+        //mario red cap upper block1
         glPushMatrix(); //Save the current state of transformations
 
 
@@ -7830,6 +7831,7 @@ void drawMarioRun(){
 	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
 	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
 
+	//mario red cap upper block1
 	glBegin(GL_QUADS);
 
 	glColor3ub(255, 0, 0);
@@ -8788,6 +8790,7 @@ void drawMarioRun(){
 	//glRotatef(_angle, 0.0, 1.0, 0.0); //Rotate about the y-axis
 	//glScalef(0.25, 0.30, 0.15); //Scale by 0.7 in the x, y, and z directions
 
+    //mario red cap upper block1
 	glBegin(GL_QUADS);
 
 	glColor3ub(255, 0, 0);
@@ -11428,17 +11431,9 @@ void writeHighscore(){
         cout << "Previous Score: " << previousScore << endl;
         if(score > previousScore)
         {
-            glPushMatrix();
-            glColor3ub(255,0,0);
-            stringstream hs;
-            hs << score;
-            string hscoreString = hs.str();
-            string displayHScoreString = "Congratulations! New High Score: " + hscoreString;
-            int hscoreStringLength = displayHScoreString.length();
-            char char_array3[hscoreStringLength];
-            strcpy(char_array3, displayHScoreString.c_str());
-            print(88,2,0,char_array3);
-            glPopMatrix();
+            highScore=true;
+            cout << "Writing new highscore to disk" << endl;
+
 
             ofstream scorefile;
             scorefile.open("highscore.txt", ofstream::out | ofstream::trunc);
@@ -11714,6 +11709,23 @@ void drawScene() {
 
 
 const int font=(int)GLUT_BITMAP_TIMES_ROMAN_24;
+
+if(highScore){
+
+       glPushMatrix();
+            glColor3ub(255,0,0);
+            stringstream hs;
+            hs << score;
+            string hscoreString = hs.str();
+            string displayHScoreString = "Congratulations! New High Score: " + hscoreString;
+            int hscoreStringLength = displayHScoreString.length();
+            char char_array3[hscoreStringLength];
+            strcpy(char_array3, displayHScoreString.c_str());
+            print(abs(cameraX)-1.5,2,0,char_array3);
+            glPopMatrix();
+
+     }
+
 
 if(gameStart==false){
 
@@ -12604,6 +12616,8 @@ void update(int value) {
         writeHighscore();
         Sleep(6000);
      }
+
+
 
 
 
